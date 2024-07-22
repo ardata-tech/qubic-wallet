@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+  <title>Hello, Qubic!</title>
+</head>
+<body>
+  <h1>Hello, Qubic!</h1>
+
+  <button class="connect">Connect</button>
+  <button class="getPubId">Get public ID</button>
+
+  <script>
+    const snapId = `local:${window.location.href}`;
+
+    const connectButton = document.querySelector('button.connect')
+    const getPubIdButton = document.querySelector('button.getPubId')
+
+    connectButton.addEventListener('click', connect)
+    getPubIdButton.addEventListener('click', getPubId)
+
+    // here we get permissions to interact with and install the snap
+    async function connect () {
+      await ethereum.request({
+        method: 'wallet_requestSnaps',
+        params: { [snapId]: {} }
+      })
+    }
+
+    async function getPubId () {
+      try {
+        const response = await ethereum.request({
+          method: 'wallet_invokeSnap',
+          params: {
+            snapId,
+            request: {
+              method: 'getPublicId',
+              params: {
+                accountIdx: 0,
+                confirm: true
+              }
+            }
+          }
+        })
+        console.log(response);
+      } catch (err) {
+        console.error(err)
+        alert('Problem happened: ' + err.message || err)
+      }
+    }
+  </script>
+</body>
+</html>
