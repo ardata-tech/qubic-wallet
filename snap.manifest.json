@@ -7,7 +7,7 @@
     "url": "https://github.com/qubic/qubic-mm-snap.git"
   },
   "source": {
-    "shasum": "57eMAo5epLkxEpqkUWaGdsq5iuhO4m3abpg3GjK+7BY=",
+    "shasum": "dO0jo76mcWXcBj+vmPR1ocJdS9FUkcHlbWqUuejHV08=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
