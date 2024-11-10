@@ -1,6 +1,6 @@
-# Qubic Wallet Snap
+# Qubic Connect
 
-The Qubic Wallet Snap is a MetaMask extension that has Qubic capabilities such as public key derivation and transaction signing.
+Qubic Connect is a MetaMask extension that has Qubic capabilities such as public key derivation and transaction signing.
 
 ## Usage
 Install via NPM.
