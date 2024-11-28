@@ -40,7 +40,7 @@ See the [RPC API](./RPC.md) for more information on how to interact with the sna
 
 
 ## Publish
-You can see the package on [npm](https://www.npmjs.com/package/@qubic-lib/qubic-mm-snap).
+You can see the package on [https://www.npmjs.com/package/@qubic-lib/qubic-mm-snap](https://www.npmjs.com/package/@qubic-lib/qubic-mm-snap).
 
 publish with.
 
