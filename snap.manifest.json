@@ -1,5 +1,5 @@
 {
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Manage Qubic assets and connect to Qubic apps with MetaMask.",
   "proposedName": "Qubic Connect",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/qubic/qubic-mm-snap.git"
   },
   "source": {
-    "shasum": "JcbgBufakwusQA+Ix9t6Qm4afkS5QGRxrLEi7LYoBoo=",
+    "shasum": "aKD9Mw26ImLm1LVnBAhMoqpLrSxf7u3vTew/QtvmFN4=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

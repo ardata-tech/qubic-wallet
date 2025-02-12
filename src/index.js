@@ -14,9 +14,8 @@ import { renderGetPublicKey, renderSignTransaction } from './ui'
  * @see https://docs.metamask.io/snaps/reference/exports/#onrpcrequest
  * @see https://docs.metamask.io/snaps/reference/rpc-api/#wallet_invokesnap
  */
-export const onRpcRequest = async ({ request, origin }) => {
-  const dappOrigin = request?.params?.origin || origin
-  const dappHost = (new URL(dappOrigin))?.host
+export const onRpcRequest = async ({ origin, request }) => {
+  const dappHost = (new URL(origin))?.host
 
   switch (request.method) {
     case 'getPublicId': {

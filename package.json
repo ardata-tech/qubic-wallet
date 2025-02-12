@@ -1,6 +1,6 @@
 {
   "name": "@qubic-lib/qubic-mm-snap",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Manage Qubic assets and connect to Qubic apps with MetaMask.",
   "main": "src/index.js",
   "scripts": {
