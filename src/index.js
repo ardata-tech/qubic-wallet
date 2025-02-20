@@ -1,6 +1,6 @@
 import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper'
 import Crypto from '@qubic-lib/qubic-ts-library/dist/crypto'
-import { generateKeyPair } from './privateKey'
+import { generateKeyPair } from './qubic'
 import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from './utils'
 import { renderGetPublicKey, renderSignTransaction } from './ui'
 
@@ -29,6 +29,8 @@ export const onRpcRequest = async ({ origin, request }) => {
         const accepted = await renderGetPublicKey(dappHost, publicId)
         assertConfirmation(accepted)
       }
+
+      console.log('Public ID:', publicId)
 
       return publicId
     }
