@@ -7,7 +7,7 @@ import {
   assertIsInt,
   assertConfirmation,
   base26
-} from './utils';
+} from '../src/utils';
 
 describe('Utility Functions', () => {
   test('assertInput throws error on falsy input', () => {

@@ -1,4 +1,4 @@
-import { generateKeyPair } from './privateKey';
+import { generateKeyPair } from '../src/privateKey';
 
 // Mocking external dependencies
 jest.mock('@metamask/key-tree', () => ({
@@ -13,7 +13,7 @@ jest.mock('qubic-ts-library/dist/qubicHelper', () => ({
   })),
 }));
 
-jest.mock('./utils', () => ({
+jest.mock('../src/utils', () => ({
   hexToBase26: jest.fn().mockReturnValue('mockedBase26Key'),
 }));
 

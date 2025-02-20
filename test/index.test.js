@@ -1,13 +1,13 @@
-import { onRpcRequest } from './index';
-import { generateKeyPair } from './privateKey';
-import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from './utils';
-import { renderGetPublicKey, renderSignTransaction } from './ui';
+import { onRpcRequest } from '../src/index';
+import { generateKeyPair } from '../src/privateKey';
+import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from '../src/utils';
+import { renderGetPublicKey, renderSignTransaction } from '../src/ui';
 import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper';
 import Crypto from '@qubic-lib/qubic-ts-library/dist/crypto';
 
-jest.mock('./privateKey');
-jest.mock('./utils');
-jest.mock('./ui');
+jest.mock('../src/privateKey');
+jest.mock('../src/utils');
+jest.mock('../src/ui');
 jest.mock('@qubic-lib/qubic-ts-library/dist/qubicHelper', () => {
   return {
     QubicHelper: jest.fn().mockImplementation(() => {
