@@ -7,7 +7,7 @@
     "url": "https://github.com/ardata-tech/qubic-connect.git"
   },
   "source": {
-    "shasum": "cgbNDHgU0QHmoxT8SyEprqM0uuJQKN34hjhfbDyN4So=",
+    "shasum": "8fqxd8T6HvzGmrLC38CMF9f7fBG/s+oA03mcidP5O7U=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
@@ -30,5 +30,6 @@
       }
     ]
   },
+  "platformVersion": "6.0.0",
   "manifestVersion": "0.1"
 }
