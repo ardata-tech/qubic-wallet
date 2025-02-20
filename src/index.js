@@ -1,7 +1,7 @@
 import Crypto from '@qubic-lib/qubic-ts-library/dist/crypto'
 import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper'
 import { renderGetPublicKey, renderSignTransaction } from './SnapService'
-import { generateKeyPair, generateKeyPairFromPrivateKey } from './QubicService'
+import { generateKeyPair, signTransaction } from './QubicService'
 import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from './ValidatorHelper'
 
 /**
@@ -22,10 +22,13 @@ export const onRpcRequest = async ({ origin, request }) => {
     case 'getPublicId': {
       // Extract the parameters from the request
       const { accountIdx = 0, confirm = false } = request.params || {}
+
       // Validate the parameters
       assertIsBoolean(confirm)
+
       // Generate a new key pair
       const { publicId } = await generateKeyPair(accountIdx)
+
       // If the user needs to confirm the request, render the confirmation UI
       if (confirm) {
         // Render the confirmation UI
@@ -64,19 +67,21 @@ export const onRpcRequest = async ({ origin, request }) => {
         assertConfirmation(accepted)
       }
 
-      // const qHelper = new QubicHelper()
-      // const qCrypto = await Crypto
-      // const { privateKey } = await generateKeyPair(accountIdx)
-      // const digest = new Uint8Array(qHelper.DIGEST_LENGTH)
-      // const toSign = tx.slice(0, offset)
-      // qCrypto.K12(toSign, digest, qHelper.DIGEST_LENGTH)
-      // const idPackage = await generateKeyPairFromPrivateKey(privateKey)
-      // const signedTx = qCrypto.schnorrq.sign(idPackage.privateKey, idPackage.publicKey, digest)
-      // const signedTxBase64 = btoa(String.fromCharCode(...signedTx))
+      // Generate a new key pair
+      const { privateKey } = await generateKeyPair(accountIdx)
+
+      // Prepare the transaction data
+      const transactionData = tx.slice(0, offset)
+
+      // Sign the transaction
+      const signedTransaction = await signTransaction(transactionData, privateKey)
+
+      // Convert the signed transaction to base64
+      const signedTransactionBase64 = btoa(String.fromCharCode(...signedTransaction))
 
       // Return the signed transaction
       return {
-        signedTx: signedTxBase64
+        signedTransaction: signedTransactionBase64
       }
     }
 

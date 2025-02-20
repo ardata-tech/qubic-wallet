@@ -38,10 +38,11 @@ export const generateKeyPair = async (accountIndex) => {
   const privateKeyBase26 = qubic.utils.hexToBase26(newAccount.privateKey)
 
   // use QubicHelper to get public key
-  const idPack = await qubic.identity.createIdPackage(seed);
+  const idPack = await qubic.identity.createIdPackage(privateKeyBase26);
 
   return {
-    privateKey: privateKeyBase26,
+    publicKey: idPack.publicKey,
+    privateKey: idPack.privateKey,
     publicId: idPack.publicId,
   }
 }
@@ -54,10 +55,21 @@ export const generateKeyPairFromPrivateKey = async (privateKey) => {
   const privateKeyBase26 = qubic.utils.hexToBase26(privateKey)
 
   // Create an identity package from the private key
-  const idPack = await qubic.identity.createIdPackageFromPrivateKey(privateKey);
+  const idPack = await qubic.identity.createIdPackageFromPrivateKey(privateKeyBase26);
 
   return {
-    privateKey: privateKeyBase26,
+    publicKey: idPack.publicKey,
+    privateKey: idPack.privateKey,
     publicId: idPack.publicId,
   }
+}
+
+export const signTransaction = async (transactionData, privateKey) => {
+  // Get the Qubic instance
+  const qubic = getQubicInstance();
+
+  // Sign the transaction data
+  const signedTransaction = await qubic.identity.signTransaction(transactionData, privateKey);
+
+  return signedTransaction;
 }
