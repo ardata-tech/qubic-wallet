@@ -1,9 +1,14 @@
 import { getBIP44AddressKeyDeriver } from '@metamask/key-tree'
-import { QubicHelper } from 'qubic-ts-library/dist/qubicHelper'
-import { hexToBase26 } from './utils'
+import Qubic from "@ardata-tech/qubic-js";
 
 export const generateKeyPair = async (accountIndex) => {
-  const qHelper = new QubicHelper()
+  // Initialize the Qubic instance with the provider URL
+  const qubic = new Qubic({
+    providerUrl: "https://rpc.qubic.org",
+    version: 1,
+  });
+
+  // Set coin type
   const coinType = 83293 // 1 for testing
 
   // Get the BIP44 node
@@ -12,13 +17,17 @@ export const generateKeyPair = async (accountIndex) => {
     params: { coinType },
   })
 
+  // Get the key deriver function
   const deriveAccountAddress = await getBIP44AddressKeyDeriver(bip44Node)
+
   // Derive the new account, index starts with 0
   const newAccount = await deriveAccountAddress(accountIndex)
+
   // Convert the private key to base26
-  const privateKeyBase26 = hexToBase26(newAccount.privateKey).padStart(55, 'z') // pad to 55 characters
+  const privateKeyBase26 = qubic.utils.hexToBase26(newAccount.privateKey)
+
   // use QubicHelper to get public key
-  const idPack = await qHelper.createIdPackage(privateKeyBase26)
+  const idPack = await qubic.identity.createIdPackage(seed);
 
   return {
     privateKey: privateKeyBase26,

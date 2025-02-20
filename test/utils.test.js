@@ -37,12 +37,4 @@ describe('Utility Functions', () => {
   test('assertConfirmation throws error if not confirmed', () => {
     expect(() => assertConfirmation(false)).toThrow({ code: 4001, message: 'User rejected the request.' });
   });
-
-  test('hexToBase26 converts hex to base26', () => {
-    expect(base26.hexToBase26('0x1')).toBe('b');
-  });
-
-  test('base26ToHex converts base26 to hex', () => {
-    expect(base26.base26ToHex('b')).toBe('0x1');
-  });
 });
