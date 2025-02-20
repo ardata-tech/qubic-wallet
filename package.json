@@ -7,7 +7,7 @@
     "serve": "mm-snap build && mm-snap serve",
     "start": "mm-snap watch",
     "build": "mm-snap build",
-    "deploy": "pnpm build && mm-snap manifest && pnpm publish",
+    "deploy": "npm build && mm-snap manifest && npm publish",
     "test": "jest"
   },
   "homepage": "https://github.com/ardata-tech/qubic-connect",
