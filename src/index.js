@@ -1,7 +1,5 @@
-import Crypto from '@qubic-lib/qubic-ts-library/dist/crypto'
-import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper'
-import { renderGetPublicKey, renderSignTransaction } from './SnapService'
 import { generateKeyPair, signTransaction } from './QubicService'
+import { renderGetPublicKey, renderSignTransaction } from './SnapService'
 import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from './ValidatorHelper'
 
 /**
