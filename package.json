@@ -10,14 +10,14 @@
     "deploy": "pnpm build && mm-snap manifest && pnpm publish",
     "test": "jest"
   },
-  "homepage": "https://github.com/qubic/qubic-mm-snap",
+  "homepage": "https://github.com/ardata-tech/qubic-connect",
   "author": "couch42 <developers@qubic.org>",
   "license": "Qubic's Anti Military License",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qubic/qubic-mm-snap.git"
+    "url": "https://github.com/ardata-tech/qubic-connect.git"
   },
-  "bugs": "https://github.com/qubic/qubic-mm-snap/issues",
+  "bugs": "https://github.com/ardata-tech/qubic-connect/issues",
   "files": [
     "dist/",
     "logo.svg",

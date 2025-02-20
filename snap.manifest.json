@@ -4,10 +4,10 @@
   "proposedName": "Qubic Connect",
   "repository": {
     "type": "git",
-    "url": "https://github.com/qubic/qubic-mm-snap.git"
+    "url": "https://github.com/ardata-tech/qubic-connect.git"
   },
   "source": {
-    "shasum": "ZzZizYZLg+6jfaCv3Q5jrrjjhOMQ0ZY9QdteJZMj0iM=",
+    "shasum": "cgbNDHgU0QHmoxT8SyEprqM0uuJQKN34hjhfbDyN4So=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
