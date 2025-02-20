@@ -11,18 +11,16 @@
     "test": "jest"
   },
   "homepage": "https://github.com/ardata-tech/qubic-connect",
-  "author": "couch42 <developers@qubic.org>",
-  "license": "Qubic's Anti Military License",
+  "author": "apquinit <alex@ardata.tech>",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/ardata-tech/qubic-connect.git"
   },
   "bugs": "https://github.com/ardata-tech/qubic-connect/issues",
-  "files": [
-    "dist/",
-    "logo.svg",
-    "snap.manifest.json"
-  ],
+  "devDependencies": {
+    "jest": "^29.7.0"
+  },
   "dependencies": {
     "@babel/runtime": "7.21.5",
     "@metamask/key-tree": "7.0.0",
@@ -31,7 +29,12 @@
     "@qubic-lib/qubic-ts-library": "0.1.2",
     "qubic-ts-library": "0.1.2"
   },
-  "devDependencies": {
-    "jest": "^29.7.0"
-  }
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist/",
+    "logo.svg",
+    "snap.manifest.json"
+  ]
 }
