@@ -1,8 +1,8 @@
-import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper'
 import Crypto from '@qubic-lib/qubic-ts-library/dist/crypto'
-import { generateKeyPair } from './qubic'
+import { QubicHelper } from '@qubic-lib/qubic-ts-library/dist/qubicHelper'
+import { renderGetPublicKey, renderSignTransaction } from './SnapService'
+import { generateKeyPair, generateKeyPairFromPrivateKey } from './QubicService'
 import { assertInput, assertConfirmation, assertIsString, assertIsInt, assertIsBoolean } from './utils'
-import { renderGetPublicKey, renderSignTransaction } from './ui'
 
 /**
  * Handle incoming JSON-RPC requests from the dapp, sent through the
@@ -64,7 +64,7 @@ export const onRpcRequest = async ({ origin, request }) => {
 
       qCrypto.K12(toSign, digest, qHelper.DIGEST_LENGTH)
 
-      const idPackage = await qHelper.createIdPackage(privateKey)
+      const idPackage = await generateKeyPairFromPrivateKey(privateKey)
       const signedTx = qCrypto.schnorrq.sign(idPackage.privateKey, idPackage.publicKey, digest)
       const signedTxBase64 = btoa(String.fromCharCode(...signedTx))
 
