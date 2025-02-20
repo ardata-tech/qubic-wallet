@@ -32,11 +32,9 @@ pnpm start
 
 ## Using the snap
 
-The production snap is available as Snap ID `npm:@qubic-lib/qubic-mm-snap`.
-
 The locally started snap is available as Snap ID `local:http://localhost:8081`.
 
-See the [RPC API](./RPC.md) for more information on how to interact with the snap.
+See the [RPC API](./docs/RPC.md) for more information on how to interact with the snap.
 
 
 ## Publish
@@ -48,6 +46,3 @@ publish with.
 npm run build
 npm publish --access public
 ```
-
-## LICENSE
-All Qubic Software is licensed unter the Anti Military License: https://github.com/qubic-network/license

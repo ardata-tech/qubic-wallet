@@ -1,5 +1,5 @@
 {
-  "name": "@qubic-lib/qubic-mm-snap",
+  "name": "@ardata-tech/qubic-connect",
   "version": "0.0.3",
   "description": "Manage Qubic assets and connect to Qubic apps with MetaMask.",
   "main": "src/index.js",

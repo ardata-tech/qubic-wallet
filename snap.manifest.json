@@ -7,12 +7,12 @@
     "url": "https://github.com/qubic/qubic-mm-snap.git"
   },
   "source": {
-    "shasum": "aKD9Mw26ImLm1LVnBAhMoqpLrSxf7u3vTew/QtvmFN4=",
+    "shasum": "ZzZizYZLg+6jfaCv3Q5jrrjjhOMQ0ZY9QdteJZMj0iM=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "logo.svg",
-        "packageName": "@qubic-lib/qubic-mm-snap",
+        "packageName": "@ardata-tech/qubic-connect",
         "registry": "https://registry.npmjs.org"
       }
     }
