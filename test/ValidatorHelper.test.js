@@ -5,11 +5,10 @@ import {
   assertIsString,
   assertIsBoolean,
   assertIsInt,
-  assertConfirmation,
-  base26
-} from '../src/utils';
+  assertConfirmation
+} from '../src/ValidatorHelper';
 
-describe('Utility Functions', () => {
+describe('ValidatorHelper Functions', () => {
   test('assertInput throws error on falsy input', () => {
     expect(() => assertInput(null)).toThrow({ code: -32000, message: 'Invalid input.' });
   });
