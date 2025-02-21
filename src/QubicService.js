@@ -38,7 +38,7 @@ export const generateKeyPair = async (accountIndex) => {
   const privateKeyBase26 = qubic.utils.hexToBase26(newAccount.privateKey)
 
   // use QubicHelper to get public key
-  const idPack = await qubic.identity.createIdPackage(privateKeyBase26);
+  const idPack = await qubic.identity.createIdentity(privateKeyBase26);
 
   return {
     publicKey: idPack.publicKey,
