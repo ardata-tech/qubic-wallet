@@ -14,20 +14,19 @@ npm add @qubic-lib/qubic-mm-snap
 Install the latest version of the Snaps CLI
 
 ```bash
-pnpm setup
-pnpm add -g @metamask/snaps-cli
+npm install -g @metamask/snaps-cli
 ```
 
 Install the dependencies
 
 ```bash
-pnpm i
+npm i
 ```
 
 Build and start the local development server
 
 ```bash
-pnpm start
+npm start
 ```
 
 ## Using the snap
