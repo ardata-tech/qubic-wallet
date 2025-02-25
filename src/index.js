@@ -26,6 +26,7 @@ export const onRpcRequest = async ({ origin, request }) => {
 
       // Generate a new key pair
       const { publicId } = await generateKeyPair(accountIdx)
+      console.log('publicId', publicId)
 
       // If the user needs to confirm the request, render the confirmation UI
       if (confirm) {
@@ -68,18 +69,21 @@ export const onRpcRequest = async ({ origin, request }) => {
       // Generate a new key pair
       const { privateKey } = await generateKeyPair(accountIdx)
 
-      // Prepare the transaction data
-      const transactionData = tx.slice(0, offset)
+      // Prepare the transaction data - IGNORE THIS LINE, JUST USE FOR REFERENCE
+      // const transactionData = tx.slice(0, offset)
+
+      // Create transaction
 
       // Sign the transaction
       const signedTransaction = await signTransaction(transactionData, privateKey)
 
-      // Convert the signed transaction to base64
-      const signedTransactionBase64 = btoa(String.fromCharCode(...signedTransaction))
+      // Encode the transaction
+
+      // Broadcast the transaction
 
       // Return the signed transaction
       return {
-        signedTransaction: signedTransactionBase64
+        signedTransaction: signedTransaction
       }
     }
 
