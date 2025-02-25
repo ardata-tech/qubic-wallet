@@ -22,7 +22,7 @@
     "jest": "^29.7.0"
   },
   "dependencies": {
-    "@ardata-tech/qubic-js": "^0.1.10",
+    "@ardata-tech/qubic-js": "^0.2.7",
     "@babel/runtime": "7.21.5",
     "@metamask/key-tree": "7.0.0",
     "@metamask/snaps-cli": "6.2.1",

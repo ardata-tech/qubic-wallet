@@ -47,6 +47,19 @@
         alert('Problem happened: ' + err.message || err)
       }
     }
+
+    // EIP-6963 MetaMask Flask detection
+    window.addEventListener("eip6963:announceProvider", (event) => {
+      const providerDetail = event.detail;
+
+      if (providerDetail.info.rdns === "io.metamask.flask") {
+        console.log("MetaMask Flask successfully detected!");
+      } else {
+        console.error("Please install MetaMask Flask!");
+      }
+    });
+
+    window.dispatchEvent(new Event("eip6963:requestProvider"));
   </script>
 </body>
 </html>
