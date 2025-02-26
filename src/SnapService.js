@@ -19,7 +19,7 @@ export function generateTransaction(host, transactionData) {
   const toAddresss = transactionData.to
   const fromAddresss = transactionData.from;
   const amount = transactionData.amount;
-  
+
   return snap.request({
     method: "snap_dialog",
     params: {
@@ -56,7 +56,7 @@ export function renderSignTransaction(host) {
     params: {
       type: 'confirmation',
       content: panel([
-        heading('Sign transaction'),
+        heading('Sign Transaction'),
         text(host),
         divider(),
         // copyable(message)
