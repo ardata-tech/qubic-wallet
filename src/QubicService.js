@@ -1,4 +1,4 @@
-import { getBIP44AddressKeyDeriver } from '@metamask/key-tree'
+import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
 import Qubic from "@ardata-tech/qubic-js";
 
 // Singleton Qubic instance
@@ -13,29 +13,34 @@ const getQubicInstance = () => {
     });
   }
   return qubicInstance;
-}
+};
+
+export const createTransaction = async ({ to, from, amount, tick }) => {
+  const qubic = getQubicInstance();
+  return await qubic.transaction.createTransaction(from, to, amount, tick);
+};
 
 export const generateKeyPair = async (accountIndex) => {
   // Get the Qubic instance
   const qubic = getQubicInstance();
 
   // Set coin type
-  const coinType = 83293 // 1 for testing
+  const coinType = 83293; // 1 for testing
 
   // Get the BIP44 node
   const bip44Node = await snap.request({
-    method: 'snap_getBip44Entropy',
+    method: "snap_getBip44Entropy",
     params: { coinType },
-  })
+  });
 
   // Get the key deriver function
-  const deriveAccountAddress = await getBIP44AddressKeyDeriver(bip44Node)
+  const deriveAccountAddress = await getBIP44AddressKeyDeriver(bip44Node);
 
   // Derive the new account, index starts with 0
-  const newAccount = await deriveAccountAddress(accountIndex)
+  const newAccount = await deriveAccountAddress(accountIndex);
 
   // Convert the private key to base26
-  const privateKeyBase26 = qubic.utils.hexToBase26(newAccount.privateKey)
+  const privateKeyBase26 = qubic.utils.hexToBase26(newAccount.privateKey);
 
   // use QubicHelper to get public key
   const identity = await qubic.identity.createIdentity(privateKeyBase26);
@@ -44,32 +49,38 @@ export const generateKeyPair = async (accountIndex) => {
     publicKey: identity.publicKey,
     privateKey: identity.privateKey,
     publicId: identity.publicId,
-  }
-}
+  };
+};
 
 export const generateKeyPairFromPrivateKey = async (privateKey) => {
   // Get the Qubic instance
   const qubic = getQubicInstance();
 
   // Convert the private key to base26
-  const privateKeyBase26 = qubic.utils.hexToBase26(privateKey)
+  const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
 
   // Create an identity package from the private key
-  const identity = await qubic.identity.createIdentityFromPrivateKey(privateKeyBase26);
+  const identity = await qubic.identity.createIdentityFromPrivateKey(
+    privateKeyBase26
+  );
 
   return {
     publicKey: identity.publicKey,
     privateKey: identity.privateKey,
     publicId: identity.publicId,
-  }
-}
+  };
+};
 
 export const signTransaction = async (transactionData, privateKey) => {
   // Get the Qubic instance
   const qubic = getQubicInstance();
 
   // Sign the transaction data
-  const signedTransaction = await qubic.identity.signTransaction(transactionData, privateKey);
 
+  const signedTransaction = await qubic.transaction.signTransaction(
+    transactionData,
+    privateKey
+  );
   return signedTransaction;
-}
+};
+
