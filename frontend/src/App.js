@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import QubicWallet from './pages/QubicWallet/index.jsx';
 

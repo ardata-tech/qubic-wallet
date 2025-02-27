@@ -1,11 +1,67 @@
 @import "../../styles/constant.scss";
-
 .qubic-wallet {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-    background-color: $primary-color;
-    color: $color-white;
+    background-image: url("../../assets/bg/qubic-wall.png");
+    background-repeat: no-repeat;
+
+    &__qubic-logo{
+        height: 57.55px;
+        width: 33.62px;
+        gap: 4px;
+    }
+
+    &__qubic-log-label{
+       font-size: 50px;
+       font-weight: 500;
+       letter-spacing: -7%;
+       margin-left: 8px;
+       font-family: Poppins-Regular;
+    }
+
+    &__qubic-log-label-connect{
+       font-size: 50px;
+       font-weight: 500;
+       letter-spacing: -7%;
+       margin-left: 8px;
+       background:  #CCFCFF;
+       font-family: Poppins-Regular;
+    }
+
+   
+
+    &__input{
+        width: 100%;
+        border: 1px solid #11192780;
+        border-radius: 6px;
+        height: 56px;
+    }
+
+    &__header-divider{
+        margin-top: 40px;
+        margin-bottom: 20px;
+        font-size: 20px;
+        line-height: 24.2px;
+        font-weight: 600;
+        font-family: Inter;
+        color: #111927;
+    }
+}
+
+.input-label{
+
+    margin-top: 12px;
+    margin-bottom: 12px;
+   
+    &__label{
+        font-family: Inter-Thin;
+        font-weight: 600;
+        font-size: 15px;
+        line-height: 18.15px;
+        letter-spacing: -2%;
+        color: #1119279E;
+    }
 }
