@@ -1,6 +1,8 @@
 import VerticalStack from "../../component/VertialStack";
 import HorizontalStack from "../../component/HorizontalStack";
 import qubicLogo from "../../assets/img/qubic-logo.png";
+import Button from "../../component/Button";
+import Input from "../../component/Input";
 import "./index.scss";
 
 const QubicWallet = () => {
@@ -39,11 +41,11 @@ const QubicWallet = () => {
             <div className="qubic-wallet__qubic-log-label-connect">connect</div>
           </HorizontalStack>
 
-          <div style={{ widthL:'218px', display: "flex", alignItems: "center", justifyContent:"space-around" }}>
-            <span>Tick:</span>
-            <span style={{marginLeft:"8px", marginRight:'8px'}}>20,144,178</span>
-            <span>(125s)</span>
-          </div>
+          <HorizontalStack className={"tick-section"}>
+            <span className="tick-section__tick">Tick:</span>
+            <span className="tick-section__value">20,144,178</span>
+            <span className="tick-section__second">(125s)</span>
+          </HorizontalStack>
         </div>
         <form action={search}>
           <div className="qubic-wallet__header-divider">Wallet Details</div>
@@ -75,6 +77,7 @@ const QubicWallet = () => {
                 <input
                   className="qubic-wallet__input"
                   name="destinationAddress"
+                  placeholder="to Address"
                 />
               </VerticalStack>
             </div>
@@ -93,6 +96,11 @@ const QubicWallet = () => {
               </VerticalStack>
             </div>
           </VerticalStack>
+
+          <HorizontalStack className="horizontal-stack-button-container">
+            <Button type="bordered" caption={"Reset"} />
+            <Button caption={"Send"} />
+          </HorizontalStack>
         </form>
       </div>
     </div>

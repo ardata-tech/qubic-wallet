@@ -1,0 +1,37 @@
+.input-container {
+  position: relative;  // So the icon can be placed on top of the input field
+ 
+}
+
+input {
+  padding: 10px 30px 10px 10px;  // Add padding to the input to give space for the icon
+  width: 100%;  // Make input take full width
+  transition: all 0.3s ease;  // Smooth transition
+    border: 1px solid #11192780;
+    border-radius: 6px;
+    height: 56px;
+      font-size: 17px;
+        color: #11192766;
+        font-weight: 400;
+        line-height: 20.57px;
+}
+
+.edit-icon {
+  position: absolute;  // Position it at the end of the input
+  right: 0px;  // Adjust position on the right
+  top: 50%;  // Center vertically
+  transform: translateY(-50%);  // Correct vertical alignment
+  cursor: pointer;  // Make it clickable
+  font-size: 18px;  // Icon size
+  color: #3498db;  // Icon color
+  transition: color 0.3s ease;  // Smooth transition for hover effect
+
+  &:hover {
+    color: #2980b9;  // Change icon color on hover
+  }
+}
+
+input:disabled {
+  background-color: #f0f0f0;  // Change background color when input is disabled
+  cursor: not-allowed;  // Show disabled cursor
+}

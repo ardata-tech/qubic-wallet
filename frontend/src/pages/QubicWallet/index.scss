@@ -31,13 +31,15 @@
        font-family: Poppins-Regular;
     }
 
-   
-
     &__input{
         width: 100%;
         border: 1px solid #11192780;
         border-radius: 6px;
         height: 56px;
+        font-size: 17px;
+        color: #11192766;
+        font-weight: 400;
+        line-height: 20.57px;
     }
 
     &__header-divider{
@@ -63,5 +65,32 @@
         line-height: 18.15px;
         letter-spacing: -2%;
         color: #1119279E;
+    }
+}
+
+.horizontal-stack-button-container{
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 3rem;
+}
+
+.tick-section{
+    flex-wrap: wrap;
+    gap: 8px;
+
+    &__tick{
+        font-family: Inter;
+        font-weight: 600;
+        font-size: 20px;
+        line-height: 24.2px;
+        letter-spacing: -2%;
+    }
+    &__value{
+       @extend .tick-section__tick;
+       color: #11192766;
+    }
+    &__second{
+        @extend .tick-section__tick;
+        color: #BE7676;
     }
 }

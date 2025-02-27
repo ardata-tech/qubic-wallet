@@ -1,7 +1,11 @@
 import "./index.scss";
 
 
-const HorizontalStack = ({ children }) => {
-    return <div className="horizontal-stack">{children}</div>;
+const HorizontalStack = ({ children, className, width }) => {
+    return (
+      <div className={`${"horizontal-stack"} ${className}`}>
+        {children}
+      </div>
+    );
 };
 export default HorizontalStack
