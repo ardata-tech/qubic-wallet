@@ -203,8 +203,8 @@ module.exports = function (webpackEnv) {
     entry: paths.appIndexJs,
     output: {
       // The build folder.
-      //path: paths.appBuild,
-      path: path.resolve(__dirname, "../../"),
+      path: paths.appBuild,
+      //path: path.resolve(__dirname, "../../"), //experiment only
       // Add /* filename */ comments to generated require()s in the output.
       pathinfo: isEnvDevelopment,
       // There will be one main bundle, and one file per asynchronous chunk.
@@ -302,6 +302,18 @@ module.exports = function (webpackEnv) {
       modules: ["node_modules", paths.appNodeModules].concat(
         modules.additionalModulePaths || []
       ),
+      fallback: {
+        "fs": false,
+        "tls": false,
+        "net": false,
+        "path": false,
+        "zlib": false,
+        "http": false,
+        "https": false,
+        "stream": false,
+        "crypto": false,
+        "crypto-browserify": require.resolve('crypto-browserify'), //if you want to use this module also don't forget npm i crypto-browserify 
+      },
       // These are the reasonable defaults supported by the Node ecosystem.
       // We also include JSX as a common component filename extension to support
       // some tools, although we do not recommend using it, see:
