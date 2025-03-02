@@ -3,9 +3,9 @@ import VerticalStack from "../../component/VertialStack";
 import HorizontalStack from "../../component/HorizontalStack";
 import qubicLogo from "../../assets/img/qubic-logo.png";
 import Button from "../../component/Button";
-import Modal from "../../component/Modal";
 import Qubic from "@ardata-tech/qubic-js";
 import "./index.scss";
+import { ToastContainer, toast } from "react-toastify";
 
 const QubicWallet = () => {
   const [tickValue, setTickValue] = useState(0);
@@ -17,7 +17,6 @@ const QubicWallet = () => {
   const [executionTick, setExecutionTick] = useState();
   const [connected, setConnected] = useState(false);
   const [lockSendTransaction, setLockSendTransaction] = useState(false);
-  //const [snapId, setSnapId] = useState();
 
   const snapId = `local:${window.location.href}`;
   const qubic = new Qubic({
@@ -26,91 +25,17 @@ const QubicWallet = () => {
   });
 
   useEffect(() => {
-    connect()
+    connect();
   }, []);
 
   useEffect(() => {
     if (connected) {
-      getPubId();
-      getTickData();
+      fetchMetamaskPublicId();
+      fetchQubicLatestTick();
     }
   }, [connected]);
 
-  const getTickData = async () => {
-    const latestTick = await qubic.chain.getLatestTick();
-    if (
-      Number(latestTick) == NaN ||
-      latestTick == undefined ||
-      latestTick == null
-    ) {
-      throw new Error("Invalid tick");
-    }
-    setTickValue(latestTick);
-    setExecutionTick(latestTick + 10);
-  };
-
-  const processTransaction = async () => {
-    setLockSendTransaction(true);
-    //todo:
-    //perform validation
-    const hasFromAddress = fromAddress && fromAddress.length > 0;
-    const hasEnoughBalance = balance && balance > 0 && balance >= amountToSend;
-    const isAmountValid =
-      amountToSend && Number.isInteger(amountToSend) && amountToSend > 0;
-    const hasToAddress = toAddress && toAddress.length > 0 && toAddress !== fromAddress;
-
-    if (
-      !hasFromAddress ||
-      !hasEnoughBalance ||
-      !isAmountValid ||
-      !hasToAddress
-    ) {
-      setLockSendTransaction(false);
-      alert(`Invalid Transaction, please fill in all required fields`);
-      return;
-    }
-
-    //get latest tick
-    await getTickData();
-
-    const params = {
-      accountIdx: 0,
-      confirm: true,
-      to: toAddress,
-      amount: amountToSend,
-      tick: executionTick + 10,
-    };
-
-    //signed transaction
-    const encodedTransaction = await window.ethereum.request({
-      method: "wallet_invokeSnap",
-      params: {
-        snapId,
-        request: {
-          method: "createTransactionAndSign",
-          params,
-        },
-      },
-    });
-
-    //call qubic js broadcast transaction
-    qubic.transaction
-      .broadcastTransaction(encodedTransaction)
-      .then((result) => {
-        alert(JSON.stringify(result));
-        setTimeout(async () => {
-          await getBalance(fromAddress);
-          setLockSendTransaction(false);
-        }, 5000);
-      })
-      .catch((err) => {
-        console.log("err", err.message);
-        alert(err.message);
-      });
-  };
-
   const connect = async () => {
-    //setConnected(true);
     try {
       await window.ethereum.request({
         method: "wallet_requestSnaps",
@@ -119,21 +44,110 @@ const QubicWallet = () => {
       setConnected(true);
     } catch (error) {
       console.log("connect error: ", error);
+      notifyError(error.message);
       setConnected(false);
     }
   };
 
-  const getBalance = async (fromAddress) => {
+  const notify = (message) =>
+    toast(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const notifyError = (message) =>
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: false,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
+
+  const disabledWalletDetails =
+    !connected || !fromAddress || Number.isNaN(balance) || balance == 0 || Number(balance) < Number(amountToSend);
+
+  const fetchQubicLatestTick = async () => {
+    const latestTick = await qubic.chain.getLatestTick();
+    if (isNaN(Number(latestTick))) {
+      throw new Error("Invalid tick");
+    }
+    setTickValue(latestTick);
+    setExecutionTick(Number(latestTick) + 10);
+  };
+
+  const hasValidTransactionDetails = () => {
+    const hasValidFromAddress = fromAddress && fromAddress.length > 0;
+    const hasValidToAddress = toAddress && toAddress.length > 0 && toAddress !== fromAddress;
+    const isAmountValid = Number.isInteger(amountToSend) && amountToSend > 0;
+    const hasSufficientBalance = balance >= amountToSend;
+    return hasValidFromAddress && hasValidToAddress && isAmountValid && hasSufficientBalance;
+  };
+
+  const handleSendTransaction = async () => {
+    setLockSendTransaction(true);
+
+    if (!hasValidTransactionDetails()) {
+      notifyError("Invalid Transaction, please fill in all required fields");
+      setLockSendTransaction(false);
+      return;
+    }
+
     try {
-      const balance = await qubic.identity.getBalanceByAddress(fromAddress);
-      setBalance(balance.balance.balance);
-    } catch (err) {
-      console.error(err);
-      alert("Problem happened: " + err.message || err);
+      await fetchQubicLatestTick();
+      const txParams = {
+        accountIdx: 0,
+        confirm: true,
+        to: toAddress,
+        amount: amountToSend,
+        tick: executionTick + 10,
+      };
+      const encodedTransaction = await window.ethereum.request({
+        method: "wallet_invokeSnap",
+        params: {
+          snapId,
+          request: { method: "createTransactionAndSign", params: txParams },
+        },
+      });
+      await broadcastRpcTransaction(encodedTransaction);
+    } finally {
+      setLockSendTransaction(false);
     }
   };
 
-  async function getPubId() {
+  const broadcastRpcTransaction = async (encodedTransaction) => {
+    try {
+      const result = await qubic.transaction.broadcastTransaction(encodedTransaction);
+      setTimeout(async () => {
+        await fetchBalance(fromAddress);
+        setLockSendTransaction(false);
+      }, 5000);
+    } catch (error) {
+      console.error(error);
+      notifyError(error.message);
+    }
+  };
+
+  const fetchBalance = async (address) => {
+    try {
+      const { balance } = await qubic.identity.getBalanceByAddress(address);
+      console.log("balance", balance);
+      setBalance(balance.balance);
+    } catch (error) {
+      notifyError(`Problem happened: ${error.message || error}`);
+    }
+  };
+
+  const fetchMetamaskPublicId = async () => {
     try {
       const publicId = await window.ethereum.request({
         method: "wallet_invokeSnap",
@@ -149,23 +163,22 @@ const QubicWallet = () => {
         },
       });
       setFromAddress(publicId);
-
-      //call getBalance
-      await getBalance(publicId);
-    } catch (err) {
-      console.error(err);
-      alert("Problem happened: " + err.message || err);
+      fetchBalance(publicId);
+    } catch (error) {
+      console.error("Error fetching public ID:", error);
+      notifyError(`An error occurred: ${error.message || error}`);
     }
-  }
-
-  const reset = () => {
-    setToAddress("");
-    setAmountToSend("");
   };
 
+  const resetForm = () => {
+    setToAddress("");
+    setAmountToSend(0);
+  };
 
   return (
     <div className="qubic-wallet">
+      <ToastContainer />
+
       <div style={{ width: "50%" }}>
         <div
           style={{
@@ -195,14 +208,11 @@ const QubicWallet = () => {
           </HorizontalStack>
 
           <HorizontalStack className={"tick-section"}>
-            {tickValue > 0 && <span className="tick-section__tick">Tick:</span>}
-
-            {tickValue > 0 && (
-              <span className="tick-section__value">{tickValue}</span>
-            )}
-            {tickSeconds > 0 && (
-              <span className="tick-section__second">({tickSeconds})</span>
-            )}
+            <span className="tick-section__tick">Tick:</span>
+            <span className="tick-section__value">{tickValue || ""}</span>
+            <span className="tick-section__second">
+              {tickSeconds ? `(${tickSeconds})` : ""}
+            </span>
           </HorizontalStack>
         </div>
         <div className="qubic-wallet__header-divider">Wallet Details</div>
@@ -233,71 +243,69 @@ const QubicWallet = () => {
           </div>
         </VerticalStack>
 
-        {balance > 0 && (
-          <>
-            <div className="qubic-wallet__header-divider">Send Qubic</div>
+        <div className="qubic-wallet__header-divider">Send Qubic</div>
 
+        <VerticalStack>
+          <div className="input-label">
             <VerticalStack>
-              <div className="input-label">
-                <VerticalStack>
-                  <label className="input-label__label">
-                    Destination Address
-                  </label>
-                  <input
-                    className="qubic-wallet__input"
-                    name="destinationAddress"
-                    placeholder="to Address"
-                    onChange={(e) => setToAddress(e.target.value)}
-                  />
-                </VerticalStack>
-              </div>
-
-              <div className="input-label">
-                <VerticalStack>
-                  <label className="input-label__label">Amount</label>
-                  <input
-                    className="qubic-wallet__input"
-                    name="sendAmount"
-                    type="number"
-                    onChange={(e) => setAmountToSend(Number(e.target.value))}
-                  />
-                </VerticalStack>
-              </div>
-
-              <div className="input-label">
-                <VerticalStack>
-                  <label className="input-label__label">Execution Tick</label>
-                  <input
-                    className="qubic-wallet__input"
-                    name="executionTick"
-                    value={executionTick}
-                    placeholder=""
-                    type="number"
-                    onChange={(e) => {
-                      if (lockSendTransaction) {
-                        setLockSendTransaction(false);
-                      }
-                      setExecutionTick(Number(e.target.value));
-                    }}
-                  />
-                </VerticalStack>
-              </div>
+              <label className="input-label__label">Destination Address</label>
+              <input
+                disabled={disabledWalletDetails}
+                className="qubic-wallet__input"
+                name="destinationAddress"
+                placeholder="to Address"
+                onChange={(e) => setToAddress(e.target.value)}
+              />
             </VerticalStack>
+          </div>
 
-            <HorizontalStack className="horizontal-stack-button-container">
-              <Button
-                type="bordered"
-                caption={"Reset"}
-                onClick={() => reset()}
+          <div className="input-label">
+            <VerticalStack>
+              <label className="input-label__label">Amount</label>
+              <input
+                disabled={disabledWalletDetails}
+                className="qubic-wallet__input"
+                name="sendAmount"
+                type="number"
+                onChange={(e) => setAmountToSend(Number(e.target.value))}
               />
-              <Button
-                disabled={lockSendTransaction}
-                caption={"Send"}
-                onClick={() => processTransaction()}
+            </VerticalStack>
+          </div>
+
+          <div className="input-label">
+            <VerticalStack>
+              <label className="input-label__label">Execution Tick</label>
+              <input
+                disabled={disabledWalletDetails}
+                className="qubic-wallet__input"
+                name="executionTick"
+                value={executionTick}
+                placeholder=""
+                type="number"
+                onChange={(e) => {
+                  if (lockSendTransaction) {
+                    setLockSendTransaction(false);
+                  }
+                  setExecutionTick(Number(e.target.value));
+                }}
               />
-            </HorizontalStack>
-          </>
-        )}
+            </VerticalStack>
+          </div>
+        </VerticalStack>
+
+        <HorizontalStack className="horizontal-stack-button-container">
+          <Button
+            disabled={disabledWalletDetails}
+            type="bordered"
+            caption={"Reset"}
+            onClick={() => resetForm()}
+          />
+          <Button
+            disabled={lockSendTransaction || disabledWalletDetails}
+            caption={"Send"}
+            onClick={() => handleSendTransaction()}
+          />
+        </HorizontalStack>
       </div>
     </div>
   );
