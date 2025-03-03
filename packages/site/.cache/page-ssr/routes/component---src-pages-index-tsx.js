@@ -11602,7 +11602,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   ConnectButton: () => (/* binding */ ConnectButton),
 /* harmony export */   HeaderButtons: () => (/* binding */ HeaderButtons),
 /* harmony export */   InstallFlaskButton: () => (/* binding */ InstallFlaskButton),
-/* harmony export */   QubicResetButton: () => (/* binding */ QubicResetButton),
+/* harmony export */   QubicBorderedtButton: () => (/* binding */ QubicBorderedtButton),
+/* harmony export */   QubicSendButton: () => (/* binding */ QubicSendButton),
 /* harmony export */   ReconnectButton: () => (/* binding */ ReconnectButton),
 /* harmony export */   SendHelloButton: () => (/* binding */ SendHelloButton)
 /* harmony export */ });
@@ -11617,9 +11618,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const QubicResetButton = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button.withConfig({
-  displayName: "Buttons__QubicResetButton"
-})(["width:117;height:55;justify-content:space-between;border-radius:6px;border-width:1px;padding-top:17px;padding-right:18px;padding-bottom:17px;padding-left:18px;font-family:Inter;font-weight:600;font-size:19px;line-height:22.99px;letter-spacing:-2%;"]);
+const QubicSendButton = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button.withConfig({
+  displayName: "Buttons__QubicSendButton"
+})(["border:none;height:55px;min-width:127px;font-size:19px;font-weight:600;line-height:22.29px;letter-spacing:-2%;background-color:#ccfcff;color:#111927;border-radius:6px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 8px rgba(0,0,0,0.2);&:hover{border-color:#2980b9;transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,0.3);}"]);
+const QubicBorderedtButton = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].button.withConfig({
+  displayName: "Buttons__QubicBorderedtButton"
+})(["height:55px;width:127px;font-size:19px;font-weight:600;line-height:22.29px;letter-spacing:-2%;color:#111927;border-radius:6px;cursor:pointer;transition:all 0.3s ease;box-shadow:0 4px 8px rgba(0,0,0,0.2);&:hover{border-color:#2980b9;transform:scale(1.05);box-shadow:0 6px 12px rgba(0,0,0,0.3);}background-color:white !important;border:1px solid #111927;"]);
 const Link = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].a.withConfig({
   displayName: "Buttons__Link"
 })(["display:flex;align-self:flex-start;align-items:center;justify-content:center;font-size:", ";border-radius:", ";border:1px solid ", ";background-color:", ";color:", ";text-decoration:none;font-weight:bold;padding:1rem;cursor:pointer;transition:all 0.2s ease-in-out;&:hover{background-color:transparent;border:1px solid ", ";color:", ";}", "{width:100%;box-sizing:border-box;}"], props => props.theme.fontSizes.small, props => props.theme.radii.button, props => {
@@ -11949,12 +11953,16 @@ const LabelInputContainer = styled_components__WEBPACK_IMPORTED_MODULE_2__["defa
 const InputWithLabel = ({
   label,
   placeholder,
-  value
+  value,
+  disabled = false,
+  type = "text"
 }) => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)(LabelInputContainer, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_InputLabel__WEBPACK_IMPORTED_MODULE_0__.InputLabel, {
       children: label
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(Input, {
+      type: type,
+      disabled: disabled,
       placeholder: placeholder,
       value: value
     })]
@@ -12113,7 +12121,7 @@ __webpack_require__.r(__webpack_exports__);
 
 const SectionContainer = styled_components__WEBPACK_IMPORTED_MODULE_0__["default"].div.withConfig({
   displayName: "SectionContainer"
-})(["width:1419;height:229;top:266.34px;left:154.5px;border-radius:20px;gap:25px;width:80%;margin-bottom:25px;"]);
+})(["width:1419;height:229;top:266.34px;left:154.5px;border-radius:20px;gap:25px;width:80%;"]);
 
 /***/ }),
 
@@ -12279,18 +12287,25 @@ __webpack_require__.r(__webpack_exports__);
 const TransactionSection = ({
   destinationValue,
   amountValue,
-  tickValue
+  tickValue,
+  disabled = false
 }) => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_SectionContainer__WEBPACK_IMPORTED_MODULE_0__.SectionContainer, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_SectionTitle__WEBPACK_IMPORTED_MODULE_1__.SectionTitle, {
       children: "Send Qubic"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Input__WEBPACK_IMPORTED_MODULE_2__.InputWithLabel, {
+      type: "text",
+      disabled: disabled,
       label: "Destination Details",
       value: destinationValue
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Input__WEBPACK_IMPORTED_MODULE_2__.InputWithLabel, {
+      type: "number",
+      disabled: disabled,
       label: "Amount",
       value: amountValue
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Input__WEBPACK_IMPORTED_MODULE_2__.InputWithLabel, {
+      type: "number",
+      disabled: disabled,
       label: "Execution Tick",
       value: tickValue
     })]
@@ -12321,15 +12336,20 @@ __webpack_require__.r(__webpack_exports__);
 
 const WalletDetailsSection = ({
   address,
-  balance
+  balance,
+  disabled = false
 }) => {
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(_SectionContainer__WEBPACK_IMPORTED_MODULE_0__.SectionContainer, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_SectionTitle__WEBPACK_IMPORTED_MODULE_1__.SectionTitle, {
       children: "Wallet Details"
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Input__WEBPACK_IMPORTED_MODULE_2__.InputWithLabel, {
+      type: "text",
+      disabled: disabled,
       label: "Address ID",
       value: address
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_Input__WEBPACK_IMPORTED_MODULE_2__.InputWithLabel, {
+      type: "number",
+      disabled: disabled,
       label: "Balance",
       value: balance
     })]
@@ -12355,8 +12375,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   InstallFlaskButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.InstallFlaskButton),
 /* harmony export */   MetaMask: () => (/* reexport safe */ _MetaMask__WEBPACK_IMPORTED_MODULE_4__.MetaMask),
 /* harmony export */   PoweredBy: () => (/* reexport safe */ _PoweredBy__WEBPACK_IMPORTED_MODULE_5__.PoweredBy),
+/* harmony export */   QubicBorderedtButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.QubicBorderedtButton),
 /* harmony export */   QubicInput: () => (/* reexport safe */ _QubicInput__WEBPACK_IMPORTED_MODULE_8__.QubicInput),
-/* harmony export */   QubicResetButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.QubicResetButton),
+/* harmony export */   QubicSendButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.QubicSendButton),
 /* harmony export */   ReconnectButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.ReconnectButton),
 /* harmony export */   SendHelloButton: () => (/* reexport safe */ _Buttons__WEBPACK_IMPORTED_MODULE_0__.SendHelloButton),
 /* harmony export */   SnapLogo: () => (/* reexport safe */ _SnapLogo__WEBPACK_IMPORTED_MODULE_6__.SnapLogo),
@@ -12400,14 +12421,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.esm.js");
-/* harmony import */ var _ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ardata-tech/qubic-js */ "../../node_modules/@ardata-tech/qubic-js/dist/index.js");
-/* harmony import */ var _ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components */ "./src/components/index.ts");
-/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../config */ "./src/config/index.ts");
-/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../hooks */ "./src/hooks/index.ts");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../utils */ "./src/utils/index.ts");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "../../node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.esm.js");
+/* harmony import */ var _ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ardata-tech/qubic-js */ "../../node_modules/@ardata-tech/qubic-js/dist/index.js");
+/* harmony import */ var _ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components */ "./src/components/index.ts");
+/* harmony import */ var _config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../config */ "./src/config/index.ts");
+/* harmony import */ var _hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../hooks */ "./src/hooks/index.ts");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../utils */ "./src/utils/index.ts");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "../../node_modules/react/jsx-runtime.js");
 
 
 
@@ -12416,77 +12439,179 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const WalletContainer = styled_components__WEBPACK_IMPORTED_MODULE_6__["default"].div.withConfig({
+
+const WalletContainer = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div.withConfig({
   displayName: "pages__WalletContainer"
-})(["display:flex;width:100%;flex-direction:column;justify-content:center;align-items:center;background-image:url(\"../assets/qubic_bg.svg\");background-size:cover;background-position:center;"]);
+})(["display:flex;flex-direction:column;justify-content:center;align-items:center;background-size:cover;background-position:center;height:100vh;background-image:url(../assets/qubic_bg.svg);background-size:cover;background-position:center;"]);
+const Header = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].header.withConfig({
+  displayName: "pages__Header"
+})(["display:flex;width:80%;height:75px;top:150px;left:155px;justify-content:space-between;margin-bottom:25px;"]);
+const QubicText = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].span.withConfig({
+  displayName: "pages__QubicText"
+})(["font-size:50px;font-weight:500;letter-spacing:-7%;margin-left:8px;font-family:Poppins-Regular;"]);
+const TickContainer = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div.withConfig({
+  displayName: "pages__TickContainer"
+})(["display:'flex',gap:'8px',justifyContent:'flex-start',width:'80%',marginBottom:'16px',"]);
 const Index = () => {
   const {
     error
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_3__.useMetaMaskContext)();
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useMetaMaskContext)();
   const {
     isFlask,
     snapsDetected,
     installedSnap
-  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_3__.useMetaMask)();
-  const requestSnap = (0,_hooks__WEBPACK_IMPORTED_MODULE_3__.useRequestSnap)();
-  const invokeSnap = (0,_hooks__WEBPACK_IMPORTED_MODULE_3__.useInvokeSnap)();
-  const qubic = new (_ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_0___default())({
+  } = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useMetaMask)();
+  const requestSnap = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useRequestSnap)();
+  const invokeSnap = (0,_hooks__WEBPACK_IMPORTED_MODULE_4__.useInvokeSnap)();
+  const {
+    0: tickValue,
+    1: setTickValue
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const {
+    0: tickSeconds,
+    1: setTickSeconds
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const {
+    0: balance,
+    1: setBalance
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const {
+    0: toAddress,
+    1: setToAddress
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('WIJBIFGHSKDFBFRKLUHZTAIVYMJDNJMKUBBMULXBUCRCVQFCZTJRNQXDOSDN');
+  const {
+    0: fromAddress,
+    1: setFromAddress
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const {
+    0: amountToSend,
+    1: setAmountToSend
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const {
+    0: executionTick,
+    1: setExecutionTick
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(0);
+  const {
+    0: identity,
+    1: setIdentity
+  } = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
+  const qubic = new (_ardata_tech_qubic_js__WEBPACK_IMPORTED_MODULE_1___default())({
     providerUrl: 'https://rpc.qubic.org',
     version: 1
   });
-  const isMetaMaskReady = (0,_utils__WEBPACK_IMPORTED_MODULE_4__.isLocalSnap)(_config__WEBPACK_IMPORTED_MODULE_2__.defaultSnapOrigin) ? isFlask : snapsDetected;
+  const isMetaMaskReady = (0,_utils__WEBPACK_IMPORTED_MODULE_5__.isLocalSnap)(_config__WEBPACK_IMPORTED_MODULE_3__.defaultSnapOrigin) ? isFlask : snapsDetected;
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    console.log('isMetaMaskReady', isMetaMaskReady);
+    if (isMetaMaskReady && !identity) {
+      getIdentity();
+      fetchQubicLatestTick();
+      fetchBalance();
+    }
+  }, [isMetaMaskReady]);
+  const fetchBalance = async () => {
+    try {
+      const {
+        balance
+      } = await qubic.identity.getBalanceByAddress(identity.publicId);
+      console.log('balance', balance);
+      setBalance(balance.balance);
+    } catch (error) {
+      console.log(`Problem happened: ${error.message || error}`);
+    }
+  };
+  const fetchQubicLatestTick = async () => {
+    const latestTick = (await qubic.chain.getLatestTick()) || 0;
+    if (isNaN(Number(latestTick))) {
+      throw new Error('Invalid tick');
+    }
+    if (typeof latestTick === 'number' && latestTick > 0) {
+      setTickValue(latestTick !== null && latestTick !== void 0 ? latestTick : 0);
+      setExecutionTick(latestTick + 10);
+    }
+  };
+  const getIdentity = async () => {
+    const jsonString = await invokeSnap({
+      method: 'getPublicId'
+    });
+    const privateKey = JSON.parse(jsonString).privateKey;
+    const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
+    const identity = await qubic.identity.createIdentity(privateKeyBase26);
+    setIdentity(identity);
+  };
   const handleSendHelloClick = async () => {
     await invokeSnap({
       method: 'hello'
     });
   };
   const sendTransaction = async () => {
-    const jsonString = await invokeSnap({
-      method: 'getPublicId'
-    });
-    console.log('handleSendHiClick', jsonString);
-    const privateKey = JSON.parse(jsonString).privateKey;
-    console.log('handleSendHiClick privateKey', privateKey);
-    const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
-    console.log('handleSendHiClick privateKeyBase26', privateKeyBase26);
-    const identity = await qubic.identity.createIdentity(privateKeyBase26);
-    console.log('identity', {
-      publicKey: identity.publicKey,
-      privateKey: identity.privateKey,
-      publicId: identity.publicId
-    });
-    const to = 'WIJBIFGHSKDFBFRKLUHZTAIVYMJDNJMKUBBMULXBUCRCVQFCZTJRNQXDOSDN';
-    const amount = 100;
-    const tick = await qubic.chain.getLatestTick();
-    const transactionData = await qubic.transaction.createTransaction(identity.publicId, to, amount, tick + 10);
-    console.log('transactionData', transactionData);
+    await fetchQubicLatestTick();
+    const transactionData = await qubic.transaction.createTransaction(identity.publicId, toAddress, amountToSend, tickValue + 10);
     const signedTransaction = await qubic.transaction.signTransaction(transactionData, identity.privateKey);
-    console.log('signedTransaction', signedTransaction);
     const signedTransactionBase64 = btoa(String.fromCharCode(...signedTransaction));
-    console.log('signedTransactionBase64', signedTransactionBase64);
     const result = await qubic.transaction.broadcastTransaction(signedTransactionBase64);
     console.log('result', result);
+    await fetchBalance();
   };
-
-  // <ReconnectButton onClick={requestSnap} disabled={!installedSnap} />;
-
-  const Header = styled_components__WEBPACK_IMPORTED_MODULE_6__["default"].header.withConfig({
-    displayName: "pages__Header"
-  })(["display:flex;width:80%;height:75px;top:150px;left:155px;justify-content:space-between;"]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(WalletContainer, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(Header, {
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        children: "test"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
-        children: "button"
+  const disabledWalletDetails = !isMetaMaskReady || !fromAddress || Number.isNaN(balance) || balance == 0 || Number(balance) < Number(amountToSend);
+  const onReset = () => {
+    setToAddress('');
+    setAmountToSend(0);
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(WalletContainer, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(Header, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+        style: {
+          display: 'flex',
+          flexDirection: 'row'
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(QubicText, {
+          children: "qubic"
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(QubicText, {
+          children: "connect"
+        })]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.QubicSendButton, {
+          onClick: requestSnap,
+          children: "Connect MetaMask"
+        })
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.WalletDetailsSection, {
-      address: "0x...",
-      balance: 0
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components__WEBPACK_IMPORTED_MODULE_1__.TransactionSection, {
-      amountValue: 0,
-      destinationValue: "0x...",
-      tickValue: 0
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.WalletDetailsSection, {
+      disabled: disabledWalletDetails,
+      address: identity.publicId,
+      balance: balance
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.TransactionSection, {
+      disabled: disabledWalletDetails,
+      amountValue: amountToSend,
+      destinationValue: toAddress,
+      tickValue: tickValue + 10
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      style: {
+        display: 'flex',
+        gap: '8px',
+        justifyContent: 'flex-start',
+        width: '80%',
+        marginBottom: '16px'
+      },
+      children: ["Latest Tick: ", tickValue]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)("div", {
+      style: {
+        display: 'flex',
+        gap: '8px',
+        justifyContent: 'flex-start',
+        width: '80%'
+      },
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.QubicBorderedtButton, {
+          onClick: onReset,
+          children: "Reset"
+        })
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.QubicSendButton, {
+          disabled: disabledWalletDetails,
+          onClick: sendTransaction,
+          children: "Send"
+        })
+      })]
     })]
   });
 };

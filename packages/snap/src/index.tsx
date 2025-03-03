@@ -1,24 +1,6 @@
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 import { generateKeyPair } from './qubic/QubicService';
-
-// import {
-//   generateKeyPair,
-//   signTransaction,
-//   createTransaction,
-// } from './qubic/QubicService';
-
-
-// import { renderGetPublicKey, generateTransaction } from './qubic/SnapService';
-// import {
-//   assertInput,
-//   assertConfirmation,
-//   assertIsString,
-//   assertIsInt,
-//   assertIsBoolean,
-// } from './qubic/ValidatorHelper';
-
-
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
  *
@@ -35,32 +17,6 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
 }) => {
 
   switch (request.method) {
-    case 'hello':
-      return snap.request({
-        method: 'snap_dialog',
-        params: {
-          type: 'confirmation',
-          content: (
-            <Box>
-              <Text>
-                Hello, <Bold>{origin}</Bold>!
-              </Text>
-              <Text>
-                This custom confirmation is just for display purposes.
-              </Text>
-              <Text>
-                But you can edit the snap source code to make it do something,
-                if you want to!
-              </Text>
-            </Box>
-          ),
-        },
-      });
-    
-    
-    
-    case 'hi':
-      return 'hello world'
     case 'getPublicId': 
       // Extract the parameters from the request
       const response = await generateKeyPair(0);

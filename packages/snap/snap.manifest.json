@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "An example Snap written in TypeScript.",
-  "proposedName": "TypeScript Example",
+  "description": "Qubic Connect is a MetaMask extension that has Qubic capabilities such as public key derivation and transaction signing.",
+  "proposedName": "Qubic Connect",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "Pz7mzY8+9iEjD+NbrJd5AsbqzrSg8uUoAGPfqtVzUZ4=",
+    "shasum": "ch6Ux0sLzJRxMSabnCJnS9+5eCtA4z/MNy5+f3ILCpM=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",

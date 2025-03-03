@@ -148,7 +148,7 @@ const Index = () => {
       signedTransactionBase64,
     );
   
-    console.log('result', result);
+    console.log('broadcastTransaction result', result);
     await fetchBalance();
   };
 
@@ -177,7 +177,7 @@ const Index = () => {
       </Header>
       <WalletDetailsSection
         disabled={disabledWalletDetails}
-        address={identity.publicId}
+        address={identity?.publicId}
         balance={balance}
       />
       <TransactionSection
