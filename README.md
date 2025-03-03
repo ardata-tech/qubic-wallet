@@ -2,6 +2,12 @@
 
 Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
 
+## Prerequisites
+- MetaMask Flask installed
+- A text editor (for example, VS Code)
+- Node version 20.11 or later
+- Yarn
+
 ## Getting Started
 
 From the root of the project, install the project dependencies using Yarn:

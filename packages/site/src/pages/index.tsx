@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
-import Qubic from '@ardata-tech/qubic-js';
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -14,7 +15,6 @@ import {
   useMetaMaskContext,
   useRequestSnap,
 } from '../hooks';
-
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 
 const WalletContainer = styled.div`
@@ -81,7 +81,6 @@ const Index = () => {
     ? isFlask
     : snapsDetected;
 
-  
   useEffect(() => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
@@ -91,15 +90,14 @@ const Index = () => {
     }
   }, [isMetaMaskReady]);
 
-   const fetchBalance = async () => {
-     try {
-       const { balance } = await qubic.identity.getBalanceByAddress(identity.publicId);
-       console.log('balance', balance);
-       setBalance(balance.balance);
-     } catch (error:any) {
-       console.log(`Problem happened: ${error.message || error}`);
-     }
-   };
+  const fetchBalance = async () => {
+    try {
+      const { balance } = await qubic.identity.getBalanceByAddress(identity.publicId)
+        setBalance(balance.balance);
+      } catch (error:any) {
+        console.log(`Problem happened: ${error.message || error}`);
+      }
+    };
 
   const fetchQubicLatestTick = async () => {
     const latestTick = await qubic.chain.getLatestTick() || 0;
@@ -109,7 +107,7 @@ const Index = () => {
     if (typeof latestTick === 'number' && latestTick > 0) {
       setTickValue(latestTick ?? 0);
       setExecutionTick(latestTick + 10 );
-    } 
+    }
   };
 
   const getIdentity = async () => {
@@ -143,7 +141,7 @@ const Index = () => {
     const result = await qubic.transaction.broadcastTransaction(
       signedTransactionBase64,
     );
-  
+
     console.log('broadcastTransaction result', result);
     await fetchBalance();
   };
@@ -155,10 +153,10 @@ const Index = () => {
       balance == 0 ||
       Number(balance) < Number(amountToSend);
 
-   const onReset = () => {
-     setToAddress('');
-     setAmountToSend(0);
-   };
+    const onReset = () => {
+      setToAddress('');
+      setAmountToSend(0);
+    };
 
   return (
     <WalletContainer>
@@ -168,7 +166,7 @@ const Index = () => {
           <QubicText>connect</QubicText>
         </div>
         <div>
-          <QubicSendButton onClick={requestSnap}>Connect MetaMask</QubicSendButton>
+          <QubicSendButton onClick={requestSnap}>Connect</QubicSendButton>
         </div>
       </Header>
       <WalletDetailsSection
