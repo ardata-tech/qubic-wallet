@@ -5,10 +5,13 @@ import { SectionTitle } from './SectionTitle';
 import { InputWithLabel } from './Input'
 
 type ITransactionSection = {
-  disabled:boolean
+  disabled: boolean;
   destinationValue: string;
-  amountValue:number
-  tickValue:number
+  amountValue: number;
+  tickValue: number;
+  onChangeDestinationValue: (value: string) => void;
+  onChangeAmountValue: (value: number) => void;
+  onTickValueValue: (value: number) => void;
 };
 
 
@@ -16,7 +19,8 @@ export const TransactionSection = ({
   destinationValue,
   amountValue,
   tickValue,
-  disabled=false
+  disabled = false,
+  onChangeDestinationValue,
 }: ITransactionSection) => {
   return (
     <SectionContainer>

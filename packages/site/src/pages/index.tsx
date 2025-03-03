@@ -174,11 +174,15 @@ const Index = () => {
         address={identity?.publicId}
         balance={balance}
       />
+      
       <TransactionSection
+        onChangeDestinationValue={(value) => {setToAddress(value);}}
+        onChangeAmountValue={(value:number) => {setAmountToSend(value)}}
+        onTickValueValue={(value) => {setExecutionTick(value);}}
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
-        tickValue={tickValue+10}
+        tickValue={executionTick + 10}
       />
 
       <div
