@@ -1,13 +1,13 @@
 {
   "version": "0.1.0",
-  "description": "Qubic Connect is a MetaMask extension that has Qubic capabilities such as public key derivation and transaction signing.",
+  "description": "Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.",
   "proposedName": "Qubic Connect",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
   },
   "source": {
-    "shasum": "ch6Ux0sLzJRxMSabnCJnS9+5eCtA4z/MNy5+f3ILCpM=",
+    "shasum": "nDuMbQ6Hw7uxLoaIrpTUlAGB9Oq3rRui8qbBSFvVHAY=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
