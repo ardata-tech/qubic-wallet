@@ -1438,10 +1438,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.esm.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! styled-components */ "../../node_modules/styled-components/dist/styled-components.esm.js");
 /* harmony import */ var _config_theme__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./config/theme */ "./src/config/theme.ts");
 /* harmony import */ var _Root__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Root */ "./src/Root.tsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "../../node_modules/react/jsx-runtime.js");
+/* harmony import */ var _app_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.css */ "./src/app.css");
+/* harmony import */ var _app_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_app_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "../../node_modules/react/jsx-runtime.js");
 
 
 
@@ -1449,15 +1451,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_4__["default"].div.withConfig({
+
+const Wrapper = styled_components__WEBPACK_IMPORTED_MODULE_5__["default"].div.withConfig({
   displayName: "App__Wrapper"
 })(["display:flex;flex-direction:column;width:100%;min-height:100vh;max-width:100vw;"]);
 const App = ({
   children
 }) => {
   const toggleTheme = (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(_Root__WEBPACK_IMPORTED_MODULE_2__.ToggleThemeContext);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_config_theme__WEBPACK_IMPORTED_MODULE_1__.GlobalStyle, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(Wrapper, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_config_theme__WEBPACK_IMPORTED_MODULE_1__.GlobalStyle, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(Wrapper, {
       children: children
     })]
   });
@@ -1690,13 +1693,13 @@ const dark = {
  * @param props - Styled Components props.
  * @returns Global style React component.
  */
-const GlobalStyle = (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.createGlobalStyle)(["html{font-size:62.5%;}@font-face{font-family:'Poppins-Regular';src:url('../assets/fonts/Poppins-Regular.ttf') format('truetype');font-weight:normal;font-style:normal;}body{background-color:", ";color:", ";font-family:", ";font-size:", ";margin:0;}*{transition:background-color .1s linear;}h1,h2,h3,h4,h5,h6{font-size:", ";", "{font-size:", ";}}code{background-color:", ";font-family:", ";padding:1.2rem;font-weight:normal;font-size:", ";}button{font-size:", ";border-radius:", ";background-color:", ";color:", ";border:1px solid ", ";font-weight:bold;padding:1rem;min-height:4.2rem;cursor:pointer;transition:all .2s ease-in-out;&:hover{background-color:transparent;border:1px solid ", ";color:", ";}&:disabled,&[disabled]{border:1px solid ", ";cursor:not-allowed;}&:disabled:hover,&[disabled]:hover{background-color:", ";color:", ";border:1px solid ", ";}}"], props => {
+const GlobalStyle = (0,styled_components__WEBPACK_IMPORTED_MODULE_0__.createGlobalStyle)(["html{font-size:62.5%;}body{background-color:", ";color:", ";font-family:Inter-Thin;font-size:", ";margin:0;}*{transition:background-color .1s linear;}h1,h2,h3,h4,h5,h6{font-size:", ";", "{font-size:", ";}}code{background-color:", ";font-family:", ";padding:1.2rem;font-weight:normal;font-size:", ";}button{font-size:", ";border-radius:", ";background-color:", ";color:", ";border:1px solid ", ";font-weight:bold;padding:1rem;min-height:4.2rem;cursor:pointer;transition:all .2s ease-in-out;&:hover{background-color:transparent;border:1px solid ", ";color:", ";}&:disabled,&[disabled]{border:1px solid ", ";cursor:not-allowed;}&:disabled:hover,&[disabled]:hover{background-color:", ";color:", ";border:1px solid ", ";}}"], props => {
   var _props$theme$colors$b;
   return (_props$theme$colors$b = props.theme.colors.background) === null || _props$theme$colors$b === void 0 ? void 0 : _props$theme$colors$b.default;
 }, props => {
   var _props$theme$colors$t;
   return (_props$theme$colors$t = props.theme.colors.text) === null || _props$theme$colors$t === void 0 ? void 0 : _props$theme$colors$t.default;
-}, props => props.theme.fonts.default, props => props.theme.fontSizes.text, props => props.theme.fontSizes.heading, props => props.theme.mediaQueries.small, props => props.theme.fontSizes.mobileHeading, props => {
+}, props => props.theme.fontSizes.text, props => props.theme.fontSizes.heading, props => props.theme.mediaQueries.small, props => props.theme.fontSizes.mobileHeading, props => {
   var _props$theme$colors$b2;
   return (_props$theme$colors$b2 = props.theme.colors.background) === null || _props$theme$colors$b2 === void 0 ? void 0 : _props$theme$colors$b2.alternative;
 }, props => props.theme.fonts.code, props => props.theme.fontSizes.text, props => props.theme.fontSizes.small, props => props.theme.radii.button, props => {
@@ -9084,6 +9087,16 @@ function instanceOfHashable(object) {
     return typeof object.toHashableString === 'function';
 }
 //# sourceMappingURL=typeGuess.js.map
+
+/***/ }),
+
+/***/ "./src/app.css":
+/*!*********************!*\
+  !*** ./src/app.css ***!
+  \*********************/
+/***/ (() => {
+
+
 
 /***/ }),
 

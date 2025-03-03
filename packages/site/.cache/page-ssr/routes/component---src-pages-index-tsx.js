@@ -12445,10 +12445,10 @@ const WalletContainer = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"
 })(["display:flex;flex-direction:column;justify-content:center;align-items:center;background-size:cover;background-position:center;height:100vh;background-image:url(../assets/qubic_bg.svg);background-size:cover;background-position:center;"]);
 const Header = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].header.withConfig({
   displayName: "pages__Header"
-})(["display:flex;width:80%;height:75px;top:150px;left:155px;justify-content:space-between;margin-bottom:25px;"]);
+})(["font-family:'poppins-thin',sans-serif;display:flex;width:80%;height:75px;top:150px;left:155px;justify-content:space-between;margin-bottom:25px;"]);
 const QubicText = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].span.withConfig({
   displayName: "pages__QubicText"
-})(["font-size:50px;font-weight:500;letter-spacing:-7%;margin-left:8px;font-family:Poppins-Regular;"]);
+})(["font-family:'poppins-thin',sans-serif;font-size:50px;font-weight:500;letter-spacing:-7%;margin-left:8px;font-family:Inter;"]);
 const TickContainer = styled_components__WEBPACK_IMPORTED_MODULE_7__["default"].div.withConfig({
   displayName: "pages__TickContainer"
 })(["display:'flex',gap:'8px',justifyContent:'flex-start',width:'80%',marginBottom:'16px',"]);
@@ -12549,7 +12549,7 @@ const Index = () => {
     const signedTransaction = await qubic.transaction.signTransaction(transactionData, identity.privateKey);
     const signedTransactionBase64 = btoa(String.fromCharCode(...signedTransaction));
     const result = await qubic.transaction.broadcastTransaction(signedTransactionBase64);
-    console.log('result', result);
+    console.log('broadcastTransaction result', result);
     await fetchBalance();
   };
   const disabledWalletDetails = !isMetaMaskReady || !fromAddress || Number.isNaN(balance) || balance == 0 || Number(balance) < Number(amountToSend);
@@ -12577,7 +12577,7 @@ const Index = () => {
       })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.WalletDetailsSection, {
       disabled: disabledWalletDetails,
-      address: identity.publicId,
+      address: identity === null || identity === void 0 ? void 0 : identity.publicId,
       balance: balance
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components__WEBPACK_IMPORTED_MODULE_2__.TransactionSection, {
       disabled: disabledWalletDetails,

@@ -1,8 +1,6 @@
 import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
 import Qubic from '@ardata-tech/qubic-js';
-import Wall from '../assets/qubic_bg.svg';
-
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -33,6 +31,7 @@ const WalletContainer = styled.div`
 `;
 
 const Header = styled.header`
+  font-family: 'poppins-thin', sans-serif;
   display: flex;
   width: 80%;
   height: 75px;
@@ -43,11 +42,12 @@ const Header = styled.header`
 `;
 
 const QubicText = styled.span`
+  font-family: 'poppins-thin', sans-serif;
   font-size: 50px;
   font-weight: 500;
   letter-spacing: -7%;
   margin-left: 8px;
-  font-family: Poppins-Regular;
+  font-family: Inter;
 `;
 
 const TickContainer = styled.div`
@@ -116,10 +116,13 @@ const Index = () => {
 
   const getIdentity = async () => {
     const jsonString: any = await invokeSnap({ method: 'getPublicId' });
-    const privateKey = JSON.parse(jsonString).privateKey;
-    const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
-    const identity = await qubic.identity.createIdentity(privateKeyBase26);
-    setIdentity(identity);
+    if (jsonString) { 
+      const privateKey = JSON.parse(jsonString)?.privateKey;
+      const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
+      const identity = await qubic.identity.createIdentity(privateKeyBase26);
+      setIdentity(identity);
+    }
+    
   };
 
   const handleSendHelloClick = async () => {

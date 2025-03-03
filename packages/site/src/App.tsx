@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from './config/theme';
 import { ToggleThemeContext } from './Root';
+import "./app.css"
 
 const Wrapper = styled.div`
   display: flex;
