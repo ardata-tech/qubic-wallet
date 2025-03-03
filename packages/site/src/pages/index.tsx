@@ -5,7 +5,7 @@
 import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
-
+import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -28,10 +28,8 @@ const WalletContainer = styled.div`
   align-items: center;
   background-size: cover;
   background-position: center;
+  repeat: no-repeat;
   height: 100vh;
-  background-image: url(../assets/qubic_bg.svg);
-  background-size: cover;
-  background-position: center;
 `;
 
 const Header = styled.header`
@@ -97,7 +95,7 @@ const Index = () => {
   const fetchBalance = async () => {
     try {
       const { balance } = await qubic.identity.getBalanceByAddress(
-        identity?.publicId,
+        identity?.publicId);
         setBalance(balance.balance);
       } catch (error:any) {
         console.log(`Problem happened: ${error.message || error}`);
@@ -164,14 +162,28 @@ const Index = () => {
     };
 
   return (
-    <WalletContainer>
+    <WalletContainer style={{ backgroundImage: `url(wall.png)` }}>
       <Header>
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
-          <QubicText>qubic</QubicText>
-          <QubicText>connect</QubicText>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            height: '75px',
+            alignItems: 'center',
+          }}
+        >
+          <img src={'qubic-logo.png'} alt="logo" />
+          <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
+            qubic
+          </QubicText>
+          <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
+            connect
+          </QubicText>
         </div>
         <div>
-          <QubicSendButton onClick={requestSnap}>Connect</QubicSendButton>
+          <QubicSendButton onClick={requestSnap}>
+            <FlaskFox/> MetaMask Connect
+          </QubicSendButton>
         </div>
       </Header>
       <WalletDetailsSection
@@ -181,9 +193,15 @@ const Index = () => {
       />
 
       <TransactionSection
-        onChangeDestinationValue={(value) => {setToAddress(value);}}
-        onChangeAmountValue={(value:number) => {setAmountToSend(value)}}
-        onTickValueValue={(value) => {setExecutionTick(value);}}
+        onChangeDestinationValue={(value) => {
+          setToAddress(value);
+        }}
+        onChangeAmountValue={(value: number) => {
+          setAmountToSend(value);
+        }}
+        onTickValueValue={(value) => {
+          setExecutionTick(value);
+        }}
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
