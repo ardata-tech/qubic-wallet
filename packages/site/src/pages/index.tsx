@@ -96,8 +96,7 @@ const Index = () => {
 
   const fetchBalance = async () => {
     try {
-      const { balance } = await qubic.identity.getBalanceByAddress(
-        identity.publicId,
+      const { balance } = await qubic.identity.getBalanceByAddress(identity?.publicId)
         setBalance(balance.balance);
       } catch (error:any) {
         console.log(`Problem happened: ${error.message || error}`);
