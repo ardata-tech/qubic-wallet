@@ -10999,10 +10999,10 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
 var Stream = _interopDefault(__webpack_require__(6272));
-var http = _interopDefault(__webpack_require__(4595));
+var http = _interopDefault(__webpack_require__(8458));
 var Url = _interopDefault(__webpack_require__(6857));
 var whatwgUrl = _interopDefault(__webpack_require__(4044));
-var https = _interopDefault(__webpack_require__(5564));
+var https = _interopDefault(__webpack_require__(1595));
 var zlib = _interopDefault(__webpack_require__(3925));
 
 // Based on https://github.com/tmpvar/jsdom/blob/aa85b2abf07766ff7bf5c1f6daafb3726f2f2db5/lib/jsdom/living/blob.js

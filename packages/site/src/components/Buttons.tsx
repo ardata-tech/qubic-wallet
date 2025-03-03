@@ -5,6 +5,49 @@ import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import { useMetaMask, useRequestSnap } from '../hooks';
 import { shouldDisplayReconnectButton } from '../utils';
 
+
+export const QubicSendButton = styled.button`
+  border: none;
+  height: 55px;
+  min-width: 127px;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 22.29px;
+  letter-spacing: -2%;
+  background-color: #ccfcff;
+  color: #111927;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  &:hover {
+    border-color: #2980b9;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+`;
+
+export const QubicBorderedtButton = styled.button`
+  height: 55px;
+  width: 127px;
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 22.29px;
+  letter-spacing: -2%;
+  color: #111927;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  &:hover {
+    border-color: #2980b9;
+    transform: scale(1.05);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  background-color: white !important;
+  border: 1px solid #111927;
+`;
+
 const Link = styled.a`
   display: flex;
   align-self: flex-start;
@@ -122,3 +165,4 @@ export const HeaderButtons = () => {
     </ConnectedContainer>
   );
 };
+

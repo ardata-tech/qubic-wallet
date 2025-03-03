@@ -4,7 +4,7 @@ const preferDefault = m => (m && m.default) || m
 
 
 exports.components = {
-  "component---cache-dev-404-page-js": preferDefault(require("/Users/ronnie/QUBIC/METAMASK SNAP/qubic-connect/packages/site/.cache/dev-404-page.js")),
-  "component---src-pages-index-tsx": preferDefault(require("/Users/ronnie/QUBIC/METAMASK SNAP/qubic-connect/packages/site/src/pages/index.tsx"))
+  "component---cache-dev-404-page-js": preferDefault(require("/Users/ronnie/QUBIC-REPO/qubic-connect/packages/site/.cache/dev-404-page.js")),
+  "component---src-pages-index-tsx": preferDefault(require("/Users/ronnie/QUBIC-REPO/qubic-connect/packages/site/src/pages/index.tsx"))
 }
 
