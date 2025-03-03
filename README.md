@@ -18,10 +18,8 @@ yarn install
 
 You may get a warning like the following:
 
-```shell
-@lavamoat/allow-scripts has detected dependencies without configuration. explicit configuration required.
+> @lavamoat/allow-scripts has detected dependencies without configuration. explicit configuration required.
 run "allow-scripts auto" to automatically populate the configuration.
-```
 
 You can fix this by running the following command:
 
