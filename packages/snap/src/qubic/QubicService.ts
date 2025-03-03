@@ -1,9 +1,9 @@
-import { getBIP44AddressKeyDeriver } from "@metamask/key-tree";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { getBIP44AddressKeyDeriver } from '@metamask/key-tree';
 
-export const generateKeyPair = async (accountIndex:any) => {
+export const generateKeyPair = async (accountIndex: any) => {
   // Set coin type
   const coinType = 83293; // 1 for testing
-  //const coinType = 3; // 1 for testing
 
   // Get the BIP44 node
   const bip44Node = await snap.request({
@@ -21,6 +21,3 @@ export const generateKeyPair = async (accountIndex:any) => {
     privateKey: newAccount.privateKey,
   };
 };
-
-
-

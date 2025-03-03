@@ -66,9 +66,7 @@ const Index = () => {
   const [tickValue, setTickValue] = useState(0);
   const [tickSeconds, setTickSeconds] = useState();
   const [balance, setBalance] = useState(0);
-  const [toAddress, setToAddress] = useState(
-    'WIJBIFGHSKDFBFRKLUHZTAIVYMJDNJMKUBBMULXBUCRCVQFCZTJRNQXDOSDN',
-  );
+  const [toAddress, setToAddress] = useState("");
   const [fromAddress, setFromAddress] = useState();
   const [amountToSend, setAmountToSend] = useState<number>(0);
   const [executionTick, setExecutionTick] = useState<number>(0);

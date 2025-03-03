@@ -9,7 +9,7 @@ const config: SnapConfig = {
   },
   polyfills: {
     buffer: true,
-    crypto: true
+    crypto: true,
   },
 };
 

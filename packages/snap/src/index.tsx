@@ -1,3 +1,5 @@
+/* eslint-disable import/order */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 import { generateKeyPair } from './qubic/QubicService';
@@ -15,14 +17,14 @@ export const onRpcRequest: OnRpcRequestHandler = async ({
   origin,
   request,
 }) => {
-
   switch (request.method) {
-    case 'getPublicId': 
+    case 'getPublicId': {
       // Extract the parameters from the request
       const response = await generateKeyPair(0);
       // Return the public ID
-      return JSON.stringify(response)
+      return JSON.stringify(response);
+    }
     default:
-     throw new Error('Method not found.');
-   }
+      throw new Error('Method not found.');
+  }
 };
