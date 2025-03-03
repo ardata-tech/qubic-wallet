@@ -172,7 +172,7 @@ const Index = () => {
           <QubicText>connect</QubicText>
         </div>
         <div>
-          <QubicSendButton onClick={requestSnap}>Connect MetaMask</QubicSendButton>
+          <QubicSendButton onClick={requestSnap}>Connect</QubicSendButton>
         </div>
       </Header>
       <WalletDetailsSection
