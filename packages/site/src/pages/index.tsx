@@ -1,7 +1,11 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
+
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -66,7 +70,7 @@ const Index = () => {
   const [tickValue, setTickValue] = useState(0);
   const [tickSeconds, setTickSeconds] = useState();
   const [balance, setBalance] = useState(0);
-  const [toAddress, setToAddress] = useState("");
+  const [toAddress, setToAddress] = useState('');
   const [fromAddress, setFromAddress] = useState();
   const [amountToSend, setAmountToSend] = useState<number>(0);
   const [executionTick, setExecutionTick] = useState<number>(0);
@@ -85,14 +89,15 @@ const Index = () => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
       getIdentity();
-      fetchQubicLatestTick()
-      fetchBalance()
+      fetchQubicLatestTick();
+      fetchBalance();
     }
   }, [isMetaMaskReady]);
 
   const fetchBalance = async () => {
     try {
-      const { balance } = await qubic.identity.getBalanceByAddress(identity.publicId)
+      const { balance } = await qubic.identity.getBalanceByAddress(
+        identity.publicId,
         setBalance(balance.balance);
       } catch (error:any) {
         console.log(`Problem happened: ${error.message || error}`);
@@ -112,7 +117,7 @@ const Index = () => {
 
   const getIdentity = async () => {
     const jsonString: any = await invokeSnap({ method: 'getPublicId' });
-    if (jsonString) { 
+    if (jsonString) {
       const privateKey = JSON.parse(jsonString)?.privateKey;
       const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
       const identity = await qubic.identity.createIdentity(privateKeyBase26);
@@ -174,7 +179,7 @@ const Index = () => {
         address={identity?.publicId}
         balance={balance}
       />
-      
+
       <TransactionSection
         onChangeDestinationValue={(value) => {setToAddress(value);}}
         onChangeAmountValue={(value:number) => {setAmountToSend(value)}}
