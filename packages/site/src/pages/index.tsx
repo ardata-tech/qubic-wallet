@@ -122,11 +122,6 @@ const Index = () => {
       const identity = await qubic.identity.createIdentity(privateKeyBase26);
       setIdentity(identity);
     }
-    
-  };
-
-  const handleSendHelloClick = async () => {
-    await invokeSnap({ method: 'hello' });
   };
 
   const sendTransaction = async () => {
