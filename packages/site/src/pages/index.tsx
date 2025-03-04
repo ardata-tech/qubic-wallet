@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -6,13 +7,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
-import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
-
-import qubicLogo from '../assets/qubic-logo.png';
-import qubicBg from '../assets/wall.png';
+import styled from 'styled-components';
 
 import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
+import qubicLogo from '../assets/qubic-logo.png';
+import qubicBg from '../assets/wall.png';
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -149,6 +149,7 @@ const Index = () => {
   });
 
   const toastSuccessMessage = (message: string) => toast(message, toastOption);
+  
   const toastErrorMessage = (message: string) =>
     toast.error(message, toastOption);
 
@@ -164,6 +165,7 @@ const Index = () => {
     const interval = setInterval(() => {
       setTickSeconds((prev) => prev - 1);
     }, 1000);
+    // eslint-disable-next-line consistent-return
     return () => clearInterval(interval);
   }, [tickSeconds]);
 
@@ -177,7 +179,7 @@ const Index = () => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
       getIdentity();
-      if (tickValue == 0) {
+      if (tickValue === 0) {
         fetchQubicLatestTick();
       }
     }
@@ -222,7 +224,7 @@ const Index = () => {
       const jsonString: string | unknown = await invokeSnap({
         method: 'getPublicId',
       });
-      if (typeof jsonString == 'string') {
+      if (typeof jsonString === 'string') {
         const privateKey = JSON.parse(jsonString)?.privateKey;
         if (privateKey) {
           const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);

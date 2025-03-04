@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { InputLabel } from './InputLabel';
 
 type InputProps = {
@@ -8,7 +9,7 @@ type InputProps = {
   disabled: boolean;
   type: string;
   onChange: (value: string | number) => void;
-  required?: boolean
+  required?: boolean;
 };
 
 const Input = styled.input`
@@ -43,21 +44,22 @@ export const InputWithLabel = ({
   placeholder,
   value,
   disabled = false,
-  type = "text",
+  type = 'text',
   onChange,
-  required = false
+  required = false,
 }: InputProps) => {
   return (
     <LabelInputContainer>
       <InputLabel style={{ fontFamily: 'Inter-Reg' }}>
         {label}
-        <span style={{color:'red'}}>{required ? '*' : ''}</span>
+        <span style={{ color: 'red' }}>{required ? '*' : ''}</span>
       </InputLabel>
       <Input
         type={type}
         disabled={disabled}
         placeholder={placeholder}
         value={value}
+        // eslint-disable-next-line id-length
         onChange={(e) => onChange(e.target.value)}
       />
     </LabelInputContainer>

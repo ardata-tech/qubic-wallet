@@ -1,15 +1,19 @@
+/* eslint-disable prettier/prettier */
+import { InputWithLabel } from './Input';
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
-import { InputWithLabel } from './Input'
 
 type IWalletDetailsSection = {
   address: string;
   balance: number;
-  disabled:boolean
+  disabled: boolean;
 };
 
-
-export const WalletDetailsSection = ({ address, balance, disabled=false }: IWalletDetailsSection) => {
+export const WalletDetailsSection = ({
+  address,
+  balance,
+  disabled = false,
+}: IWalletDetailsSection) => {
   return (
     <SectionContainer>
       <SectionTitle style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>

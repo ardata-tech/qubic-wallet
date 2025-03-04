@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const SectionContainer = styled.div`
   border-radius: 20px;
   width: 100%;
