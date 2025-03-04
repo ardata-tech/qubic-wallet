@@ -24,7 +24,7 @@ export const TransactionSection = ({
 }: ITransactionSection) => {
   return (
     <SectionContainer>
-      <SectionTitle>Send Qubic</SectionTitle>
+      <SectionTitle style={{fontFamily:'Inter-Reg', fontWeight:"bold"}}>Send Qubic</SectionTitle>
       <InputWithLabel
         type="text"
         disabled={disabled}

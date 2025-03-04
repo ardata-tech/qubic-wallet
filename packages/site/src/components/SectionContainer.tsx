@@ -7,4 +7,5 @@ export const SectionContainer = styled.div`
   border-radius: 20px;
   gap: 25px;
   width: 80%;
+  margin-top: 30px;
 `;

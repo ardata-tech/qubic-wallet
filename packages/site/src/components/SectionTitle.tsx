@@ -2,7 +2,6 @@ import type { ComponentProps } from 'react';
 import styled from 'styled-components';
 
 export const SectionTitle = styled.div`
-  font-family: Inter;
   font-weight: 600;
   font-size: 20px;
   line-height: 24.2px;
