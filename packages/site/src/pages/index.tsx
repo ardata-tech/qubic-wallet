@@ -9,6 +9,9 @@ import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
 
+import qubicLogo from '../assets/qubic-logo.png';
+import qubicBg from '../assets/wall.png';
+
 import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import {
   WalletDetailsSection,
@@ -198,8 +201,10 @@ const Index = () => {
     setAmountToSend(0);
   };
 
+  console.log('window.location.origin', window.location.origin);
+
   return (
-    <WalletContainer style={{ backgroundImage: `url(wall.png)` }}>
+    <WalletContainer style={{ backgroundImage: `url(${qubicBg})` }}>
       <Header>
         <div
           style={{
@@ -209,7 +214,7 @@ const Index = () => {
             alignItems: 'center',
           }}
         >
-          <img src={'qubic-logo.png'} alt="logo" />
+          <img src={qubicLogo} alt="logo" />
           <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
             qubic
           </QubicText>
