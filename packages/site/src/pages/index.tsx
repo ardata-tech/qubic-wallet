@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-shadow */
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-use-before-define */
@@ -5,6 +7,7 @@
 import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
 import styled from 'styled-components';
+
 import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import {
   WalletDetailsSection,
@@ -103,13 +106,13 @@ const Index = () => {
     };
 
   const fetchQubicLatestTick = async () => {
-    const latestTick = await qubic.chain.getLatestTick() || 0;
+    const latestTick = (await qubic.chain.getLatestTick()) ?? 0;
     if (isNaN(Number(latestTick))) {
       throw new Error('Invalid tick');
     }
     if (typeof latestTick === 'number' && latestTick > 0) {
       setTickValue(latestTick ?? 0);
-      setExecutionTick(latestTick + 10 );
+      setExecutionTick(latestTick + 10);
     }
   };
 
@@ -124,7 +127,7 @@ const Index = () => {
   };
 
   const sendTransaction = async () => {
-    await fetchQubicLatestTick()
+    await fetchQubicLatestTick();
     const transactionData = await qubic.transaction.createTransaction(
       identity.publicId,
       toAddress,
@@ -149,17 +152,16 @@ const Index = () => {
     await fetchBalance();
   };
 
-    const disabledWalletDetails =
-      !isMetaMaskReady ||
-      !fromAddress ||
-      Number.isNaN(balance) ||
-      balance == 0 ||
-      Number(balance) < Number(amountToSend);
-
-    const onReset = () => {
-      setToAddress('');
-      setAmountToSend(0);
-    };
+  const disabledWalletDetails =
+    !isMetaMaskReady ||
+    !fromAddress ||
+    Number.isNaN(balance) ||
+    balance === 0 ||
+    Number(balance) < Number(amountToSend);
+  const onReset = () => {
+    setToAddress('');
+    setAmountToSend(0);
+  };
 
   return (
     <WalletContainer style={{ backgroundImage: `url(wall.png)` }}>
@@ -182,7 +184,7 @@ const Index = () => {
         </div>
         <div>
           <QubicSendButton onClick={requestSnap}>
-            <FlaskFox /> MetaMask Connect
+            <FlaskFox /> Connect to MetaMask
           </QubicSendButton>
         </div>
       </Header>
@@ -218,7 +220,7 @@ const Index = () => {
           fontFamily: 'Inter-Reg',
         }}
       >
-        Latest Tick: <span style={{ fontWeight: "bold" }}> {tickValue}</span>
+        Latest Tick: <span style={{ fontWeight: 'bold' }}> {tickValue}</span>
       </div>
 
       <div
