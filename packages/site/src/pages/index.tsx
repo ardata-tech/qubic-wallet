@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-shadow */
@@ -6,13 +7,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Qubic from '@ardata-tech/qubic-js';
 import { useEffect, useState, type ComponentProps } from 'react';
-import styled from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
-
-import qubicLogo from '../assets/qubic-logo.png';
-import qubicBg from '../assets/wall.png';
+import styled from 'styled-components';
 
 import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
+import qubicLogo from '../assets/qubic-logo.png';
+import qubicBg from '../assets/wall.png';
 import {
   WalletDetailsSection,
   TransactionSection,
@@ -72,7 +72,7 @@ const toastOption: any = {
 };
 
 const Index = () => {
-  const DEFAULT_TIME_LIMIT = 10; 
+  const DEFAULT_TIME_LIMIT = 10;
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
@@ -87,7 +87,6 @@ const Index = () => {
   const [executionTick, setExecutionTick] = useState<number>(0);
   const [identity, setIdentity] = useState<any>();
 
-
   const qubic = new Qubic({
     providerUrl: 'https://rpc.qubic.org',
     version: 1,
@@ -101,29 +100,29 @@ const Index = () => {
     ? isFlask
     : snapsDetected;
 
-   useEffect(() => {
-     if (tickSeconds === 0) {
-       setTickSeconds(DEFAULT_TIME_LIMIT);
-       return;
-     }
-     const interval = setInterval(() => {
-       setTickSeconds((prev) => prev - 1);
-     }, 1000);
-     return () => clearInterval(interval);
-   }, [tickSeconds]);
-  
   useEffect(() => {
-    if(tickSeconds === 0) {
+    if (tickSeconds === 0) {
+      setTickSeconds(DEFAULT_TIME_LIMIT);
+      return;
+    }
+    const interval = setInterval(() => {
+      setTickSeconds((prev) => prev - 1);
+    }, 1000);
+    // eslint-disable-next-line consistent-return
+    return () => clearInterval(interval);
+  }, [tickSeconds]);
+
+  useEffect(() => {
+    if (tickSeconds === 0) {
       fetchQubicLatestTick();
     }
-  },[tickSeconds])
-  
-  
+  }, [tickSeconds]);
+
   useEffect(() => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
       getIdentity();
-      if (tickValue == 0) {
+      if (tickValue === 0) {
         fetchQubicLatestTick();
       }
     }
@@ -168,7 +167,7 @@ const Index = () => {
       const jsonString: string | unknown = await invokeSnap({
         method: 'getPublicId',
       });
-      if (typeof jsonString == 'string') {
+      if (typeof jsonString === 'string') {
         const privateKey = JSON.parse(jsonString)?.privateKey;
         if (privateKey) {
           const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
