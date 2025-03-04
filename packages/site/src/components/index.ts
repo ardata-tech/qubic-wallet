@@ -9,3 +9,4 @@ export * from './Toggle';
 export * from './QubicInput';
 export * from './WalletDetailsSection';
 export * from './TransactionSection';
+export * from './NetworkSection';

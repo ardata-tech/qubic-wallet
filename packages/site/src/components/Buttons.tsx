@@ -8,7 +8,7 @@ import { shouldDisplayReconnectButton } from '../utils';
 export const QubicSendButton = styled.button`
   border: none;
   height: 55px;
-  min-width: 127px;
+  min-width: 130px;
   font-size: 19px;
   font-weight: 600;
   line-height: 22.29px;
@@ -24,11 +24,34 @@ export const QubicSendButton = styled.button`
     transform: scale(1.05);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
   }
+  @media (max-width: 425px) {
+    height: 35px;
+    min-width: 100px;
+    font-size: 14px;
+    line-height: 14.29px;
+  }
 `;
+
+export const LoadingButton = ({ onClick, loading=false, children, disabled  }:any) => {
+ return (
+   <QubicSendButton disabled={loading || disabled} onClick={onClick}>
+     <div
+       style={{
+         display: 'flex',
+         alignItems: 'center',
+         justifyContent: 'center',
+       }}
+     >
+       {loading ? <div className="spinner" /> : null}
+       <div>{children}</div>
+     </div>
+   </QubicSendButton>
+ );
+};
 
 export const QubicBorderedtButton = styled.button`
   height: 55px;
-  width: 127px;
+  min-width: 127px;
   font-size: 19px;
   font-weight: 600;
   line-height: 22.29px;
@@ -45,6 +68,13 @@ export const QubicBorderedtButton = styled.button`
   }
   background-color: white !important;
   border: 1px solid #111927;
+
+  @media (max-width: 425px) {
+    height: 35px;
+    min-width: 100px;
+    font-size: 14px;
+    line-height: 14.29px;
+  }
 `;
 
 const Link = styled.a`
@@ -73,6 +103,7 @@ const Link = styled.a`
     width: 100%;
     box-sizing: border-box;
   }
+
 `;
 
 const Button = styled.button`

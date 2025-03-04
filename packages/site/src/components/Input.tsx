@@ -12,22 +12,30 @@ type InputProps = {
 };
 
 const Input = styled.input`
-  width: 1419;
-  height: 56;
-  justify-content: space-between;
+  font-family: Inter-Reg;
+  width: 100%;
+  height: 18px;
   border-radius: 6px;
   border-width: 1px;
   padding-top: 23px;
   padding-right: 19px;
   padding-bottom: 23px;
   padding-left: 19px;
-  font-family: Inter-Reg;
+
+  @media (max-width: 425px) {
+    padding-top: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    width: 90%;
+  }
 `;
 
 const LabelInputContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 25px;
+  margin-bottom: 18px;
+  
 `;
 
 export const InputWithLabel = ({

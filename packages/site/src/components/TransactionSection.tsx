@@ -1,5 +1,3 @@
-import type { ComponentProps } from 'react';
-import styled from 'styled-components';
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
 import { InputWithLabel } from './Input'
@@ -26,7 +24,7 @@ export const TransactionSection = ({
 }: ITransactionSection) => {
   return (
     <SectionContainer>
-      <SectionTitle style={{ fontFamily: 'Inter-Reg', fontWeight: 'bold' }}>
+      <SectionTitle style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
         Send Qubic
       </SectionTitle>
       <InputWithLabel

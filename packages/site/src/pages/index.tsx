@@ -18,7 +18,9 @@ import {
   TransactionSection,
   QubicBorderedtButton,
   QubicSendButton,
+  LoadingButton,
 } from '../components';
+
 import { defaultSnapOrigin } from '../config';
 import {
   useMetaMask,
@@ -27,37 +29,89 @@ import {
   useRequestSnap,
 } from '../hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
+import NetworkSection from '../components/NetworkSection';
 
 const WalletContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   background-size: cover;
   background-position: center;
   repeat: no-repeat;
   height: 100vh;
+  padding: 10%;
+  padding-top: 3%;
+
+  @media (max-width: 425px) {
+    width: 100% !important;
+    padding: 20px !important;
+  }
 `;
 
-const Header = styled.header`
+const Header = styled.div`
   font-family: 'poppins-thin', sans-serif;
   display: flex;
-  width: 80%;
-  height: 75px;
-  top: 150px;
-  left: 155px;
+  width: 100%;
   justify-content: space-between;
-  margin-bottom: 25px;
   align-items: center;
+  margin-bottom: 0px;
+
+  @media (max-width: 768px) {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+`;
+
+const HeaderItemWrapper = styled.div`
+  display: flex;
+  flexdirection: row;
+  height: 65px;
+  alignitems: center;
+
+  @media (max-width: 768px) {
+    height: 40px;
+  }
+  @media (max-width: 425px) {
+    height: 30px;
+  }
 `;
 
 const QubicText = styled.span`
-  font-family: 'poppins-thin', sans-serif;
-  font-size: 50px;
+  font-size: 45px;
   font-weight: 500;
   letter-spacing: -7%;
   margin-left: 8px;
   font-family: Inter;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+  @media (max-width: 425px) {
+    font-size: 20px;
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  justifyContent: flex-start;
+  width: 100%;
+`;
+
+const TickContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  justifycontent: flex-start;
+  width: 100%;
+  font-family: Inter-Reg;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 425px) {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 `;
 
 const toastOption: any = {
@@ -72,7 +126,7 @@ const toastOption: any = {
 };
 
 const Index = () => {
-  const DEFAULT_TIME_LIMIT = 10; 
+  const DEFAULT_TIME_LIMIT = 10;
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
@@ -86,7 +140,8 @@ const Index = () => {
   const [amountToSend, setAmountToSend] = useState<number>(0);
   const [executionTick, setExecutionTick] = useState<number>(0);
   const [identity, setIdentity] = useState<any>();
-
+  const [isTransactionProcessing, setIsTransactionProcessing] =
+    useState<boolean>(false);
 
   const qubic = new Qubic({
     providerUrl: 'https://rpc.qubic.org',
@@ -101,24 +156,23 @@ const Index = () => {
     ? isFlask
     : snapsDetected;
 
-   useEffect(() => {
-     if (tickSeconds === 0) {
-       setTickSeconds(DEFAULT_TIME_LIMIT);
-       return;
-     }
-     const interval = setInterval(() => {
-       setTickSeconds((prev) => prev - 1);
-     }, 1000);
-     return () => clearInterval(interval);
-   }, [tickSeconds]);
-  
   useEffect(() => {
-    if(tickSeconds === 0) {
+    if (tickSeconds === 0) {
+      setTickSeconds(DEFAULT_TIME_LIMIT);
+      return;
+    }
+    const interval = setInterval(() => {
+      setTickSeconds((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [tickSeconds]);
+
+  useEffect(() => {
+    if (tickSeconds === 0) {
       fetchQubicLatestTick();
     }
-  },[tickSeconds])
-  
-  
+  }, [tickSeconds]);
+
   useEffect(() => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
@@ -183,6 +237,24 @@ const Index = () => {
     }
   };
 
+  const validateTransaction = () => {
+    setIsTransactionProcessing(true);
+    const fromAddress: string = identity.publicId;
+    const inValidAddressLength =
+      !fromAddress ||
+      fromAddress.length < 60 ||
+      !identity?.publicId ||
+      identity.publicId.length < 60;
+    const inValidBalance =
+      amountToSend > balance || balance == 0 || amountToSend == 0;
+    if (!inValidAddressLength || !inValidBalance) {
+      setIsTransactionProcessing(false);
+      toastErrorMessage('Invalid Transaction');
+    } else {
+      sendTransaction();
+    }
+  };
+
   const sendTransaction = async () => {
     try {
       const transactionData = await qubic.transaction.createTransaction(
@@ -203,10 +275,14 @@ const Index = () => {
       );
       if (result) {
         onReset();
+        toastSuccessMessage(
+          `Successfully sent ${amountToSend} QUBIC to ${toAddress}`,
+        );
         setTimeout(fetchBalance, 10000);
       }
     } catch (error: any) {
-      toastErrorMessage(error.message);
+      setIsTransactionProcessing(false);
+      toastErrorMessage(`Failed to send ${amountToSend} QUBIC to ${toAddress}`);
     }
   };
 
@@ -224,14 +300,7 @@ const Index = () => {
   return (
     <WalletContainer style={{ backgroundImage: `url(${qubicBg})` }}>
       <Header>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'row',
-            height: '75px',
-            alignItems: 'center',
-          }}
-        >
+        <HeaderItemWrapper>
           <img src={qubicLogo} alt="logo" />
           <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
             qubic
@@ -245,7 +314,7 @@ const Index = () => {
           >
             connect
           </QubicText>
-        </div>
+        </HeaderItemWrapper>
         <div>
           <QubicSendButton onClick={requestSnap}>
             <FlaskFox /> Connect
@@ -253,10 +322,20 @@ const Index = () => {
         </div>
       </Header>
       <WalletDetailsSection
-        disabled={disabledWalletDetails}
+        disabled={true}
         address={identity?.publicId}
         balance={balance}
       />
+
+      <NetworkSection>
+        <TickContainer>
+          Tick:
+          <span style={{ fontWeight: 'bold', color: '#11192766' }}>
+            {tickValue}
+            <span style={{ color: '#BE7676' }}>({tickSeconds}s)</span>
+          </span>
+        </TickContainer>
+      </NetworkSection>
 
       <TransactionSection
         onChangeDestinationValue={(value) => setToAddress(String(value))}
@@ -270,48 +349,19 @@ const Index = () => {
         tickValue={executionTick}
       />
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '8px',
-          justifyContent: 'flex-start',
-          width: '80%',
-          marginBottom: '16px',
-          fontFamily: 'Inter-Reg',
-        }}
-      >
-        Tick:
-        <span style={{ fontWeight: 'bold', color: '#11192766' }}>
-          {tickValue}
-          <span style={{ color: '#BE7676' }}>({tickSeconds}s)</span>
-        </span>
-      </div>
-
-      <div
-        style={{
-          display: 'flex',
-          gap: '8px',
-          justifyContent: 'flex-start',
-          width: '80%',
-        }}
-      >
+      <ButtonContainer>
         <div>
           <QubicBorderedtButton onClick={onReset}>Reset</QubicBorderedtButton>
         </div>
         <div>
-          <QubicSendButton
-            disabled={
-              disabledWalletDetails ||
-              identity?.publicId === null ||
-              toAddress === '' ||
-              amountToSend === 0
-            }
-            onClick={sendTransaction}
+          <LoadingButton
+            loading={isTransactionProcessing}
+            onClick={validateTransaction}
           >
-            Send
-          </QubicSendButton>
+            Sending
+          </LoadingButton>
         </div>
-      </div>
+      </ButtonContainer>
       <ToastContainer />
     </WalletContainer>
   );
