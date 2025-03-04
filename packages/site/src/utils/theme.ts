@@ -10,18 +10,17 @@ export const getThemePreference = () => {
   if (typeof window === 'undefined') {
     return false;
   }
+  return false
 
-  const darkModeSystem = window?.matchMedia(
-    '(prefers-color-scheme: dark)',
-  ).matches;
+  // const darkModeSystem = window?.matchMedia(
+  //   '(prefers-color-scheme: dark)',
+  // ).matches;
 
-  const localStoragePreference = getLocalStorage('theme');
-  const systemPreference = darkModeSystem ? 'dark' : 'light';
-  const preference = localStoragePreference ?? systemPreference;
+  // const localStoragePreference = getLocalStorage('theme');
+  // const systemPreference = darkModeSystem ? 'dark' : 'light';
+  // const preference = localStoragePreference ?? systemPreference;
 
-  if (!localStoragePreference) {
-    setLocalStorage('theme', systemPreference);
-  }
-
-  return preference === 'dark';
+  // if (!localStoragePreference) {
+  //   setLocalStorage('theme', systemPreference);
+  // }
 };

@@ -1,8 +1,6 @@
 import type { FunctionComponent, ReactNode } from 'react';
-import { useContext } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from './config/theme';
-import { ToggleThemeContext } from './Root';
 import "./app.css"
 
 const Wrapper = styled.div`
@@ -18,8 +16,6 @@ export type AppProps = {
 };
 
 export const App: FunctionComponent<AppProps> = ({ children }) => {
-  const toggleTheme = useContext(ToggleThemeContext);
-
   return (
     <>
       <GlobalStyle />

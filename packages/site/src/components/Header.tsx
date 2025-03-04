@@ -1,10 +1,6 @@
 import styled, { useTheme } from 'styled-components';
 
-import { getThemePreference } from '../utils';
-import { HeaderButtons } from './Buttons';
 import { SnapLogo } from './SnapLogo';
-import { Toggle } from './Toggle';
-
 const HeaderWrapper = styled.header`
   display: flex;
   flex-direction: row;
@@ -47,15 +43,15 @@ export const Header = ({
     <HeaderWrapper>
       <LogoWrapper>
         <SnapLogo color={theme.colors.icon?.default} size={36} />
-        <Title>template-snap</Title>
+        <Title>Qubic-Connect-Snap</Title>
       </LogoWrapper>
-      <RightContainer>
+      {/* <RightContainer>
         <Toggle
           onToggle={handleToggleClick}
           defaultChecked={getThemePreference()}
         />
         <HeaderButtons />
-      </RightContainer>
+      </RightContainer> */}
     </HeaderWrapper>
   );
 };

@@ -6,12 +6,14 @@ import { SectionTitle } from './SectionTitle';
 type IWalletDetailsSection = {
   address: string;
   balance: number;
+  tick: string;
   disabled: boolean;
 };
 
 export const WalletDetailsSection = ({
   address,
   balance,
+  tick,
   disabled = false,
 }: IWalletDetailsSection) => {
   return (
@@ -20,6 +22,13 @@ export const WalletDetailsSection = ({
         Wallet Details
       </SectionTitle>
       <InputWithLabel
+        style={{
+          border: 'none',
+          padding: 0,
+          marginTop: '1rem',
+          backgroundColor: 'transparent',
+        }}
+        showLabel={true}
         onChange={() => {}}
         required={false}
         type="text"
@@ -28,11 +37,32 @@ export const WalletDetailsSection = ({
         value={address}
       />
       <InputWithLabel
+        style={{
+          border: 'none',
+          padding: 0,
+          marginTop: '1rem',
+          backgroundColor: 'transparent',
+        }}
+        showLabel={true}
         onChange={() => {}}
         type="number"
         disabled={disabled}
-        label="Balance"
+        label="Balance in Qubic Units (QUBIC)"
         value={balance}
+      />
+      <InputWithLabel
+        style={{
+          border: 'none',
+          padding: 0,
+          marginTop: '1rem',
+          backgroundColor: 'transparent',
+        }}
+        showLabel={true}
+        onChange={() => {}}
+        type="text"
+        disabled={disabled}
+        label="Tick"
+        value={tick}
       />
     </SectionContainer>
   );

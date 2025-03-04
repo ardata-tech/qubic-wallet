@@ -78,7 +78,7 @@ const HeaderItemWrapper = styled.div`
 `;
 
 const QubicText = styled.span`
-  font-size: 45px;
+  font-size: 35px;
   font-weight: 500;
   letter-spacing: -7%;
   margin-left: 8px;
@@ -149,7 +149,7 @@ const Index = () => {
   });
 
   const toastSuccessMessage = (message: string) => toast(message, toastOption);
-  
+
   const toastErrorMessage = (message: string) =>
     toast.error(message, toastOption);
 
@@ -327,9 +327,10 @@ const Index = () => {
         disabled={true}
         address={identity?.publicId}
         balance={balance}
+        tick={`${tickValue} (${tickSeconds}s)`}
       />
 
-      <NetworkSection>
+      {/* <NetworkSection>
         <TickContainer>
           Tick:
           <span style={{ fontWeight: 'bold', color: '#11192766' }}>
@@ -337,7 +338,7 @@ const Index = () => {
             <span style={{ color: '#BE7676' }}>({tickSeconds}s)</span>
           </span>
         </TickContainer>
-      </NetworkSection>
+      </NetworkSection> */}
 
       <TransactionSection
         onChangeDestinationValue={(value) => setToAddress(String(value))}
@@ -360,7 +361,7 @@ const Index = () => {
             loading={isTransactionProcessing}
             onClick={validateTransaction}
           >
-            Sending
+            Send
           </LoadingButton>
         </div>
       </ButtonContainer>

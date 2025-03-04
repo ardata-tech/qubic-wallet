@@ -10,6 +10,8 @@ type InputProps = {
   type: string;
   onChange: (value: string | number) => void;
   required?: boolean;
+  showLabel?: boolean;
+  style?: any
 };
 
 const Input = styled.input`
@@ -40,6 +42,7 @@ const LabelInputContainer = styled.div`
 `;
 
 export const InputWithLabel = ({
+  showLabel=true,
   label,
   placeholder,
   value,
@@ -47,14 +50,20 @@ export const InputWithLabel = ({
   type = 'text',
   onChange,
   required = false,
+  style
 }: InputProps) => {
   return (
     <LabelInputContainer>
-      <InputLabel style={{ fontFamily: 'Inter-Reg' }}>
-        {label}
-        <span style={{ color: 'red' }}>{required ? '*' : ''}</span>
-      </InputLabel>
+
+      {showLabel && (
+        <InputLabel style={{ fontFamily: 'Inter-Reg' }}>
+          {label}
+          <span style={{ color: 'red' }}>{required ? '*' : ''}</span>
+        </InputLabel>
+      )}
+
       <Input
+        style={style}
         type={type}
         disabled={disabled}
         placeholder={placeholder}

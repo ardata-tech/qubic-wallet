@@ -17,7 +17,7 @@ export const ToggleThemeContext = createContext<ToggleTheme>(
 );
 
 export const Root: FunctionComponent<RootProps> = ({ children }) => {
-  const [darkTheme, setDarkTheme] = useState(getThemePreference());
+  const [darkTheme, setDarkTheme] = useState(false);
 
   const toggleTheme: ToggleTheme = () => {
     setLocalStorage('theme', darkTheme ? 'light' : 'dark');
