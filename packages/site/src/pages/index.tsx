@@ -182,7 +182,7 @@ const Index = () => {
         </div>
         <div>
           <QubicSendButton onClick={requestSnap}>
-            <FlaskFox/> MetaMask Connect
+            <FlaskFox /> MetaMask Connect
           </QubicSendButton>
         </div>
       </Header>
@@ -215,9 +215,10 @@ const Index = () => {
           justifyContent: 'flex-start',
           width: '80%',
           marginBottom: '16px',
+          fontFamily: 'Inter-Reg',
         }}
       >
-        Latest Tick: {tickValue}
+        Latest Tick: <span style={{ fontWeight: "bold" }}> {tickValue}</span>
       </div>
 
       <div

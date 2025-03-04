@@ -19,6 +19,7 @@ const Input = styled.input`
   padding-right: 19px;
   padding-bottom: 23px;
   padding-left: 19px;
+  font-family: Inter-Reg;
 `;
 
 const LabelInputContainer = styled.div`
@@ -36,8 +37,13 @@ export const InputWithLabel = ({
 }: InputProps) => {
   return (
     <LabelInputContainer>
-      <InputLabel>{label}</InputLabel>
-      <Input type={type} disabled={disabled} placeholder={placeholder} value={value} />
+      <InputLabel style={{ fontFamily: 'Inter-Reg' }}>{label}</InputLabel>
+      <Input
+        type={type}
+        disabled={disabled}
+        placeholder={placeholder}
+        value={value}
+      />
     </LabelInputContainer>
   );
 };
