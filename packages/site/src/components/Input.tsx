@@ -7,7 +7,8 @@ type InputProps = {
   value: any;
   disabled: boolean;
   type: string;
-  onChange: (value:string | number)=>void
+  onChange: (value: string | number) => void;
+  required?: boolean
 };
 
 const Input = styled.input`
@@ -35,11 +36,15 @@ export const InputWithLabel = ({
   value,
   disabled = false,
   type = "text",
-  onChange
+  onChange,
+  required = false
 }: InputProps) => {
   return (
     <LabelInputContainer>
-      <InputLabel style={{ fontFamily: 'Inter-Reg' }}>{label}</InputLabel>
+      <InputLabel style={{ fontFamily: 'Inter-Reg' }}>
+        {label}
+        <span style={{color:'red'}}>{required ? '*' : ''}</span>
+      </InputLabel>
       <Input
         type={type}
         disabled={disabled}

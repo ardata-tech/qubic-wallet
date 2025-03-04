@@ -30,6 +30,7 @@ export const TransactionSection = ({
         Send Qubic
       </SectionTitle>
       <InputWithLabel
+        required
         type="text"
         disabled={disabled}
         label="Destination Details"
@@ -37,6 +38,7 @@ export const TransactionSection = ({
         onChange={onChangeDestinationValue}
       />
       <InputWithLabel
+        required
         type="number"
         disabled={disabled}
         label="Amount"
@@ -44,6 +46,7 @@ export const TransactionSection = ({
         onChange={(e) => onChangeAmountValue(e)}
       />
       <InputWithLabel
+        required
         type="number"
         disabled={disabled}
         label="Execution Tick"

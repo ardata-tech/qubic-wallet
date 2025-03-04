@@ -48,6 +48,7 @@ const Header = styled.header`
   left: 155px;
   justify-content: space-between;
   margin-bottom: 25px;
+  align-items: center;
 `;
 
 const QubicText = styled.span`
@@ -70,7 +71,6 @@ const toastOption: any = {
   theme: 'light',
 };
 
-
 const Index = () => {
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
@@ -78,7 +78,7 @@ const Index = () => {
   const invokeSnap = useInvokeSnap();
 
   const [tickValue, setTickValue] = useState(0);
-  const [tickSeconds, setTickSeconds] = useState();
+  const [tickSeconds, setTickSeconds] = useState<number>(5);
   const [balance, setBalance] = useState(0);
   const [toAddress, setToAddress] = useState('');
   const [fromAddress, setFromAddress] = useState();
@@ -86,18 +86,38 @@ const Index = () => {
   const [executionTick, setExecutionTick] = useState<number>(0);
   const [identity, setIdentity] = useState<any>();
 
+
   const qubic = new Qubic({
     providerUrl: 'https://rpc.qubic.org',
     version: 1,
   });
 
   const toastSuccessMessage = (message: string) => toast(message, toastOption);
-  const toastErrorMessage = (message: string) => toast.error(message, toastOption);
-  
+  const toastErrorMessage = (message: string) =>
+    toast.error(message, toastOption);
+
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
 
+   useEffect(() => {
+     if (tickSeconds === 0) {
+       setTickSeconds(5);
+       return;
+     }
+     const interval = setInterval(() => {
+       setTickSeconds((prev) => prev - 1);
+     }, 1000);
+     return () => clearInterval(interval);
+   }, [tickSeconds]);
+  
+  useEffect(() => {
+    if(tickSeconds === 0) {
+      fetchQubicLatestTick();
+    }
+  },[tickSeconds])
+  
+  
   useEffect(() => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
@@ -122,8 +142,8 @@ const Index = () => {
         );
         setBalance(balance.balance);
       }
-    } catch (error:any) {
-      toastErrorMessage(error.message)
+    } catch (error: any) {
+      toastErrorMessage(error.message);
     }
   };
 
@@ -135,10 +155,10 @@ const Index = () => {
       }
       if (typeof latestTick === 'number' && latestTick > 0) {
         setTickValue(latestTick ?? 0);
-        setExecutionTick(latestTick + 10);
+        setExecutionTick(latestTick);
       }
-    } catch (error:any) {
-      toastErrorMessage(error.message)
+    } catch (error: any) {
+      toastErrorMessage(error.message);
     }
   };
 
@@ -157,8 +177,8 @@ const Index = () => {
           setIdentity(identity);
         }
       }
-    } catch (error:any) {
-      toastErrorMessage(error.message)
+    } catch (error: any) {
+      toastErrorMessage(error.message);
     }
   };
 
@@ -185,9 +205,9 @@ const Index = () => {
         onReset();
         setTimeout(fetchBalance, 10000);
       }
-    } catch (error:any) {
-      toastErrorMessage(error.message)
-    } 
+    } catch (error: any) {
+      toastErrorMessage(error.message);
+    }
   };
 
   const disabledWalletDetails =
@@ -218,7 +238,13 @@ const Index = () => {
           <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
             qubic
           </QubicText>
-          <QubicText style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
+          <QubicText
+            style={{
+              fontFamily: 'Poppins-Reg',
+              fontWeight: 600,
+              color: '#61f0fe',
+            }}
+          >
             connect
           </QubicText>
         </div>
@@ -243,7 +269,7 @@ const Index = () => {
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
-        tickValue={executionTick + 10}
+        tickValue={executionTick}
       />
 
       <div
@@ -256,7 +282,10 @@ const Index = () => {
           fontFamily: 'Inter-Reg',
         }}
       >
-        Latest Tick: <span style={{ fontWeight: 'bold' }}> {tickValue}</span>
+        Latest Tick:{' '}
+        <span style={{ fontWeight: 'bold' }}>
+          {tickValue}({tickSeconds}s)
+        </span>
       </div>
 
       <div
@@ -272,7 +301,12 @@ const Index = () => {
         </div>
         <div>
           <QubicSendButton
-            disabled={disabledWalletDetails}
+            disabled={
+              disabledWalletDetails ||
+              identity?.publicId === null ||
+              toAddress === '' ||
+              amountToSend === 0
+            }
             onClick={sendTransaction}
           >
             Send
