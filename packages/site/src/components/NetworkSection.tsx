@@ -1,7 +1,7 @@
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
 
- const NetworkSection = ({ children }:any) => {
+const NetworkSection = ({ children }: any) => {
   return (
     <SectionContainer>
       <SectionTitle style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
@@ -10,6 +10,6 @@ import { SectionTitle } from './SectionTitle';
       {children}
     </SectionContainer>
   );
- };
+};
 
- export default NetworkSection
+export default NetworkSection;
