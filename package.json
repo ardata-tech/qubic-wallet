@@ -58,6 +58,7 @@
     }
   },
   "dependencies": {
-    "@ardata-tech/qubic-js": "^0.2.16"
+    "@ardata-tech/qubic-js": "^0.2.16",
+    "react-toastify": "^11.0.5"
   }
 }
