@@ -5,7 +5,6 @@ import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import { useMetaMask, useRequestSnap } from '../hooks';
 import { shouldDisplayReconnectButton } from '../utils';
 
-
 export const QubicSendButton = styled.button`
   border: none;
   height: 55px;
@@ -165,4 +164,3 @@ export const HeaderButtons = () => {
     </ConnectedContainer>
   );
 };
-

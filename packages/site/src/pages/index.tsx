@@ -184,7 +184,7 @@ const Index = () => {
         </div>
         <div>
           <QubicSendButton onClick={requestSnap}>
-            <FlaskFox /> Connect to MetaMask
+            <FlaskFox /> Connect
           </QubicSendButton>
         </div>
       </Header>

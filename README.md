@@ -27,6 +27,12 @@ You can fix this by running the following command:
 yarn allow-scripts auto
 ```
 
+Build the dApp and the Snap:
+
+```shell
+yarn build
+```
+
 Start the development server:
 
 ```shell
