@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Inter-Reg';
+  src: url('/fonts/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins-Reg';
+  src: url('/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

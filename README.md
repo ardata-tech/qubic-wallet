@@ -1,47 +1,42 @@
 # Qubic Connect
 
-Qubic Connect is a MetaMask extension that has Qubic capabilities such as public key derivation and transaction signing.
+Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
 
-## Usage
-Install via NPM.
+## Prerequisites
+- MetaMask Flask installed
+- A text editor (for example, VS Code)
+- Node version 20.11 or later
+- Yarn
 
-```bash
-npm add @qubic-lib/qubic-mm-snap
+## Getting Started
+
+From the root of the project, install the project dependencies using Yarn:
+
+```shell
+yarn install
 ```
 
-## Starting the snap
+You may get a warning like the following:
 
-Install the latest version of the Snaps CLI
+> @lavamoat/allow-scripts has detected dependencies without configuration. explicit configuration required.
+run "allow-scripts auto" to automatically populate the configuration.
 
-```bash
-npm install -g @metamask/snaps-cli
+You can fix this by running the following command:
+
+```shell
+yarn allow-scripts auto
 ```
 
-Install the dependencies
+Build the dApp and the Snap:
 
-```bash
-npm i
+```shell
+yarn build
 ```
 
-Build and start the local development server
+Start the development server:
 
-```bash
-npm start
+```shell
+yarn start
 ```
 
-## Using the snap
-
-The locally started snap is available as Snap ID `local:http://localhost:8081`.
-
-See the [RPC API](./docs/RPC.md) for more information on how to interact with the snap.
-
-
-## Publish
-You can see the package on [https://www.npmjs.com/package/@qubic-lib/qubic-mm-snap](https://www.npmjs.com/package/@qubic-lib/qubic-mm-snap).
-
-publish with.
-
-```bash
-npm run build
-npm publish --access public
-```
+You are now serving the Snap at http://localhost:8080 and its front-end dapp at http://localhost:8000.
