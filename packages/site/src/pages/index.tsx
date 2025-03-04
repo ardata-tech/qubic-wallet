@@ -39,7 +39,6 @@ const WalletContainer = styled.div`
   background-size: cover;
   background-position: center;
   repeat: no-repeat;
-  height: 100vh;
   padding: 10%;
   padding-top: 3%;
 

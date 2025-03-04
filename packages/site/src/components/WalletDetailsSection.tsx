@@ -10,6 +10,13 @@ type IWalletDetailsSection = {
   disabled: boolean;
 };
 
+const noBorderStyle = {
+  border: 'none',
+  padding: 0,
+  marginTop: '1rem',
+  backgroundColor: 'transparent',
+};
+
 export const WalletDetailsSection = ({
   address,
   balance,
@@ -22,12 +29,7 @@ export const WalletDetailsSection = ({
         Wallet Details
       </SectionTitle>
       <InputWithLabel
-        style={{
-          border: 'none',
-          padding: 0,
-          marginTop: '1rem',
-          backgroundColor: 'transparent',
-        }}
+        style={noBorderStyle}
         showLabel={true}
         onChange={() => {}}
         required={false}
@@ -37,12 +39,7 @@ export const WalletDetailsSection = ({
         value={address}
       />
       <InputWithLabel
-        style={{
-          border: 'none',
-          padding: 0,
-          marginTop: '1rem',
-          backgroundColor: 'transparent',
-        }}
+        style={noBorderStyle}
         showLabel={true}
         onChange={() => {}}
         type="number"
@@ -51,12 +48,7 @@ export const WalletDetailsSection = ({
         value={balance}
       />
       <InputWithLabel
-        style={{
-          border: 'none',
-          padding: 0,
-          marginTop: '1rem',
-          backgroundColor: 'transparent',
-        }}
+        style={noBorderStyle}
         showLabel={true}
         onChange={() => {}}
         type="text"

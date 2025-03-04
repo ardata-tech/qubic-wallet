@@ -132,6 +132,10 @@ export const GlobalStyle = createGlobalStyle`
     font-family: ${(props) => props.theme.fonts.default};
     font-size: ${(props) => props.theme.fontSizes.text};
     margin: 0;
+    overflow: hidden;
+    @media (max-width: 425px) {
+      overflow: auto;
+    }
   }
 
   * {
