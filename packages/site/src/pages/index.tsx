@@ -95,6 +95,13 @@ const Index = () => {
     }
   }, [isMetaMaskReady]);
 
+  useEffect(() => {
+    if (identity) {
+      fetchQubicLatestTick();
+      fetchBalance();
+    }
+  }, [identity]);
+
   const fetchBalance = async () => {
     try {
       const { balance } = await qubic.identity.getBalanceByAddress(
@@ -128,11 +135,20 @@ const Index = () => {
 
   const sendTransaction = async () => {
     await fetchQubicLatestTick();
+
+    console.log(
+      'payload',
+      identity?.publicId,
+      toAddress,
+      amountToSend,
+      executionTick,
+    );
+
     const transactionData = await qubic.transaction.createTransaction(
       identity.publicId,
       toAddress,
       amountToSend,
-      tickValue + 10,
+      executionTick,
     );
 
     const signedTransaction = await qubic.transaction.signTransaction(
@@ -144,20 +160,22 @@ const Index = () => {
       String.fromCharCode(...signedTransaction),
     );
 
-    const result = await qubic.transaction.broadcastTransaction(
-      signedTransactionBase64,
-    );
+    console.log('signedTransactionBase64', signedTransactionBase64);
 
-    console.log('broadcastTransaction result', result);
+    // const result = await qubic.transaction.broadcastTransaction(
+    //   signedTransactionBase64,
+    // );
+
+    // console.log('broadcastTransaction result', result);
     await fetchBalance();
   };
 
   const disabledWalletDetails =
-    !isMetaMaskReady ||
-    !fromAddress ||
+    !identity||
     Number.isNaN(balance) ||
     balance === 0 ||
     Number(balance) < Number(amountToSend);
+  
   const onReset = () => {
     setToAddress('');
     setAmountToSend(0);
@@ -195,15 +213,11 @@ const Index = () => {
       />
 
       <TransactionSection
-        onChangeDestinationValue={(value) => {
-          setToAddress(value);
+        onChangeDestinationValue={(value) => setToAddress(String(value))}
+        onChangeAmountValue={(value) => {
+          setAmountToSend(Number(value));
         }}
-        onChangeAmountValue={(value: number) => {
-          setAmountToSend(value);
-        }}
-        onTickValueValue={(value) => {
-          setExecutionTick(value);
-        }}
+        onTickValueValue={(value) => setExecutionTick(Number(value))}
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}

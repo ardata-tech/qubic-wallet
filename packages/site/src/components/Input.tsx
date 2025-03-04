@@ -6,7 +6,8 @@ type InputProps = {
   placeholder?: string;
   value: any;
   disabled: boolean;
-  type:string
+  type: string;
+  onChange: (value:string | number)=>void
 };
 
 const Input = styled.input`
@@ -33,7 +34,8 @@ export const InputWithLabel = ({
   placeholder,
   value,
   disabled = false,
-  type="text"
+  type = "text",
+  onChange
 }: InputProps) => {
   return (
     <LabelInputContainer>
@@ -43,6 +45,7 @@ export const InputWithLabel = ({
         disabled={disabled}
         placeholder={placeholder}
         value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
     </LabelInputContainer>
   );
