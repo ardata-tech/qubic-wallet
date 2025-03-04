@@ -72,13 +72,14 @@ const toastOption: any = {
 };
 
 const Index = () => {
+  const DEFAULT_TIME_LIMIT = 10; 
   const { error } = useMetaMaskContext();
   const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
   const invokeSnap = useInvokeSnap();
 
   const [tickValue, setTickValue] = useState(0);
-  const [tickSeconds, setTickSeconds] = useState<number>(5);
+  const [tickSeconds, setTickSeconds] = useState<number>(DEFAULT_TIME_LIMIT);
   const [balance, setBalance] = useState(0);
   const [toAddress, setToAddress] = useState('');
   const [fromAddress, setFromAddress] = useState();
@@ -102,7 +103,7 @@ const Index = () => {
 
    useEffect(() => {
      if (tickSeconds === 0) {
-       setTickSeconds(5);
+       setTickSeconds(DEFAULT_TIME_LIMIT);
        return;
      }
      const interval = setInterval(() => {
@@ -122,14 +123,14 @@ const Index = () => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
       getIdentity();
-      fetchQubicLatestTick();
-      fetchBalance();
+      if (tickValue == 0) {
+        fetchQubicLatestTick();
+      }
     }
   }, [isMetaMaskReady]);
 
   useEffect(() => {
     if (identity?.publicId) {
-      fetchQubicLatestTick();
       fetchBalance();
     }
   }, [identity]);
@@ -184,7 +185,6 @@ const Index = () => {
 
   const sendTransaction = async () => {
     try {
-      await fetchQubicLatestTick();
       const transactionData = await qubic.transaction.createTransaction(
         identity.publicId,
         toAddress,
@@ -220,8 +220,6 @@ const Index = () => {
     setToAddress('');
     setAmountToSend(0);
   };
-
-  console.log('window.location.origin', window.location.origin);
 
   return (
     <WalletContainer style={{ backgroundImage: `url(${qubicBg})` }}>
@@ -282,9 +280,10 @@ const Index = () => {
           fontFamily: 'Inter-Reg',
         }}
       >
-        Latest Tick:{' '}
-        <span style={{ fontWeight: 'bold' }}>
-          {tickValue}({tickSeconds}s)
+        Tick:
+        <span style={{ fontWeight: 'bold', color: '#11192766' }}>
+          {tickValue}
+          <span style={{ color: '#BE7676' }}>({tickSeconds}s)</span>
         </span>
       </div>
 
