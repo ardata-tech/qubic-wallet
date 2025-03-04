@@ -12,14 +12,13 @@ type InputProps = {
 };
 
 const Label = styled.label<InputProps>`
-    font-family: Inter-Thin;
-    font-weight: 600;
-    font-size: 15px;
-    line-height: 18.15px;
-    letter-spacing: -2%;
-    color: #1119279e;
+  font-family: Inter-Thin;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 18.15px;
+  letter-spacing: -2%;
+  color: #1119279e;
 `;
-
 
 const Input = styled.input<InputProps>`
   padding: 10px 30px 10px 10px;
