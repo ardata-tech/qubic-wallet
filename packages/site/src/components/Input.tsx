@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-
 import { InputLabel } from './InputLabel';
+import React from 'react';
 
 type InputProps = {
   label: string;
@@ -20,10 +20,11 @@ const Input = styled.input`
   height: 18px;
   border-radius: 6px;
   border-width: 1px;
-  padding-top: 23px;
-  padding-right: 19px;
-  padding-bottom: 23px;
-  padding-left: 19px;
+  padding-top: 14px;
+  padding-right: 14px;
+  padding-bottom: 14px;
+  padding-left: 14px;
+  background-color: #ffffff;
 
   @media (max-width: 425px) {
     padding-top: 12px;

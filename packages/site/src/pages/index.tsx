@@ -54,7 +54,7 @@ const Header = styled.div`
   width: 100%;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0px;
+  margin-bottom: 4rem;
 
   @media (max-width: 768px) {
     width: 100% !important;
@@ -96,6 +96,7 @@ const ButtonContainer = styled.div`
   gap: 8px;
   justifyContent: flex-start;
   width: 100%;
+  margin-top: 2rem;
 `;
 
 const TickContainer = styled.div`
@@ -141,6 +142,11 @@ const Index = () => {
   const [identity, setIdentity] = useState<any>();
   const [isTransactionProcessing, setIsTransactionProcessing] =
     useState<boolean>(false);
+  
+  
+  useEffect(() => {
+    console.log('error', error);
+  }, [error]);
 
   const qubic = new Qubic({
     providerUrl: 'https://rpc.qubic.org',
@@ -157,16 +163,31 @@ const Index = () => {
     : snapsDetected;
 
   useEffect(() => {
-    if (tickSeconds === 0) {
-      setTickSeconds(DEFAULT_TIME_LIMIT);
-      return;
+    if (isMetaMaskReady && identity) { 
+      if (tickSeconds === 0) {
+        setTickSeconds(DEFAULT_TIME_LIMIT);
+        return;
+      }
+
+      const interval = setInterval(() => {
+        setTickSeconds((prev) => prev - 1);
+      }, 1000);
+      // eslint-disable-next-line consistent-return
+      return () => clearInterval(interval);
     }
-    const interval = setInterval(() => {
-      setTickSeconds((prev) => prev - 1);
-    }, 1000);
-    // eslint-disable-next-line consistent-return
-    return () => clearInterval(interval);
   }, [tickSeconds]);
+
+  const onConnect = async () => {
+    if (isMetaMaskReady && identity?.publicId == undefined) {
+      await requestSnap();
+    } else {
+      if (!isFlask) {
+        toastErrorMessage('Please install MetaMask Flask');
+      } else if (!snapsDetected) {
+        toastErrorMessage('Snap is not detected');
+      }
+    }
+  };
 
   useEffect(() => {
     if (tickSeconds === 0) {
@@ -320,18 +341,25 @@ const Index = () => {
           </QubicText>
         </HeaderItemWrapper>
         <div>
-          <QubicSendButton onClick={requestSnap}>
-            <FlaskFox /> Connect
+          <QubicSendButton
+            onClick={onConnect}
+            disabled={isMetaMaskReady && identity}
+          >
+            <FlaskFox /> {isMetaMaskReady && identity ? 'Connected' : 'Connect'}
           </QubicSendButton>
         </div>
       </Header>
       <WalletDetailsSection
         disabled={true}
-        address={identity?.publicId}
-        balance={balance}
-        tick={`${tickValue} (${tickSeconds}s)`}
+        address={isMetaMaskReady && identity ? identity.publicId : undefined}
+        balance={balance || undefined}
+        tick={
+          isMetaMaskReady && identity
+            ? `${tickValue} (${tickSeconds}s)`
+            : undefined
+        }
       />
-      
+
       <TransactionSection
         onChangeDestinationValue={(value) => setToAddress(String(value))}
         onChangeAmountValue={(value) => {

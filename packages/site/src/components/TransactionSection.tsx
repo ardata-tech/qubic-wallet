@@ -15,6 +15,11 @@ type ITransactionSection = {
   onTickValueValue: (value: string | number) => void;
 };
 
+
+const style = {
+  marginTop: '1rem',
+};
+
 export const TransactionSection = ({
   destinationValue,
   amountValue,
@@ -30,6 +35,7 @@ export const TransactionSection = ({
         Send Qubic Units (QUBIC)
       </SectionTitle>
       <InputWithLabel
+        style={style}
         required
         type="text"
         disabled={disabled}
@@ -39,6 +45,7 @@ export const TransactionSection = ({
         placeholder="e.g., ECRXFGMYUXWETCOUKCRIQDNCEOJAHUXFTQETBZSDVCLEMKPZZMJLVOECGHRB"
       />
       <InputWithLabel
+        style={style}
         required
         type="number"
         disabled={disabled}
@@ -48,6 +55,7 @@ export const TransactionSection = ({
         onChange={(e) => onChangeAmountValue(e)}
       />
       <InputWithLabel
+        style={style}
         required
         type="number"
         disabled={disabled}

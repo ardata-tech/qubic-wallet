@@ -2,19 +2,19 @@
 import { InputWithLabel } from './Input';
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
+import React from 'react';
 
 type IWalletDetailsSection = {
-  address: string;
-  balance: number;
-  tick: string;
+  address: string | undefined;
+  balance: number | undefined;
+  tick: string | undefined;
   disabled: boolean;
 };
 
 const noBorderStyle = {
   border: 'none',
   padding: 0,
-  marginTop: '1rem',
-  backgroundColor: 'transparent',
+  marginTop: '1rem'
 };
 
 export const WalletDetailsSection = ({
@@ -36,16 +36,16 @@ export const WalletDetailsSection = ({
         type="text"
         disabled={disabled}
         label="Address ID"
-        value={address}
+        value={ address || '-'}
       />
       <InputWithLabel
         style={noBorderStyle}
         showLabel={true}
         onChange={() => {}}
-        type="number"
+        type={typeof balance === 'number' ? 'number' : 'text'}
         disabled={disabled}
-        label="Balance in Qubic Units (QUBIC)"
-        value={balance}
+        label="Balance"
+        value={balance ||  '-'}
       />
       <InputWithLabel
         style={noBorderStyle}
@@ -54,7 +54,7 @@ export const WalletDetailsSection = ({
         type="text"
         disabled={disabled}
         label="Tick"
-        value={tick}
+        value={tick || '-'}
       />
     </SectionContainer>
   );
