@@ -6,7 +6,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Qubic from '@ardata-tech/qubic-js';
-import { useEffect, useState, type ComponentProps } from 'react';
+import { useEffect, useMemo, useState, type ComponentProps } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -128,7 +128,7 @@ const toastOption: any = {
 const Index = () => {
   const DEFAULT_TIME_LIMIT = 10;
   const { error } = useMetaMaskContext();
-  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
+  const { isFlask, snapsDetected, installedSnap, getSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
   const invokeSnap = useInvokeSnap();
 
@@ -142,7 +142,12 @@ const Index = () => {
   const [identity, setIdentity] = useState<any>();
   const [isTransactionProcessing, setIsTransactionProcessing] =
     useState<boolean>(false);
+  
+  const [metamaskState, setMetamaskState] = useState<
+    'Connected' | 'Connecting' | 'Connect'
+  >('Connected');
 
+  console.log("metamask", isFlask, snapsDetected);
   
   useEffect(() => {
     console.log('error', error);
@@ -153,6 +158,10 @@ const Index = () => {
     version: 1,
   });
 
+  useEffect(() => {
+    document.title = "Qubic Connect"
+  },[])
+
   const toastSuccessMessage = (message: string) => toast(message, toastOption);
 
   const toastErrorMessage = (message: string) =>
@@ -162,29 +171,37 @@ const Index = () => {
     ? isFlask
     : snapsDetected;
 
-  useEffect(() => {
-      if (tickSeconds === 0) {
-        setTickSeconds(DEFAULT_TIME_LIMIT);
-        return;
-      }
+  useMemo(() => {
+    if (isMetaMaskReady && identity?.publicId) {
+      setMetamaskState('Connected');
+    } else {
+      setMetamaskState('Connect');
+    }
+  }, [isMetaMaskReady, identity]);
 
-      const interval = setInterval(() => {
-        setTickSeconds((prev) => prev - 1);
-      }, 1000);
-      // eslint-disable-next-line consistent-return
-      return () => clearInterval(interval);
+  // useEffect(() => {
+  //     if (tickSeconds === 0) {
+  //       setTickSeconds(DEFAULT_TIME_LIMIT);
+  //       return;
+  //     }
+
+  //     const interval = setInterval(() => {
+  //       setTickSeconds((prev) => prev - 1);
+  //     }, 1000);
+  //     // eslint-disable-next-line consistent-return
+  //     return () => clearInterval(interval);
     
-  }, [tickSeconds]);
+  // }, [tickSeconds]);
 
   const onConnect = async () => {
-    if (isMetaMaskReady && identity?.publicId == undefined) {
-      await requestSnap();
+    if (metamaskState == "Connect") {
+       await requestSnap();
     } else {
-      if (!isFlask) {
-        toastErrorMessage('Please install MetaMask Flask');
-      } else if (!snapsDetected) {
-        toastErrorMessage('Snap is not detected');
-      }
+        if (!isFlask) {
+          toastErrorMessage('Please install MetaMask Flask');
+        } else if (!snapsDetected) {
+          toastErrorMessage('Snap is not detected');
+        }
     }
   };
 
@@ -198,9 +215,7 @@ const Index = () => {
     console.log('isMetaMaskReady', isMetaMaskReady);
     if (isMetaMaskReady && !identity) {
       getIdentity();
-      if (tickValue === 0) {
-        fetchQubicLatestTick();
-      }
+      fetchQubicLatestTick();
     }
   }, [isMetaMaskReady]);
 
@@ -239,6 +254,7 @@ const Index = () => {
   };
 
   const getIdentity = async () => {
+    console.log('fetching identity----->>>')
     try {
       const jsonString: string | unknown = await invokeSnap({
         method: 'getPublicId',
@@ -342,7 +358,7 @@ const Index = () => {
         <div>
           <MetaMaskIndicatorButton
             onClick={onConnect}
-            disabled={isMetaMaskReady && identity}
+            disabled={metamaskState == 'Connected'}
           >
             <div
               style={{
@@ -352,19 +368,24 @@ const Index = () => {
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '5px',
+                paddingRight: '8px',
+                paddingLeft: '8px',
               }}
             >
-              <div style={{width:'70%', display:'flex', alignItems:'center', gap:'10px', justifyContent:'flex-end'}}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '5px',
+                  justifyContent: 'flex-end',
+                }}
+              >
                 <div style={{ width: '25px', height: '25px' }}>
                   <FlaskFox />
                 </div>
-                <div>
-                  {isMetaMaskReady && identity ? 'Connected' : 'Connect'}
+                <div style={{ display: 'flex', fontWeight: 600 }}>
+                  {`${metamaskState} to MetaMask`}
                 </div>
-              </div>
-
-              <div>
-                <span>{'>'}</span>
               </div>
             </div>
           </MetaMaskIndicatorButton>
@@ -395,10 +416,16 @@ const Index = () => {
 
       <ButtonContainer>
         <div>
-          <QubicBorderedtButton onClick={onReset}>Reset</QubicBorderedtButton>
+          <QubicBorderedtButton
+            disabled={!amountToSend && !toAddress}
+            onClick={onReset}
+          >
+            Reset
+          </QubicBorderedtButton>
         </div>
         <div>
           <LoadingButton
+            disabled={!toAddress || !amountToSend}
             loading={isTransactionProcessing}
             onClick={validateTransaction}
           >
