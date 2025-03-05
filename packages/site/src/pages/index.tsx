@@ -246,7 +246,7 @@ const Index = () => {
       }
       if (typeof latestTick === 'number' && latestTick > 0) {
         setTickValue(latestTick ?? 0);
-        setExecutionTick(latestTick);
+        setExecutionTick(latestTick + 10);
       }
     } catch (error: any) {
       toastErrorMessage(error.message);
@@ -411,7 +411,7 @@ const Index = () => {
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
-        tickValue={executionTick + 10}
+        tickValue={executionTick}
       />
 
       <ButtonContainer>
