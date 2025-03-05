@@ -53,7 +53,7 @@ export const WalletDetailsSection = ({
         onChange={() => {}}
         type="text"
         disabled={disabled}
-        label="Tick"
+        label="Current Tick"
         value={tick || '-'}
       />
     </SectionContainer>
