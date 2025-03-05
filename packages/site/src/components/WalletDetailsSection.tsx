@@ -14,7 +14,8 @@ type IWalletDetailsSection = {
 const noBorderStyle = {
   border: 'none',
   padding: 0,
-  marginTop: '1rem'
+  marginTop: '1rem',
+  backgroundColor: 'transparent',
 };
 
 export const WalletDetailsSection = ({
@@ -24,7 +25,7 @@ export const WalletDetailsSection = ({
   disabled = false,
 }: IWalletDetailsSection) => {
   return (
-    <SectionContainer>
+    <SectionContainer >
       <SectionTitle style={{ fontFamily: 'Poppins-Reg', fontWeight: 600 }}>
         Wallet Details
       </SectionTitle>

@@ -50,7 +50,7 @@ export const TransactionSection = ({
         type="number"
         disabled={disabled}
         label="Amount in Qubic Units (QUBIC)"
-        value={amountValue}
+        value={amountValue || ""}
         // eslint-disable-next-line id-length
         onChange={(e) => onChangeAmountValue(e)}
       />

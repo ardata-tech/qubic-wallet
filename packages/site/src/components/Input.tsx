@@ -19,14 +19,14 @@ const Input = styled.input`
   width: 100%;
   height: 18px;
   border-radius: 6px;
-  border-width: 1px;
+  border-width: 0px;
   padding-top: 14px;
   padding-right: 14px;
   padding-bottom: 14px;
   padding-left: 14px;
-  background-color: #ffffff;
-
-  @media (max-width: 425px) {
+  background-color:#efefef;
+  
+   @media (max-width: 425px) {
     padding-top: 12px;
     padding-right: 12px;
     padding-bottom: 12px;
