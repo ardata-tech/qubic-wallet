@@ -335,7 +335,7 @@ const Index = () => {
         setIsTransactionProcessing(false);
         onReset();
         toastSuccessMessage(
-          `Sent ${amountToSend} QUBIC to ${toAddress} (Tx: ${result.transactionId})`,
+          `Sent ${amountToSend} QUBIC to ${toAddress}`,
         );
         setTimeout(fetchBalance, 10000);
       }
