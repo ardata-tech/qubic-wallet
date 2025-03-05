@@ -179,19 +179,19 @@ const Index = () => {
     }
   }, [isMetaMaskReady, identity]);
 
-  // useEffect(() => {
-  //     if (tickSeconds === 0) {
-  //       setTickSeconds(DEFAULT_TIME_LIMIT);
-  //       return;
-  //     }
+  useEffect(() => {
+      if (tickSeconds === 0) {
+        setTickSeconds(DEFAULT_TIME_LIMIT);
+        return;
+      }
 
-  //     const interval = setInterval(() => {
-  //       setTickSeconds((prev) => prev - 1);
-  //     }, 1000);
-  //     // eslint-disable-next-line consistent-return
-  //     return () => clearInterval(interval);
+      const interval = setInterval(() => {
+        setTickSeconds((prev) => prev - 1);
+      }, 1000);
+      // eslint-disable-next-line consistent-return
+      return () => clearInterval(interval);
     
-  // }, [tickSeconds]);
+  }, [tickSeconds]);
 
   const onConnect = async () => {
     if (metamaskState == "Connect") {
