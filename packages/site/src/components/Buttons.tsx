@@ -1,6 +1,6 @@
 import type { ComponentProps } from 'react';
 import styled from 'styled-components';
-
+import React from 'react';
 import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
 import { useMetaMask, useRequestSnap } from '../hooks';
 import { shouldDisplayReconnectButton } from '../utils';
@@ -31,6 +31,16 @@ export const QubicSendButton = styled.button`
     line-height: 14.29px;
   }
 `;
+
+export const MetaMaskIndicatorButton = styled.button`
+  border: 1px solid orange !important;
+  background-color: white;
+  color: orange;
+  font-weight: 450;
+  border-radius: 50px;
+  min-width: 200px;
+`;
+
 
 export const LoadingButton = ({ onClick, loading=false, children, disabled  }:any) => {
  return (

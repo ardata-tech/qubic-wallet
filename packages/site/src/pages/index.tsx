@@ -10,14 +10,14 @@ import { useEffect, useState, type ComponentProps } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import styled from 'styled-components';
 
-import { ReactComponent as FlaskFox } from '../assets/flask_fox.svg';
+import { ReactComponent as FlaskFox } from '../assets/metamask_fox_orange.svg';
 import qubicLogo from '../assets/qubic-logo.png';
 import qubicBg from '../assets/wall.png';
 import {
   WalletDetailsSection,
   TransactionSection,
   QubicBorderedtButton,
-  QubicSendButton,
+  MetaMaskIndicatorButton,
   LoadingButton,
 } from '../components';
 
@@ -142,7 +142,7 @@ const Index = () => {
   const [identity, setIdentity] = useState<any>();
   const [isTransactionProcessing, setIsTransactionProcessing] =
     useState<boolean>(false);
-  
+
   
   useEffect(() => {
     console.log('error', error);
@@ -163,7 +163,6 @@ const Index = () => {
     : snapsDetected;
 
   useEffect(() => {
-    if (isMetaMaskReady && identity) { 
       if (tickSeconds === 0) {
         setTickSeconds(DEFAULT_TIME_LIMIT);
         return;
@@ -174,7 +173,7 @@ const Index = () => {
       }, 1000);
       // eslint-disable-next-line consistent-return
       return () => clearInterval(interval);
-    }
+    
   }, [tickSeconds]);
 
   const onConnect = async () => {
@@ -341,12 +340,34 @@ const Index = () => {
           </QubicText>
         </HeaderItemWrapper>
         <div>
-          <QubicSendButton
+          <MetaMaskIndicatorButton
             onClick={onConnect}
             disabled={isMetaMaskReady && identity}
           >
-            <FlaskFox /> {isMetaMaskReady && identity ? 'Connected' : 'Connect'}
-          </QubicSendButton>
+            <div
+              style={{
+                display: 'flex',
+                width: '100%',
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '5px',
+              }}
+            >
+              <div style={{width:'70%', display:'flex', alignItems:'center', gap:'10px', justifyContent:'flex-end'}}>
+                <div style={{ width: '25px', height: '25px' }}>
+                  <FlaskFox />
+                </div>
+                <div>
+                  {isMetaMaskReady && identity ? 'Connected' : 'Connect'}
+                </div>
+              </div>
+
+              <div>
+                <span>{'>'}</span>
+              </div>
+            </div>
+          </MetaMaskIndicatorButton>
         </div>
       </Header>
       <WalletDetailsSection
