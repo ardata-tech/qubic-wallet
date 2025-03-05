@@ -3,11 +3,12 @@
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
 import { InputWithLabel } from './Input';
+import React from 'react'
 
 type ITransactionSection = {
   disabled: boolean;
   destinationValue: string;
-  amountValue: number;
+  amountValue: number | undefined;
   tickValue: number;
   onChangeDestinationValue: (value: string | number) => void;
   onChangeAmountValue: (value: string | number) => void;

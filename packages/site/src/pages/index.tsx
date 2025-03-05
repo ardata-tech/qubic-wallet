@@ -29,7 +29,7 @@ import {
   useRequestSnap,
 } from '../hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
-import NetworkSection from '../components/NetworkSection';
+import React from 'react';
 
 const WalletContainer = styled.div`
   display: flex;
@@ -136,7 +136,7 @@ const Index = () => {
   const [balance, setBalance] = useState(0);
   const [toAddress, setToAddress] = useState('');
   const [fromAddress, setFromAddress] = useState();
-  const [amountToSend, setAmountToSend] = useState<number>(0);
+  const [amountToSend, setAmountToSend] = useState<number>();
   const [executionTick, setExecutionTick] = useState<number>(0);
   const [identity, setIdentity] = useState<any>();
   const [isTransactionProcessing, setIsTransactionProcessing] =
@@ -239,6 +239,7 @@ const Index = () => {
   };
 
   const validateTransaction = () => {
+    const amount = amountToSend || 0
     setIsTransactionProcessing(true);
     const fromAddress: string = identity.publicId;
     const inValidAddressLength =
@@ -246,9 +247,9 @@ const Index = () => {
       fromAddress.length < 60 ||
       !identity?.publicId ||
       identity.publicId.length < 60;
-    const inValidBalance =
-      amountToSend > balance || balance == 0 || amountToSend == 0;
-    if (!inValidAddressLength || !inValidBalance) {
+    const inValidBalance = amount > balance || balance == 0 || amount == 0;
+
+    if (inValidAddressLength || inValidBalance) {
       setIsTransactionProcessing(false);
       toastErrorMessage('Invalid Transaction');
     } else {
@@ -257,11 +258,12 @@ const Index = () => {
   };
 
   const sendTransaction = async () => {
+    const amount = amountToSend || 0
     try {
       const transactionData = await qubic.transaction.createTransaction(
         identity.publicId,
         toAddress,
-        amountToSend,
+        amount,
         executionTick,
       );
       const signedTransaction = await qubic.transaction.signTransaction(
@@ -275,6 +277,7 @@ const Index = () => {
         signedTransactionBase64,
       );
       if (result) {
+        setIsTransactionProcessing(false);
         onReset();
         toastSuccessMessage(
           `Successfully sent ${amountToSend} QUBIC to ${toAddress}`,
@@ -328,17 +331,7 @@ const Index = () => {
         balance={balance}
         tick={`${tickValue} (${tickSeconds}s)`}
       />
-
-      {/* <NetworkSection>
-        <TickContainer>
-          Tick:
-          <span style={{ fontWeight: 'bold', color: '#11192766' }}>
-            {tickValue}
-            <span style={{ color: '#BE7676' }}>({tickSeconds}s)</span>
-          </span>
-        </TickContainer>
-      </NetworkSection> */}
-
+      
       <TransactionSection
         onChangeDestinationValue={(value) => setToAddress(String(value))}
         onChangeAmountValue={(value) => {
@@ -348,7 +341,7 @@ const Index = () => {
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
-        tickValue={executionTick}
+        tickValue={executionTick + 10}
       />
 
       <ButtonContainer>
