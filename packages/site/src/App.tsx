@@ -1,8 +1,11 @@
+/* eslint-disable import/no-unassigned-import */
+/* eslint-disable import/order */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FunctionComponent, ReactNode } from 'react';
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from './config/theme';
-import "./app.css"
+import './app.css';
 
 const Wrapper = styled.div`
   display: flex;
@@ -20,9 +23,7 @@ export const App: FunctionComponent<AppProps> = ({ children }) => {
   return (
     <>
       <GlobalStyle />
-      <Wrapper>
-        {children}
-      </Wrapper>
+      <Wrapper>{children}</Wrapper>
     </>
   );
 };

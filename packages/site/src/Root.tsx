@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FunctionComponent, ReactNode } from 'react';
 import { createContext, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
