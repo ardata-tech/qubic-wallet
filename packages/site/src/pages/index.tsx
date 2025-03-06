@@ -174,6 +174,18 @@ const Index = () => {
     ? isFlask
     : snapsDetected;
 
+  const connected = shouldDisplayReconnectButton(installedSnap);
+  console.log('connected', connected);
+  console.log('isMetaMaskReady', isMetaMaskReady);
+  console.log('installedSnap', installedSnap);
+  useEffect(() => {
+    console.log('pass---->>');
+    if (connected && !identity) {
+      getIdentity();
+      fetchQubicLatestTick();
+    }
+  }, [connected]);
+
   useEffect(() => {
     document.title = 'Qubic Connect';
 
@@ -186,12 +198,15 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    if (isMetaMaskReady && identity?.publicId) {
+    if (connected && identity?.publicId) {
       setMetamaskState('Connected');
     } else {
       setMetamaskState('Connect');
     }
-  }, [isMetaMaskReady, identity]);
+    if (identity?.publicId) {
+      fetchBalance();
+    }
+  }, [connected, identity]);
 
   useEffect(() => {
     if (tickSeconds === 0) {
@@ -211,20 +226,6 @@ const Index = () => {
       fetchQubicLatestTick();
     }
   }, [tickSeconds]);
-
-  useEffect(() => {
-    console.log('isMetaMaskReady', isMetaMaskReady);
-    if (isMetaMaskReady && !identity) {
-      getIdentity();
-      fetchQubicLatestTick();
-    }
-  }, [isMetaMaskReady]);
-
-  useEffect(() => {
-    if (identity?.publicId) {
-      fetchBalance();
-    }
-  }, [identity]);
 
   const transactionState = useMemo(() => {
     return isTransactionProcessing ? 'Sending' : 'Send';
@@ -334,9 +335,7 @@ const Index = () => {
         console.log('result', result);
         setIsTransactionProcessing(false);
         onReset();
-        toastSuccessMessage(
-          `Sent ${amountToSend} QUBIC to ${toAddress}`,
-        );
+        toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
         setTimeout(fetchBalance, 10000);
       }
     } catch (error: any) {
