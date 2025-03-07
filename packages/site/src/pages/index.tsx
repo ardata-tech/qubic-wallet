@@ -30,6 +30,7 @@ import {
 } from '../hooks';
 import { isLocalSnap, shouldDisplayReconnectButton } from '../utils';
 import React from 'react';
+import { toastErrorMessage, toastSuccessMessage } from '../utils/toast';
 
 const WalletContainer = styled.div`
   display: flex;
@@ -114,34 +115,11 @@ const TickContainer = styled.div`
   }
 `;
 
-const toastOption: any = {
-  position: 'top-right',
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: false,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'colored',
-  transition: Slide,
-};
-
-const toastSuccess: any = {
-  position: 'top-right',
-  autoClose: 60000,
-  hideProgressBar: false,
-  closeOnClick: false,
-  pauseOnHover: false,
-  draggable: false,
-  progress: undefined,
-  theme: 'colored',
-  transition: Slide,
-};
 
 const Index = () => {
   const DEFAULT_TIME_LIMIT = 10;
   const { error } = useMetaMaskContext();
-  const { isFlask, snapsDetected, installedSnap, getSnap } = useMetaMask();
+  const { isFlask, snapsDetected, installedSnap } = useMetaMask();
   const requestSnap = useRequestSnap();
   const invokeSnap = useInvokeSnap();
 
@@ -149,7 +127,6 @@ const Index = () => {
   const [tickSeconds, setTickSeconds] = useState<number>(DEFAULT_TIME_LIMIT);
   const [balance, setBalance] = useState(0);
   const [toAddress, setToAddress] = useState('');
-  const [fromAddress, setFromAddress] = useState();
   const [amountToSend, setAmountToSend] = useState<number>();
   const [executionTick, setExecutionTick] = useState<number>(0);
   const [identity, setIdentity] = useState<any>();
@@ -164,22 +141,13 @@ const Index = () => {
     providerUrl: 'https://rpc.qubic.org',
     version: 1,
   });
-  const toastSuccessMessage = (message: string) =>
-    toast.success(message, toastSuccess);
-
-  const toastErrorMessage = (message: string) =>
-    toast.error(message, toastOption);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
 
   const connected = shouldDisplayReconnectButton(installedSnap);
-  console.log('connected', connected);
-  console.log('isMetaMaskReady', isMetaMaskReady);
-  console.log('installedSnap', installedSnap);
   useEffect(() => {
-    console.log('pass---->>');
     if (connected && !identity) {
       getIdentity();
       fetchQubicLatestTick();
@@ -277,6 +245,8 @@ const Index = () => {
       const jsonString: string | unknown = await invokeSnap({
         method: 'getPublicId',
       });
+      console.log('jsonString', jsonString);
+
       if (typeof jsonString === 'string') {
         const privateKey = JSON.parse(jsonString)?.privateKey;
         if (privateKey) {
@@ -284,9 +254,11 @@ const Index = () => {
           const identity = await qubic.identity.createIdentity(
             privateKeyBase26,
           );
+           console.log('jsonString identity', identity);
           setIdentity(identity);
         }
       }
+
     } catch (error: any) {
       setBalance(0);
       toastErrorMessage(`Get Identity: ${error.message}`);
@@ -332,7 +304,6 @@ const Index = () => {
         signedTransactionBase64,
       );
       if (result) {
-        console.log('result', result);
         setIsTransactionProcessing(false);
         onReset();
         toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
