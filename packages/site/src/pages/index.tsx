@@ -8,7 +8,6 @@
 import Qubic from '@ardata-tech/qubic-js';
 import React, { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import styled from 'styled-components';
 import { ReactComponent as FlaskFox } from '../assets/metamask_fox_orange.svg';
 import qubicLogo from '../assets/qubic-logo.png';
 import qubicBg from '../assets/wall.png';
@@ -58,7 +57,7 @@ const Index = () => {
     version: 1,
   });
 
-  const res: any = usePolling(10000, 60000);
+  const healtStatus: any = usePolling(10000, 60000);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
@@ -91,7 +90,7 @@ const Index = () => {
 
   useEffect(() => {
     let interval: NodeJS.Timer;
-    if (res?.data) {
+    if (healtStatus?.data) {
       if (tickSeconds === 0) {
         fetchQubicLatestTick();
         setTickSeconds(DEFAULT_TIME_LIMIT);
@@ -103,7 +102,7 @@ const Index = () => {
     }
     // eslint-disable-next-line consistent-return
     return () => clearInterval(interval);
-  }, [tickSeconds, res]);
+  }, [tickSeconds, healtStatus]);
 
   const onConnect = async () => {
     if (!isFlask || !snapsDetected) {
