@@ -1,0 +1,93 @@
+.wallet-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  padding: 10%;
+  padding-top: 3%;
+  background-repeat: no-repeat;
+
+  @media (max-width: 425px) {
+    width: 100% !important;
+    padding: 20px !important;
+  }
+}
+
+.header-item-wrapper {
+  display: flex;
+  flex-direction: row;
+  height: 65px;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    height: 40px;
+  }
+  @media (max-width: 425px) {
+    height: 30px;
+  }
+}
+
+.header {
+  font-family: 'poppins-thin', sans-serif;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+
+  @media (max-width: 768px) {
+    width: 100% !important;
+    margin-bottom: 10px;
+  }
+}
+
+.qubic-text{
+  font-size: 35px;
+  letter-spacing: -7%;
+  margin-left: 8px;
+  font-family: 'Poppins-Reg';
+  font-weight: 600;
+
+  @media (max-width: 768px) {
+    font-size: 30px;
+  }
+  @media (max-width: 425px) {
+    font-size: 20px;
+  }
+}
+
+.qubic-logo{
+  width: 25px;
+  height: 45px;
+  @media (max-width: 768px) {
+    width: 40px;
+    height: 40px;
+  }
+  @media (max-width: 425px) {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+.metamask-button-container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-weight: 600;
+}
+
+.metamask-button-container-img{
+    width: 25px;
+    height: 25px;
+}
+
+.metamask-button-container-text{
+    width: 25px;
+    height: 25px;
+}
+
