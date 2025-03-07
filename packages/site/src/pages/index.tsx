@@ -31,88 +31,6 @@ import { toastErrorMessage, toastSuccessMessage } from '../utils/toast';
 import usePolling from '../hooks/useQubicHealthPolling';
 import './index.css';
 
-const WalletContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  background-size: cover;
-  background-position: center;
-  repeat: no-repeat;
-  padding: 10%;
-  padding-top: 3%;
-
-  @media (max-width: 425px) {
-    width: 100% !important;
-    padding: 20px !important;
-  }
-`;
-
-const Header = styled.div`
-  font-family: 'poppins-thin', sans-serif;
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 4rem;
-
-  @media (max-width: 768px) {
-    width: 100% !important;
-    margin-bottom: 10px;
-  }
-`;
-
-const HeaderItemWrapper = styled.div`
-  display: flex;
-  flexdirection: row;
-  height: 65px;
-  alignitems: center;
-
-  @media (max-width: 768px) {
-    height: 40px;
-  }
-  @media (max-width: 425px) {
-    height: 30px;
-  }
-`;
-
-const QubicText = styled.span`
-  font-size: 35px;
-  font-weight: 500;
-  letter-spacing: -7%;
-  margin-left: 8px;
-  font-family: Inter;
-
-  @media (max-width: 768px) {
-    font-size: 30px;
-  }
-  @media (max-width: 425px) {
-    font-size: 20px;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  justifycontent: flex-start;
-  width: 100%;
-  margin-top: 2rem;
-`;
-
-const TickContainer = styled.div`
-  display: flex;
-  gap: 8px;
-  justifycontent: flex-start;
-  width: 100%;
-  font-family: Inter-Reg;
-  margin-top: 20px;
-  margin-bottom: 20px;
-
-  @media (max-width: 425px) {
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-`;
 
 const Index = () => {
   const DEFAULT_TIME_LIMIT = 10;
@@ -147,13 +65,6 @@ const Index = () => {
     : snapsDetected;
 
   const connected = shouldDisplayReconnectButton(installedSnap);
-
-  // useEffect(() => {
-  //   if (connected && !identity) {
-  //     getIdentity();
-  //     fetchQubicLatestTick();
-  //   }
-  // }, [connected]);
 
   useEffect(() => {
     document.title = 'Qubic Connect';
@@ -375,7 +286,7 @@ const Index = () => {
         tickValue={executionTick}
       />
 
-      <ButtonContainer>
+      <div className='action-button-container'>
         <div>
           <QubicBorderedtButton
             disabled={!amountToSend && !toAddress}
@@ -393,7 +304,7 @@ const Index = () => {
             {isTransactionProcessing ? 'Sending' : 'Send'}
           </LoadingButton>
         </div>
-      </ButtonContainer>
+      </div>
       <ToastContainer />
     </div>
   );
