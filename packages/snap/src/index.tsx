@@ -2,7 +2,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { getBIP44AddressKeyDeriver } from '@metamask/key-tree';
-import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -15,7 +14,7 @@ import { Box, Text, Bold } from '@metamask/snaps-sdk/jsx';
  * @throws If the request method is not valid for this snap.
  */
 
-const generateKeyPair = async (accountIndex: any) => {
+const generateKeyPair = async (accountIndex: number) => {
   // Set coin type
   const coinType = 83293; // 1 for testing
 
@@ -37,17 +36,14 @@ const generateKeyPair = async (accountIndex: any) => {
 };
 
 export const onRpcRequest: OnRpcRequestHandler = async ({
-  origin,
   request,
 }) => {
-  switch (request.method) {
-    case 'getPublicId': {
-      // Extract the parameters from the request
-      const response = await generateKeyPair(0);
-      // Return the public ID
-      return JSON.stringify(response);
+  if (request.method == 'getPublicId') {
+          const response = await generateKeyPair(0);
+          // Return the public ID
+          return JSON.stringify(response);
+  } else {
+     throw new Error('Method not found.');
     }
-    default:
-      throw new Error('Method not found.');
-  }
+  
 };
