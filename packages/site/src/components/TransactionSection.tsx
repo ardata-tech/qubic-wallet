@@ -3,7 +3,6 @@
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
 import { InputWithLabel } from './Input';
-import React from 'react'
 
 type ITransactionSection = {
   disabled: boolean;

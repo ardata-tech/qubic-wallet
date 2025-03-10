@@ -2,7 +2,6 @@
 import { InputWithLabel } from './Input';
 import { SectionContainer } from './SectionContainer';
 import { SectionTitle } from './SectionTitle';
-import React from 'react';
 
 type IWalletDetailsSection = {
   address: string | undefined;

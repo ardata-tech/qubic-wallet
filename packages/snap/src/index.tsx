@@ -29,21 +29,15 @@ const generateKeyPair = async (accountIndex: number) => {
 
   // // Derive the new account, index starts with 0
   const newAccount = await deriveAccountAddress(accountIndex);
-
-  return {
-    privateKey: newAccount.privateKey,
-  };
+  return newAccount.privateKey;
 };
 
-export const onRpcRequest: OnRpcRequestHandler = async ({
-  request,
-}) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
   if (request.method == 'getPublicId') {
-          const response = await generateKeyPair(0);
-          // Return the public ID
-          return JSON.stringify(response);
+    const privateKey = await generateKeyPair(0);
+    // Return the public ID
+    return JSON.stringify({ privateKey }); // JSON.stringify(response);
   } else {
-     throw new Error('Method not found.');
-    }
-  
+    throw new Error('Method not found.');
+  }
 };

@@ -6,9 +6,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Qubic from '@ardata-tech/qubic-js';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
-import { ReactComponent as FlaskFox } from '../assets/metamask_fox_orange.svg';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { ReactComponent } from '../assets/metamask_fox_orange.svg';
 import qubicLogo from '../assets/qubic-logo.png';
 import qubicBg from '../assets/wall.png';
 import {
@@ -30,6 +31,11 @@ import { toastErrorMessage, toastSuccessMessage } from '../utils/toast';
 import usePolling from '../hooks/useQubicHealthPolling';
 import './index.css';
 
+interface Identity {
+  publicKey: Uint8Array;
+  privateKey: Uint8Array;
+  publicId: string;
+}
 
 const Index = () => {
   const DEFAULT_TIME_LIMIT = 10;
@@ -44,7 +50,7 @@ const Index = () => {
   const [toAddress, setToAddress] = useState('');
   const [amountToSend, setAmountToSend] = useState<number>();
   const [executionTick, setExecutionTick] = useState<number>(0);
-  const [identity, setIdentity] = useState<any>();
+  const [identity, setIdentity] = useState<Identity>();
   const [isTransactionProcessing, setIsTransactionProcessing] =
     useState<boolean>(false);
 
@@ -57,13 +63,28 @@ const Index = () => {
     version: 1,
   });
 
-  const healtStatus: any = usePolling(10000, 60000);
+  const healtStatus = usePolling(10000, 60000);
 
   const isMetaMaskReady = isLocalSnap(defaultSnapOrigin)
     ? isFlask
     : snapsDetected;
 
   const connected = shouldDisplayReconnectButton(installedSnap);
+
+  const fetchBalance = async () => {
+    try {
+      if (identity?.publicId) {
+        const { balance } = await qubic.identity.getBalanceByAddress(
+          identity?.publicId,
+        );
+        setBalance(balance.balance);
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        toastErrorMessage(`Fetch balance: ${error.message}`);
+      }
+    }
+  };
 
   useEffect(() => {
     document.title = 'Qubic Connect';
@@ -75,6 +96,47 @@ const Index = () => {
       setToAddress('');
     };
   }, []);
+
+  const fetchQubicLatestTick = async () => {
+    try {
+      const latestTick = (await qubic.chain.getLatestTick()) ?? 0;
+      if (isNaN(Number(latestTick))) {
+        throw new Error('Invalid tick');
+      }
+      if (typeof latestTick === 'number' && latestTick > 0) {
+        setTickValue(latestTick ?? 0);
+        setExecutionTick(latestTick + 10);
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        toastErrorMessage(`Fetch latest tick: ${error.message}`);
+      }
+    }
+  };
+
+  const getIdentity = async () => {
+    try {
+      const jsonString: unknown = await invokeSnap({
+        method: 'getPublicId',
+      });
+
+      if (typeof jsonString === 'string') {
+        const privateKey = JSON.parse(jsonString)?.privateKey;
+        if (privateKey) {
+          const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
+          const identity = await qubic.identity.createIdentity(
+            privateKeyBase26,
+          );
+          setIdentity(identity);
+        }
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        setBalance(0);
+        toastErrorMessage(`Get Identity: ${error.message}`);
+      }
+    }
+  };
 
   useEffect(() => {
     if (connected && !identity) {
@@ -114,67 +176,68 @@ const Index = () => {
     if (metamaskState === 'Connect') {
       try {
         await requestSnap();
-      } catch (error: any) {
-        toastErrorMessage(`Error requesting Snap: ${error.message}`);
+      } catch (error: Error | unknown) {
+        if (error instanceof Error) {
+          toastErrorMessage(`Error requesting Snap: ${error?.message}`);
+        }
       } finally {
         setMetamaskState('Connecting');
       }
     }
   };
 
-  const fetchBalance = async () => {
+  const onReset = () => {
+    setToAddress('');
+    setAmountToSend(0);
+  };
+
+  const sendTransaction = async () => {
+    const amount = amountToSend ?? 0;
     try {
-      if (identity?.publicId) {
-        const { balance } = await qubic.identity.getBalanceByAddress(
-          identity?.publicId,
+
+      if (!identity) {
+        return 
+      }
+
+      const transactionData = await qubic.transaction.createTransaction(
+        identity?.publicId,
+        toAddress,
+        amount,
+        executionTick,
+      );
+      const signedTransaction = await qubic.transaction.signTransaction(
+        transactionData,
+        identity?.privateKey,
+      );
+     
+      const signedTransactionBase64 =
+        qubic.transaction.encodeTransactionToBase64(signedTransaction);
+      const result = await qubic.transaction.broadcastTransaction(
+        signedTransactionBase64,
+      );
+      if (result) {
+        setIsTransactionProcessing(false);
+        onReset();
+        toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
+        toastSuccessMessage(`Transaction ID: ${result.transactionId}`);
+        setTimeout(fetchBalance, 10000);
+      }
+    } catch (error: Error | unknown) {
+      if (error instanceof Error) {
+        setIsTransactionProcessing(false);
+        toastErrorMessage(
+          `Failed to send ${amountToSend} QUBIC to ${toAddress}`,
         );
-        setBalance(balance.balance);
       }
-    } catch (error: any) {
-      toastErrorMessage(`Fetch balance: ${error.message}`);
-    }
-  };
-
-  const fetchQubicLatestTick = async () => {
-    try {
-      const latestTick = (await qubic.chain.getLatestTick()) ?? 0;
-      if (isNaN(Number(latestTick))) {
-        throw new Error('Invalid tick');
-      }
-      if (typeof latestTick === 'number' && latestTick > 0) {
-        setTickValue(latestTick ?? 0);
-        setExecutionTick(latestTick + 10);
-      }
-    } catch (error: any) {
-      toastErrorMessage(`Fetch latest tick: ${error.message}`);
-    }
-  };
-
-  const getIdentity = async () => {
-    try {
-      const jsonString: any = await invokeSnap({
-        method: 'getPublicId',
-      });
-
-      if (typeof jsonString === 'string') {
-        const privateKey = JSON.parse(jsonString)?.privateKey;
-        if (privateKey) {
-          const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
-          const identity = await qubic.identity.createIdentity(
-            privateKeyBase26,
-          );
-          setIdentity(identity);
-        }
-      }
-    } catch (error: any) {
-      setBalance(0);
-      toastErrorMessage(`Get Identity: ${error.message}`);
     }
   };
 
   const validateTransaction = () => {
-    setIsTransactionProcessing(true);
+    if (!identity) {
+      return;
+    }
 
+    setIsTransactionProcessing(true);
     const amount = amountToSend ?? 0;
     const fromAddress: string = identity?.publicId;
     const inValidAddressLength =
@@ -191,44 +254,8 @@ const Index = () => {
     }
   };
 
-  const sendTransaction = async () => {
-    const amount = amountToSend ?? 0;
-    try {
-      const transactionData = await qubic.transaction.createTransaction(
-        identity.publicId,
-        toAddress,
-        amount,
-        executionTick,
-      );
-      const signedTransaction = await qubic.transaction.signTransaction(
-        transactionData,
-        identity.privateKey,
-      );
-      const signedTransactionBase64 = btoa(
-        String.fromCharCode(...signedTransaction),
-      );
-      const result = await qubic.transaction.broadcastTransaction(
-        signedTransactionBase64,
-      );
-      if (result) {
-        setIsTransactionProcessing(false);
-        onReset();
-        toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
-        setTimeout(fetchBalance, 10000);
-      }
-    } catch (error: any) {
-      setIsTransactionProcessing(false);
-      toastErrorMessage(`Failed to send ${amountToSend} QUBIC to ${toAddress}`);
-    }
-  };
-
   const disabledWalletDetails =
     !identity || Number.isNaN(balance) || balance == 0;
-
-  const onReset = () => {
-    setToAddress('');
-    setAmountToSend(0);
-  };
 
   return (
     <div
@@ -255,7 +282,7 @@ const Index = () => {
           >
             <div className="metamask-button-container">
               <div className="metamask-button-container-img">
-                <FlaskFox />
+                <ReactComponent />
               </div>
               <span>{`${metamaskState} to MetaMask`}</span>
             </div>
@@ -285,7 +312,7 @@ const Index = () => {
         tickValue={executionTick}
       />
 
-      <div className='action-button-container'>
+      <div className="action-button-container">
         <div>
           <QubicBorderedtButton
             disabled={!amountToSend && !toAddress}

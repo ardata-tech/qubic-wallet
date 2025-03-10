@@ -4,15 +4,14 @@ import type {
 } from '@metamask/providers';
 
 /**
- * Check if the current provider supports snaps by calling `wallet_getSnaps`.
- *
- * @param provider - The provider to use to check for snaps support. Defaults to
- * `window.ethereum`.
- * @returns True if the provider supports snaps, false otherwise.
+ * Checks if a MetaMask provider supports Snaps.
+ * @param provider - The MetaMask provider to check. Defaults to the global
+ * `window.ethereum` provider.
+ * @returns `true` if the provider supports Snaps, `false` otherwise.
  */
 export async function hasSnapsSupport(
   provider: MetaMaskInpageProvider = window.ethereum,
-) {
+): Promise<boolean> {
   try {
     await provider.request({
       method: 'wallet_getSnaps',
@@ -25,25 +24,26 @@ export async function hasSnapsSupport(
 }
 
 /**
- * Get a MetaMask provider using EIP6963. This will return the first provider
- * reporting as MetaMask. If no provider is found after 500ms, this will
- * return null instead.
- *
- * @returns A MetaMask provider if found, otherwise null.
+ * Gets the MetaMask provider supporting EIP-6963.
+ * Listens for `eip6963:announceProvider` events and resolves the promise with the
+ * first provider that announces itself with an `info.rdns` that includes
+ * `io.metamask`.
+ * If no provider announces itself within 500ms, the promise resolves to `null`.
+ * @returns The MetaMask provider supporting EIP-6963, or `null` if none is found.
  */
-export async function getMetaMaskEIP6963Provider() {
+export async function getMetaMaskEIP6963Provider(): Promise<MetaMaskInpageProvider | null> {
   return new Promise<MetaMaskInpageProvider | null>((rawResolve) => {
     // Timeout looking for providers after 500ms
     const timeout = setTimeout(() => {
       resolve(null);
     }, 500);
-
     /**
-     * Resolve the promise with a MetaMask provider and clean up.
-     *
-     * @param provider - A MetaMask provider if found, otherwise null.
+     * Resolves the promise with the provided MetaMask provider or `null`.
+     * Removes the event listener for `eip6963:announceProvider` and clears
+     * the timeout set for provider detection.
+     * @param provider - The MetaMask provider to resolve with, or `null` if no provider is found.
      */
-    function resolve(provider: MetaMaskInpageProvider | null) {
+    function resolve(provider: MetaMaskInpageProvider | null): void {
       window.removeEventListener(
         'eip6963:announceProvider',
         onAnnounceProvider,
@@ -53,21 +53,25 @@ export async function getMetaMaskEIP6963Provider() {
     }
 
     /**
-     * Listener for the EIP6963 announceProvider event.
-     *
-     * Resolves the promise if a MetaMask provider is found.
-     *
-     * @param event - The EIP6963 announceProvider event.
-     * @param event.detail - The details of the EIP6963 announceProvider event.
+     * Listens for `eip6963:announceProvider` events and resolves the promise with
+     * the first provider that announces itself with an `info.rdns` that includes
+     * `io.metamask`.
+     * @param event - The event object.
+     * @param event.detail - The `eip6963:announceProvider` event details.
      */
-    function onAnnounceProvider({ detail }: EIP6963AnnounceProviderEvent) {
+    function onAnnounceProvider({
+      detail,
+    }: EIP6963AnnounceProviderEvent): void {
       if (!detail) {
+        // If the event detail is missing, do nothing.
         return;
       }
 
       const { info, provider } = detail;
 
       if (info.rdns.includes('io.metamask')) {
+        // If the provider has an `info.rdns` that includes `io.metamask`,
+        // resolve the promise with that provider.
         resolve(provider);
       }
     }
@@ -79,12 +83,19 @@ export async function getMetaMaskEIP6963Provider() {
 }
 
 /**
- * Get a provider that supports snaps. This will loop through all the detected
- * providers and return the first one that supports snaps.
- *
- * @returns The provider, or `null` if no provider supports snaps.
+ * Finds and returns the MetaMask provider that supports Snaps.
+ * First, it checks if the global `window.ethereum` provider supports Snaps.
+ * If it does, it returns the global provider.
+ * If the global provider does not support Snaps, it checks the `detected` and
+ * `providers` properties of the global provider and returns the first provider
+ * that announces support for Snaps.
+ * If no provider announces support for Snaps, it uses
+ * `getMetaMaskEIP6963Provider` to find and return a provider that supports
+ * EIP-6963 and Snaps.
+ * If it fails to find a provider that supports Snaps, it returns `null`.
+ * @returns The MetaMask provider that supports Snaps, or `null` if none is found.
  */
-export async function getSnapsProvider() {
+export async function getSnapsProvider(): Promise<MetaMaskInpageProvider | null> {
   if (typeof window === 'undefined') {
     return null;
   }

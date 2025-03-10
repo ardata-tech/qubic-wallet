@@ -1,10 +1,5 @@
-/**
- * Get a local storage key.
- *
- * @param key - The local storage key to access.
- * @returns The value stored at the key provided if the key exists.
- */
-export const getLocalStorage = (key: string) => {
+
+export const getLocalStorage = (key: string): string|unknown => {
   const { localStorage: ls } = window;
 
   if (ls !== null) {
@@ -15,13 +10,7 @@ export const getLocalStorage = (key: string) => {
   throw new Error('Local storage is not available.');
 };
 
-/**
- * Set a value to local storage at a certain key.
- *
- * @param key - The local storage key to set.
- * @param value - The value to set.
- */
-export const setLocalStorage = (key: string, value: string) => {
+export const setLocalStorage = (key: string, value: string): void => {
   const { localStorage: ls } = window;
 
   if (ls !== null) {

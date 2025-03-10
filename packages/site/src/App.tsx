@@ -2,7 +2,6 @@
 /* eslint-disable import/order */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { FunctionComponent, ReactNode } from 'react';
-import { useContext } from 'react';
 import styled from 'styled-components';
 import { GlobalStyle } from './config/theme';
 import './app.css';

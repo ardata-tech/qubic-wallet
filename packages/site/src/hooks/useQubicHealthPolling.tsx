@@ -1,16 +1,22 @@
 import { useState, useEffect } from 'react';
 import Qubic from '@ardata-tech/qubic-js';
 
-interface UsePollingResult<T> {
-  data: T | null;
+
+interface IHealthCheck {
+  status: boolean;
+}
+
+
+interface UsePollingResult {
+  data: IHealthCheck | null;
   error: Error | null;
 }
 
-const useQubicHealthPolling = <T,>(
+const useQubicHealthPolling = (
   fastInterval: number = 10000,
   slowInterval: number = 60000,
-): UsePollingResult<T> => {
-  const [data, setData] = useState<T | null>(null);
+): UsePollingResult => {
+  const [data, setData] = useState<IHealthCheck | null>(null);
   const [error, setError] = useState<Error | null>(null);
   const [intervalTime, setIntervalTime] = useState<number>(fastInterval);
 
@@ -25,14 +31,14 @@ const useQubicHealthPolling = <T,>(
     const fetchData = async () => {
       qubic.chain
         .getHealthCheck()
-        .then((response: any) => {
+        .then((response: IHealthCheck | null) => {
           if (isMounted) {
             setData(response);
             setError(null);
             setIntervalTime(true ? fastInterval : slowInterval);
           }
         })
-        .catch((err: any) => {
+        .catch((err: unknown) => {
           if (isMounted) {
             setData(null);
             setError(err instanceof Error ? err : new Error(String(err)));

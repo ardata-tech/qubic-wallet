@@ -1,8 +1,7 @@
 import type { DefaultTheme } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
 
-const breakpoints = ['600px', '768px', '992px'];
-
+const breakpoints = ['600px','768px','992px'];
 /**
  * Common theme properties.
  */
@@ -114,12 +113,6 @@ export const dark: DefaultTheme = {
   ...theme,
 };
 
-/**
- * Default style applied to the app.
- *
- * @param props - Styled Components props.
- * @returns Global style React component.
- */
 export const GlobalStyle = createGlobalStyle`
   html {
     /* 62.5% of the base size of 16px = 10px.*/
@@ -128,9 +121,9 @@ export const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: white;
-    color: ${(props) => props.theme.colors.text?.default};
-    font-family: ${(props) => props.theme.fonts.default};
-    font-size: ${(props) => props.theme.fontSizes.text};
+    color: ${(props): string | undefined => props.theme.colors.text?.default};
+    font-family: ${(props): string | undefined => props.theme.fonts.default};
+    font-size: ${(props): string | undefined => props.theme.fontSizes.text};
     margin: 0;
     overflow: auto;
     
@@ -144,26 +137,30 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-size: ${(props) => props.theme.fontSizes.heading};
-    ${(props) => props.theme.mediaQueries.small} {
-      font-size: ${(props) => props.theme.fontSizes.mobileHeading};
+    font-size: ${(props): string | undefined => props.theme.fontSizes.heading};
+    ${(props): string | undefined => props.theme.mediaQueries.small} {
+      font-size: ${(props): string | undefined =>
+        props.theme.fontSizes.mobileHeading};
     }
   }
 
   code {
-    background-color: ${(props) => props.theme.colors.background?.alternative};
-    font-family: ${(props) => props.theme.fonts.code};
+    background-color: ${(props): string | undefined =>
+      props.theme.colors.background?.alternative};
+    font-family: ${(props): string | undefined => props.theme.fonts.code};
     padding: 1.2rem;
     font-weight: normal;
-    font-size: ${(props) => props.theme.fontSizes.text};
+    font-size: ${(props): string | undefined => props.theme.fontSizes.text};
   }
 
   button {
-    font-size: ${(props) => props.theme.fontSizes.small};
-    border-radius: ${(props) => props.theme.radii.button};
-    background-color: ${(props) => props.theme.colors.background?.inverse};
-    color: ${(props) => props.theme.colors.text?.inverse};
-    border: 1px solid ${(props) => props.theme.colors.background?.inverse};
+    font-size: ${(props): string | undefined => props.theme.fontSizes.small};
+    border-radius: ${(props): string | undefined => props.theme.radii.button};
+    background-color: ${(props): string | undefined =>
+      props.theme.colors.background?.inverse};
+    color: ${(props): string | undefined => props.theme.colors.text?.inverse};
+    border: 1px solid ${(props): string | undefined =>
+      props.theme.colors.background?.inverse};
     font-weight: bold;
     padding: 1rem;
     min-height: 4.2rem;
@@ -172,21 +169,25 @@ export const GlobalStyle = createGlobalStyle`
 
     &:hover {
       background-color: transparent;
-      border: 1px solid ${(props) => props.theme.colors.background?.inverse};
-      color: ${(props) => props.theme.colors.text?.default};
+      border: 1px solid ${(props): string | undefined =>
+        props.theme.colors.background?.inverse};
+      color: ${(props): string | undefined => props.theme.colors.text?.default};
     }
 
     &:disabled,
     &[disabled] {
-      border: 1px solid ${(props) => props.theme.colors.background?.inverse};
+      border: 1px solid ${(props): string | undefined =>
+        props.theme.colors.background?.inverse};
       cursor: not-allowed;
     }
 
     &:disabled:hover,
     &[disabled]:hover {
-      background-color: ${(props) => props.theme.colors.background?.inverse};
-      color: ${(props) => props.theme.colors.text?.inverse};
-      border: 1px solid ${(props) => props.theme.colors.background?.inverse};
+      background-color: ${(props): string | undefined =>
+        props.theme.colors.background?.inverse};
+      color: ${(props): string | undefined => props.theme.colors.text?.inverse};
+      border: 1px solid ${(props): string | undefined =>
+        props.theme.colors.background?.inverse};
     }
   }
 `;

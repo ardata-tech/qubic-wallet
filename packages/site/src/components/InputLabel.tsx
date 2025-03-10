@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import type { ComponentProps } from 'react';
 import styled from 'styled-components';
 
 export const InputLabel = styled.label`

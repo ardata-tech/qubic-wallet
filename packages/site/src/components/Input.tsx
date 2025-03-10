@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { InputLabel } from './InputLabel';
-import React from 'react';
 
 type InputProps = {
   label: string;

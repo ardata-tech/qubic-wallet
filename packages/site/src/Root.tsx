@@ -5,7 +5,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { dark, light } from './config/theme';
 import { MetaMaskProvider } from './hooks';
-import { getThemePreference, setLocalStorage } from './utils';
+import { setLocalStorage } from './utils';
 
 export type RootProps = {
   children: ReactNode;
