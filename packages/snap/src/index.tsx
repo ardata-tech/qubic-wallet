@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import type { OnRpcRequestHandler } from '@metamask/snaps-sdk';
 import { getBIP44AddressKeyDeriver } from '@metamask/key-tree';
+import { Box, Heading, Text } from "@metamask/snaps-sdk/jsx";
 
 /**
  * Handle incoming JSON-RPC requests, sent through `wallet_invokeSnap`.
@@ -32,8 +33,25 @@ const generateKeyPair = async (accountIndex: number) => {
   return newAccount.privateKey;
 };
 
-export const onRpcRequest: OnRpcRequestHandler = async ({ request }) => {
+export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
   if (request.method == 'getPublicId') {
+    const confirmationResponse = await snap.request({
+      method: "snap_dialog",
+      params: {
+        type: "confirmation",
+        content: (
+          <Box>
+            <Heading>Confirm Wallet Access</Heading>
+            <Text>Allow {origin} to access your Qubic ID?</Text>
+          </Box>
+        ),
+      },
+    });
+  
+    if (!confirmationResponse) {
+      throw new Error("User rejected the request.");
+    }
+
     const privateKey = await generateKeyPair(0);
     // Return the public ID
     return JSON.stringify({ privateKey }); // JSON.stringify(response);
