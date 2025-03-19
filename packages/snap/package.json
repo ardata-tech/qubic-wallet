@@ -27,6 +27,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ardata-tech/qubic-js": "0.2.16",
     "@metamask/snaps-sdk": "6.14.0"
   },
   "devDependencies": {

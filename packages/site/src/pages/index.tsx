@@ -105,7 +105,7 @@ const Index = () => {
       }
       if (typeof latestTick === 'number' && latestTick > 0) {
         setTickValue(latestTick ?? 0);
-        setExecutionTick(latestTick + 10);
+        setExecutionTick(latestTick + 15);
       }
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
@@ -121,13 +121,18 @@ const Index = () => {
       });
 
       if (typeof jsonString === 'string') {
-        const privateKey = JSON.parse(jsonString)?.privateKey;
-        if (privateKey) {
-          const privateKeyBase26 = qubic.utils.hexToBase26(privateKey);
-          const identity = await qubic.identity.createIdentity(
-            privateKeyBase26,
-          );
-          setIdentity(identity);
+        const qubicId: any = JSON.parse(jsonString);
+
+        if (qubicId.publicKey && qubicId.publicId) {
+          const newIdentity: Identity = {
+            publicKey: qubicId.publicKey,
+            privateKey: new Uint8Array(32), // Uint8Array of 0. Refactor code to expect all operations with private key to be done in snap
+            publicId: qubicId.publicId
+          };
+
+          setIdentity(newIdentity);
+        } else {
+          throw new Error('Invalid Qubic ID');
         }
       }
     } catch (error: Error | unknown) {
@@ -195,32 +200,32 @@ const Index = () => {
     const amount = amountToSend ?? 0;
     try {
 
-      if (!identity) {
+      if (!identity?.publicId) {
         return 
       }
 
-      const transactionData = await qubic.transaction.createTransaction(
-        identity?.publicId,
-        toAddress,
-        amount,
-        executionTick,
-      );
-      const signedTransaction = await qubic.transaction.signTransaction(
-        transactionData,
-        identity?.privateKey,
-      );
-     
-      const signedTransactionBase64 =
-        qubic.transaction.encodeTransactionToBase64(signedTransaction);
-      const result = await qubic.transaction.broadcastTransaction(
-        signedTransactionBase64,
-      );
-      if (result) {
-        setIsTransactionProcessing(false);
-        onReset();
-        toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
-        toastSuccessMessage(`Transaction ID: ${result.transactionId}`);
-        setTimeout(fetchBalance, 10000);
+      const jsonString: unknown = await invokeSnap({
+        method: 'signTransaction',
+        params: { 
+          publicid: identity?.publicId,
+          toAddress,
+          amount,
+          executionTick
+        }, 
+      });
+
+      if (typeof jsonString === 'string') {
+        const data: any = JSON.parse(jsonString);
+        if (data.result) {
+          setIsTransactionProcessing(false);
+          onReset();
+          toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
+          toastSuccessMessage(`Transaction ID: ${data.result.transactionId}`);
+          setTimeout(fetchBalance, 10000);
+        }
+      }
+      else {
+        throw new Error('Invalid JSON response');
       }
     } catch (error: Error | unknown) {
       if (error instanceof Error) {

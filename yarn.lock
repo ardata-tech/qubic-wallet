@@ -17649,6 +17649,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "snap@workspace:packages/snap"
   dependencies:
+    "@ardata-tech/qubic-js": 0.2.16
     "@jest/globals": 29.7.0
     "@metamask/auto-changelog": 3.4.4
     "@metamask/eslint-config": 12.2.0
