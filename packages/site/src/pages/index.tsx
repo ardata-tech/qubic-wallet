@@ -145,7 +145,7 @@ const Index = () => {
 
   useEffect(() => {
     if (connected && !identity) {
-      getIdentity();
+      setMetamaskState('Connect');
       fetchQubicLatestTick();
     } else if (connected && identity?.publicId) {
       fetchBalance();
@@ -180,13 +180,20 @@ const Index = () => {
     }
     if (metamaskState === 'Connect') {
       try {
-        await requestSnap();
+        setMetamaskState('Connecting');
+        if (!connected) {
+          await requestSnap();
+        }
+
+        await getIdentity();
       } catch (error: Error | unknown) {
         if (error instanceof Error) {
           toastErrorMessage(`Error requesting Snap: ${error?.message}`);
         }
       } finally {
-        setMetamaskState('Connecting');
+        if (!connected || !identity?.publicId) {
+          setMetamaskState('Connect');
+        }
       }
     }
   };
@@ -237,7 +244,7 @@ const Index = () => {
     }
   };
 
-  const validateTransaction = () => {
+  const validateTransaction = async () => {
     if (!identity) {
       return;
     }
@@ -245,17 +252,22 @@ const Index = () => {
     setIsTransactionProcessing(true);
     const amount = amountToSend ?? 0;
     const fromAddress: string = identity?.publicId;
-    const inValidAddressLength =
-      fromAddress?.length != 60 && toAddress?.length != 60;
-    const inValidBalance = amount > balance || balance == 0 || amount == 0;
+    // const inValidAddressLength =
+    //   fromAddress?.length != 60 && toAddress?.length != 60;
+    // const inValidBalance = amount > balance || balance == 0 || amount == 0;
 
+    const isFromAddressValid = await qubic.identity.verifyIdentity(fromAddress)
+    const isToAddressValid = await qubic.identity.verifyIdentity(toAddress)
+    const isAmountValid = amount >= 0 && amount <= balance
+    
     if (
-      [inValidAddressLength, inValidBalance].every((value) => value === false)
+    //  [inValidAddressLength, inValidBalance].every((value) => value === false)
+      isFromAddressValid && isToAddressValid && isAmountValid
     ) {
       sendTransaction();
     } else {
       setIsTransactionProcessing(false);
-      toastErrorMessage('Invalid Transaction');
+      toastErrorMessage('Invalid Transaction. Please check your inputs.');
     }
   };
 
@@ -297,7 +309,7 @@ const Index = () => {
       <WalletDetailsSection
         disabled={true}
         address={isMetaMaskReady && identity ? identity.publicId : undefined}
-        balance={balance || undefined}
+        balance={isMetaMaskReady && identity ? balance : undefined}
         tick={
           isMetaMaskReady && identity
             ? `${tickValue} (${tickSeconds}s)`
@@ -314,7 +326,7 @@ const Index = () => {
         disabled={disabledWalletDetails}
         amountValue={amountToSend}
         destinationValue={toAddress}
-        tickValue={executionTick}
+        tickValue={disabledWalletDetails ? 0 : executionTick}
       />
 
       <div className="action-button-container">
