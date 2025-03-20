@@ -31,6 +31,12 @@ import { toastErrorMessage, toastSuccessMessage } from '../utils/toast';
 import usePolling from '../hooks/useQubicHealthPolling';
 import './index.css';
 
+interface IBroadcastTransactionResponse {
+  peersBroadcasted: number;
+  encodedTransaction: string;
+  transactionId: string;
+}
+
 interface Identity {
   publicKey: Uint8Array;
   privateKey: Uint8Array;
@@ -121,7 +127,7 @@ const Index = () => {
       });
 
       if (typeof jsonString === 'string') {
-        const qubicId: any = JSON.parse(jsonString);
+        const qubicId: Identity = JSON.parse(jsonString);
 
         if (qubicId.publicKey && qubicId.publicId) {
           const newIdentity: Identity = {
@@ -222,13 +228,18 @@ const Index = () => {
       });
 
       if (typeof jsonString === 'string') {
-        const data: any = JSON.parse(jsonString);
-        if (data.result) {
+        const parsedResult = JSON.parse(jsonString);
+        if (typeof parsedResult === 'object' && 'peersBroadcasted' in parsedResult) {
+          const { transactionId }: IBroadcastTransactionResponse = parsedResult;
+
+          // Now you can use the typed result
           setIsTransactionProcessing(false);
           onReset();
           toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
-          toastSuccessMessage(`Transaction ID: ${data.result.transactionId}`);
+          toastSuccessMessage(`Transaction ID: ${transactionId}`);
           setTimeout(fetchBalance, 10000);
+        } else {
+          throw new Error('Unexpected response format');
         }
       }
       else {
