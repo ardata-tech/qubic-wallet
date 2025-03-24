@@ -111,7 +111,7 @@ const Index = () => {
       }
       if (typeof latestTick === 'number' && latestTick > 0) {
         setTickValue(latestTick ?? 0);
-        setExecutionTick(latestTick + 15);
+        setExecutionTick(latestTick + 30);
       }
     } catch (error: Error | unknown) {
       if (error instanceof Error) {
@@ -229,10 +229,9 @@ const Index = () => {
 
       if (typeof jsonString === 'string') {
         const parsedResult = JSON.parse(jsonString);
-        if (typeof parsedResult === 'object' && 'peersBroadcasted' in parsedResult) {
-          const { transactionId }: IBroadcastTransactionResponse = parsedResult;
+        if (parsedResult.result.peersBroadcasted) {
+          const { transactionId }: IBroadcastTransactionResponse = parsedResult.result;
 
-          // Now you can use the typed result
           setIsTransactionProcessing(false);
           onReset();
           toastSuccessMessage(`Sent ${amountToSend} QUBIC to ${toAddress}`);
