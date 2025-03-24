@@ -57,6 +57,11 @@ const generateQubicID = async (privateKey: string | undefined) => {
   return {privateKey: undefined, publicKey: undefined, publicId: undefined}; // or handle error appropriately
 }
 
+const sanitizeInput = (value: string) => {
+  // Remove newlines, carriage returns, and excessive spaces
+  return value.replace(/[\r\n]/gmu, '').replace(/\s+/gu, ' ').trim();
+};
+
 
 export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => {
   if (request.method == 'getPublicId') {
@@ -84,9 +89,47 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
     return JSON.stringify({privateKey: undefined, publicKey: qubicId.publicKey, publicId: qubicId.publicId}); 
   }
   else if (request.method == 'signTransaction') {
+    const privateKey = await generateKeyPair(0);
+    const qubicId = await generateQubicID(privateKey);
+
+    if (!qubicId.privateKey){
+      throw new Error("Private key is missing.");
+    }
+
     const params = request.params as unknown as SignTransactionParams;
 
-    // return JSON.stringify(params)
+    const fromAddress = sanitizeInput(params.publicid);
+    const toAddress = sanitizeInput(params.toAddress);
+    const amount = sanitizeInput(params.amount.toString());
+    const executionTick = sanitizeInput(params.executionTick.toString());
+
+    const isFromAddressValid = await qubic.identity.verifyIdentity(fromAddress)
+    if (!isFromAddressValid) {
+      throw new Error("Invalid FROM ADDRESS");
+    }
+
+    const isToAddressValid = await qubic.identity.verifyIdentity(toAddress)
+    if (!isToAddressValid) {
+      throw new Error("Invalid TO ADDRESS");
+    }
+
+    const { balance } = await qubic.identity.getBalanceByAddress(fromAddress);
+    const isAmountValid = Number(amount) >= 0;
+    const isBalanceEnough = Number(amount) <= balance.balance;
+    const newBalance = (fromAddress.toLowerCase() == toAddress.toLowerCase()) ? balance.balance : balance.balance - Number(amount);
+    if (!isAmountValid) {
+      throw new Error("Invalid AMOUNT");
+    }
+    if (!isBalanceEnough) {
+      throw new Error("Insufficient BALANCE");
+    }
+
+    let latestTick = (await qubic.chain.getLatestTick()) ?? 0;
+    const isExecutionTickValid = Number(executionTick) >= latestTick;
+    if (!isExecutionTickValid) {
+      throw new Error("Invalid EXECUTION TICK");
+    }
+
     const confirmationResponse = await snap.request({
       method: "snap_dialog",
       params: {
@@ -96,10 +139,13 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
             <Heading>Confirm Send Transaction</Heading>
             <Text>Allow {origin} to send a transaction?</Text>
             <Divider />
-            <Text>From Address: {params.publicid}</Text>
-            <Text>To Address: {params.toAddress}</Text>
-            <Text>Amount: {params.amount.toString()}</Text>
-            <Text>Execution Tick : {params.executionTick.toString()}</Text>
+            <Text>From Address: {fromAddress}</Text>
+            <Text>To Address: {toAddress}</Text>
+            <Text>Amount: {amount}</Text>
+            <Text>Execution Tick : {executionTick}</Text>
+            <Divider />
+            <Text>New balance after sending: {newBalance.toString()} Qubic Units</Text>
+            <Text>Current Balance: {balance.balance} Qubic Units</Text>
           </Box>
         ),
       },
@@ -109,19 +155,17 @@ export const onRpcRequest: OnRpcRequestHandler = async ({ origin, request }) => 
       throw new Error("User rejected the request.");
     }
 
-    const transactionData = await qubic.transaction.createTransaction(
-      params.publicid,
-      params.toAddress,
-      params.amount,
-      params.executionTick
-    );
-
-    const privateKey = await generateKeyPair(0);
-    const qubicId = await generateQubicID(privateKey);
-
-    if (!qubicId.privateKey){
-      throw new Error("Private key is missing.");
+    latestTick = (await qubic.chain.getLatestTick()) ?? 0;
+    if (latestTick > Number(executionTick)) {
+      throw new Error("Latest tick is already ahead of the execution tick.");
     }
+
+    const transactionData = await qubic.transaction.createTransaction(
+      fromAddress,
+      toAddress,
+      Number(amount),
+      Number(executionTick)
+    );
 
     const signedTransaction = await qubic.transaction.signTransaction(
       transactionData,
