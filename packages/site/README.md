@@ -1,42 +1,43 @@
-# Qubic Connect
+# Qubic Connect Site
 
-Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
+This project was bootstrapped with [Gatsby](https://www.gatsbyjs.com/).
 
-## Prerequisites
-- MetaMask Flask installed
-- A text editor (for example, VS Code)
-- Node version 20.11 or later
-- Yarn
+## Available Scripts
 
-## Getting Started
+In the project directory, you can run:
 
-From the root of the project, install the project dependencies using Yarn:
+### `yarn start`
 
-```shell
-yarn install
-```
+Runs the app in the development mode.\
+Open [http://localhost:8000](http://localhost:8000) to view it in the browser.
 
-You may get a warning like the following:
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-> @lavamoat/allow-scripts has detected dependencies without configuration. explicit configuration required.
-run "allow-scripts auto" to automatically populate the configuration.
+### `yarn build`
 
-You can fix this by running the following command:
+Builds the app for production to the `public` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
 
-```shell
-yarn allow-scripts auto
-```
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
 
-Build the dApp and the Snap:
+See the section about [deployment](https://www.gatsbyjs.com/docs/how-to/previews-deploys-hosting/) for more information.
 
-```shell
-yarn build
-```
+## Environment variables
 
-Start the development server:
+Gatsby has built-in support for loading environment variables into the browser and Functions. Loading environment variables into Node.js requires a small code snippet.
 
-```shell
-yarn start
-```
+In development, Gatsby will load environment variables from a file named `.env.development`. For builds, it will load from `.env.production`.
 
-You are now serving the Snap at http://localhost:8080 and its front-end dapp at http://localhost:8000.
+By default you can use the `SNAP_ORIGIN` variable (used in `src/config/snap.ts`) to define a production origin for you snap (eg. `npm:MyPackageName`). If not defined it will defaults to `local:http://localhost:8080`.
+
+A `.env` file template is available, to use it rename `.env.production.dist` to `.env.production`
+
+To learn more visit [Gatsby documentation](https://www.gatsbyjs.com/docs/how-to/local-development/environment-variables/)
+
+## Learn More
+
+You can learn more in the [Gatsby documentation](https://www.gatsbyjs.com/docs/).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
