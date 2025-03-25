@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "description": "Qubic Connect is a MetaMask Snap that provides secure and seamless interactions with the Qubic blockchain.",
+  "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
   "proposedName": "Qubic Connect",
   "repository": {
     "type": "git",

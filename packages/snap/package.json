@@ -1,7 +1,7 @@
 {
-  "name": "snap",
-  "version": "0.1.0",
-  "description": "The 'Hello, world!' of MetaMask Snaps, now written in TypeScript.",
+  "name": "qubic-connect",
+  "version": "1.0.0",
+  "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
   "repository": {
     "type": "git",
     "url": "https://github.com/MetaMask/template-snap-monorepo.git"
