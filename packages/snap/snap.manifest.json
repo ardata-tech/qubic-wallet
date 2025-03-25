@@ -4,7 +4,7 @@
   "proposedName": "Qubic Connect",
   "repository": {
     "type": "git",
-    "url": "https://github.com/MetaMask/template-snap-monorepo.git"
+    "url": "https://github.com/ardata-tech/qubic-connect"
   },
   "source": {
     "shasum": "666kXKpdcNeQkyfyrFtmi1qR3Xs7A74miyTa5uo/2fE=",
