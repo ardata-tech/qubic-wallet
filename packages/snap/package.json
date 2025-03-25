@@ -1,5 +1,5 @@
 {
-  "name": "qubic-connect",
+  "name": "@ardata-tech/qubic-connect",
   "version": "1.0.0",
   "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
   "repository": {

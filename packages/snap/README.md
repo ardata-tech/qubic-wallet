@@ -1,12 +1,42 @@
-# TypeScript Example Snap
+# Qubic Connect
 
-This snap demonstrates how to develop a snap with TypeScript. It is a simple
-snap that displays a confirmation dialog when the `hello` JSON-RPC method is
-called.
+Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
 
-## Testing
+## Prerequisites
+- MetaMask Flask installed
+- A text editor (for example, VS Code)
+- Node version 20.11 or later
+- Yarn
 
-The snap comes with some basic tests, to demonstrate how to write tests for
-snaps. To test the snap, run `yarn test` in this directory. This will use
-[`@metamask/snaps-jest`](https://github.com/MetaMask/snaps/tree/main/packages/snaps-jest)
-to run the tests in `src/index.test.ts`.
+## Getting Started
+
+From the root of the project, install the project dependencies using Yarn:
+
+```shell
+yarn install
+```
+
+You may get a warning like the following:
+
+> @lavamoat/allow-scripts has detected dependencies without configuration. explicit configuration required.
+run "allow-scripts auto" to automatically populate the configuration.
+
+You can fix this by running the following command:
+
+```shell
+yarn allow-scripts auto
+```
+
+Build the dApp and the Snap:
+
+```shell
+yarn build
+```
+
+Start the development server:
+
+```shell
+yarn start
+```
+
+You are now serving the Snap at http://localhost:8080 and its front-end dapp at http://localhost:8000.
