@@ -7,11 +7,11 @@
     "url": "https://github.com/ardata-tech/qubic-connect"
   },
   "source": {
-    "shasum": "666kXKpdcNeQkyfyrFtmi1qR3Xs7A74miyTa5uo/2fE=",
+    "shasum": "BKlZQnwh8eh9qn0Ww43fEDpZnTAJhk0n0MelkjOnhew=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
-        "packageName": "snap",
+        "packageName": "qubic-connect",
         "registry": "https://registry.npmjs.org/"
       }
     }
