@@ -1,6 +1,6 @@
 {
   "name": "@ardata-tech/qubic-connect",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
   "repository": {
     "type": "git",
@@ -10,7 +10,8 @@
   "main": "./dist/bundle.js",
   "files": [
     "dist/",
-    "snap.manifest.json"
+    "snap.manifest.json",
+    "icon.svg"
   ],
   "scripts": {
     "allow-scripts": "yarn workspace root allow-scripts",

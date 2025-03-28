@@ -1,5 +1,5 @@
 {
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
   "proposedName": "Qubic Connect",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/ardata-tech/qubic-connect"
   },
   "source": {
-    "shasum": "VCTIfuX1MCNiB4B9LkNqDWPoNE750kKycpxfAz57he8=",
+    "shasum": "9nSaXu7BNWyoTdRGXThwDbLuoLbqZSEyQyhYSJGR8Nw=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
