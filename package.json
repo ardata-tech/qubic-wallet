@@ -3,13 +3,13 @@
   "version": "0.1.1",
   "private": true,
   "description": "",
-  "homepage": "https://github.com/ardata-tech/qubic-connect#readme",
+  "homepage": "https://github.com/ardata-tech/qubic-wallet#readme",
   "bugs": {
-    "url": "https://github.com/ardata-tech/qubic-connect/issues"
+    "url": "https://github.com/ardata-tech/qubic-wallet/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ardata-tech/qubic-connect.git"
+    "url": "git+https://github.com/ardata-tech/qubic-wallet.git"
   },
   "license": "MIT",
   "author": "",

@@ -1,10 +1,10 @@
 {
   "version": "1.0.5",
-  "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
-  "proposedName": "Qubic Connect",
+  "description": "Qubic Wallet provides secure and seamless interactions with the Qubic blockchain.",
+  "proposedName": "Qubic Wallet",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ardata-tech/qubic-connect"
+    "url": "https://github.com/ardata-tech/qubic-wallet"
   },
   "source": {
     "shasum": "9nSaXu7BNWyoTdRGXThwDbLuoLbqZSEyQyhYSJGR8Nw=",
@@ -12,7 +12,7 @@
       "npm": {
         "filePath": "dist/bundle.js",
         "iconPath": "icon.svg",
-        "packageName": "@ardata-tech/qubic-connect",
+        "packageName": "@ardata-tech/qubic-wallet",
         "registry": "https://registry.npmjs.org/"
       }
     }

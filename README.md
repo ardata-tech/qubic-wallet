@@ -1,6 +1,6 @@
-# Qubic Connect
+# Qubic Wallet
 
-Qubic Connect is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
+Qubic Wallet is a MetaMask Snap that provides Qubic capabilities such as public key derivation, transaction signing, and broadcasting. It integrates with MetaMask to enable secure and seamless interactions with the Qubic blockchain.
 
 ## Prerequisites
 - MetaMask Flask installed

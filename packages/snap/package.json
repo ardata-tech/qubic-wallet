@@ -1,10 +1,10 @@
 {
-  "name": "@ardata-tech/qubic-connect",
+  "name": "@ardata-tech/qubic-wallet",
   "version": "1.0.5",
-  "description": "Qubic Connect provides secure and seamless interactions with the Qubic blockchain.",
+  "description": "Qubic Wallet provides secure and seamless interactions with the Qubic blockchain.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ardata-tech/qubic-connect"
+    "url": "https://github.com/ardata-tech/qubic-wallet"
   },
   "license": "MIT",
   "main": "./dist/bundle.js",
