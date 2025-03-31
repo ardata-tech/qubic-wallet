@@ -13,7 +13,6 @@ export const QubicSendButton = styled.button`
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
   :disabled {
     border: none !important;
@@ -27,8 +26,7 @@ export const QubicSendButton = styled.button`
 
   &:hover {
     border-color: none;
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgb(174, 200, 202) !important;
   }
   @media (max-width: 425px) {
     height: 35px;
@@ -51,9 +49,9 @@ export const MetaMaskIndicatorButton = styled.button`
       background: #ff5c16;
     }
 
+    color: white;
     border-color: #ff5c16 !important;
-    transform: scale(1.05) !important;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3) !important;
+    background-color: rgb(249, 106, 45) !important;
   }
 `;
 
@@ -98,16 +96,14 @@ export const QubicBorderedtButton = styled.button`
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
   &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    background-color: rgb(174, 200, 202) !important;
   }
 
-  background-color: white !important;
+  background-color: white;
   :disabled {
-    background: rgb(216, 220, 220) !important;
+    background: rgb(216, 220, 220);
     color: black;
     &:hover {
       background: rgb(216, 220, 220);
