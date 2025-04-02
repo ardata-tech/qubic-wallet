@@ -93,7 +93,7 @@ const Index = () => {
   };
 
   useEffect(() => {
-    document.title = 'Qubic Connect';
+    document.title = 'Qubic Wallet';
 
     return () => {
       setBalance(0);
@@ -295,11 +295,11 @@ const Index = () => {
           <span className="qubic-text">qubic</span>
           <span
             className="qubic-text qubic-text-connect"
-            style={{
-              color: '#61f0fe',
-            }}
+            // style={{
+            //   color: '#61f0fe',
+            // }}
           >
-            connect
+            wallet
           </span>
         </div>
         <div>
