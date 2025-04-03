@@ -10,7 +10,8 @@ import { useEffect, useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { ReactComponent } from '../assets/metamask_fox_orange.svg';
-import qubicLogo from '../assets/qubic-logo.png';
+// import qubicLogo from '../assets/qubic-logo.png';
+import qubicWalletLogo from '../assets/qubicwallet-logo.png';
 import qubicBg from '../assets/wall.png';
 import {
   WalletDetailsSection,
@@ -291,16 +292,7 @@ const Index = () => {
     >
       <header className="header">
         <div className="header-item-wrapper">
-          <img className="qubic-logo" src={qubicLogo} alt="logo" />
-          <span className="qubic-text">qubic</span>
-          <span
-            className="qubic-text qubic-text-connect"
-            // style={{
-            //   color: '#61f0fe',
-            // }}
-          >
-            wallet
-          </span>
+          <img src={qubicWalletLogo} alt="logo" />
         </div>
         <div>
           <MetaMaskIndicatorButton
