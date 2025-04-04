@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const QubicSendButton = styled.button`
+  /* Base styles */
   border: none;
   height: 55px;
   min-width: 130px;
@@ -8,26 +9,30 @@ export const QubicSendButton = styled.button`
   font-weight: 600;
   line-height: 22.29px;
   letter-spacing: -2%;
-  background-color: #ccfcff;
+  background-color: #ccfcff; /* Light cyan background matching the image */
   color: #111927;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0px 2px 24px rgba(0, 0, 0, 0.16); /* Add subtle shadow to match the image */
 
-  :disabled {
-    border: none !important;
+  /* Hover state */
+  &:hover {
+    background-color: #333333 !important;
+    color: white;
+  }
+
+  /* Disabled state */
+  &:disabled {
     background: rgb(216, 220, 220);
     color: black;
     &:hover {
-      background: rgb(216, 220, 220);
+      background: rgb(216, 220, 220) !important;
       color: black;
     }
   }
 
-  &:hover {
-    border-color: none;
-    background-color: rgb(174, 200, 202) !important;
-  }
+  /* Responsive styles */
   @media (max-width: 425px) {
     height: 35px;
     min-width: 100px;
@@ -85,7 +90,9 @@ export const LoadingButton = ({
 };
 
 export const QubicBorderedtButton = styled.button`
-  border: none !important;
+  /* Base styles */
+  background-color: white;
+  border: 1px solid #111927 !important; /* Add border to match the image */
   height: 55px;
   min-width: 127px;
   font-size: 19px;
@@ -97,24 +104,28 @@ export const QubicBorderedtButton = styled.button`
   cursor: pointer;
   transition: all 0.3s ease;
 
+  /* Hover state */
   &:hover {
-    background-color: rgb(174, 200, 202) !important;
+    background-color: #333333 !important;
+    color: white;
+    border-color: #333333 !important;
   }
 
-  background-color: white;
-  :disabled {
+  /* Disabled state */
+  &:disabled {
     background: rgb(216, 220, 220);
     color: black;
     &:hover {
-      background: rgb(216, 220, 220);
+      background: rgb(216, 220, 220) !important;
       color: black;
     }
   }
 
+  /* Responsive styles */
   @media (max-width: 425px) {
     height: 35px;
     min-width: 100px;
     font-size: 14px;
     line-height: 14.29px;
   }
-`;
+`
