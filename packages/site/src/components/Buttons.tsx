@@ -58,6 +58,11 @@ export const MetaMaskIndicatorButton = styled.button`
     border-color: #ff5c16 !important;
     background-color: rgb(249, 106, 45) !important;
   }
+
+  @media (max-width: 992px) {
+    margin-top: 4px;
+    margin-bottom: 4px;
+  }
 `;
 
 interface LoadingButtonProps {
