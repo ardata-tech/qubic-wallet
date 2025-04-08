@@ -10,4 +10,4 @@ export const defaultSnapOrigin =
   process.env.SNAP_ORIGIN ?? `local:http://localhost:8080`;
 
 export const mode = 
-  ['debug', 'release'].includes(process.env.MODE || "") ? process.env.MODE : 'debug';
+  ['debug', 'release'].includes(process.env.MODE ?? "") ? process.env.MODE : 'debug';
