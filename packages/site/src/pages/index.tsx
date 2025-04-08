@@ -20,7 +20,7 @@ import {
   MetaMaskIndicatorButton,
   LoadingButton,
 } from '../components';
-import { defaultSnapOrigin } from '../config';
+import { defaultSnapOrigin, mode } from '../config/snap';
 import {
   useMetaMask,
   useInvokeSnap,
@@ -179,9 +179,9 @@ const Index = () => {
   }, [tickSeconds, healtStatus]);
 
   const onConnect = async () => {
-    if (!isFlask || !snapsDetected) {
+    if ((mode == "debug") == !isFlask || !snapsDetected) {
       toastErrorMessage(
-        !isFlask ? 'Please install MetaMask first' : 'Snap is not detected',
+        mode == "debug" ? 'Please install MetaMask Flask first' : 'Please install MetaMask first',
       );
       return;
     }
