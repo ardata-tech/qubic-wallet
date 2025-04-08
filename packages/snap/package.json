@@ -1,6 +1,6 @@
 {
   "name": "@ardata-tech/qubic-wallet",
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Qubic Wallet provides secure and seamless interactions with the Qubic blockchain.",
   "repository": {
     "type": "git",

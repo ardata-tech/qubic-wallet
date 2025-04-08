@@ -1,5 +1,5 @@
 {
-  "version": "1.0.5",
+  "version": "1.0.7",
   "description": "Qubic Wallet provides secure and seamless interactions with the Qubic blockchain.",
   "proposedName": "Qubic Wallet",
   "repository": {
@@ -7,7 +7,7 @@
     "url": "https://github.com/ardata-tech/qubic-wallet"
   },
   "source": {
-    "shasum": "9EZkgNvQRxr+M6KCGrcaQ+1cTyxBIdWSt/oZ4Vznppk=",
+    "shasum": "CUiQNRISBu/m0w9wZ3lpwkW9jsRaDM1JoH9ptrB1dN0=",
     "location": {
       "npm": {
         "filePath": "dist/bundle.js",
