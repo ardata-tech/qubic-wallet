@@ -1,0 +1,45 @@
+name: Docker CI/DO App Platform CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push-docker-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
+    - name: Create packages/site/.env.production file
+      run: |
+        echo "SNAP_ORIGIN=$SNAP_ORIGIN" >> $GITHUB_WORKSPACE/packages/site/.env.production
+        echo "MODE=$MODE" >> $GITHUB_WORKSPACE/packages/site/.env.production
+      env:
+        SNAP_ORIGIN: ${{ vars.SNAP_ORIGIN }}
+        MODE: ${{ vars.MODE }}
+        
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v6
+      with:
+        context: ./server
+        file: ./server/Dockerfile
+        push: true
+        tags: ${{ vars.DOCKER_BUILD_TAG }}
+
+    - name: Install doctl
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+    - name: Deploy to DigitalOcean App Platform
+      run: |
+        doctl apps create-deployment ${{ vars.DIGITALOCEAN_APP_ID }} --force-rebuild
