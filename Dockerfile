@@ -25,5 +25,8 @@ RUN yarn run build
 # Expose the port the app runs on
 EXPOSE 9000
 
+# Ensure the entrypoint script is executable
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Run the application
 CMD ["yarn", "gatsby", "serve", "-H", "0.0.0.0"]
