@@ -152,6 +152,7 @@ const Index = () => {
 
   useEffect(() => {
     if (connected && !identity) {
+      getIdentity();
       setMetamaskState('Connect');
       fetchQubicLatestTick();
     } else if (connected && identity?.publicId) {
